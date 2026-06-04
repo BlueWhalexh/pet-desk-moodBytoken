@@ -133,7 +133,7 @@ The full step-by-step (with tips on what makes a great pet) lives at <https://pe
 
 This fork adds a local skill at `.agents/skills/petdex-mood-sprite/` for generating or validating token-mood art.
 
-The desktop also shows a weighted token usage percentage above the pet, such as `57%`. It is enabled by default and can be turned off in Settings with `Usage percent`, or by setting `showUsagePercent` to `false` in `~/.petdex/preferences.json`. By default the sampler uses all supported local agent sources; set `PETDEX_USAGE_MOOD_SOURCE=codex` or `PETDEX_USAGE_MOOD_SOURCE=claude-code` before starting the desktop when you want a single-agent percentage.
+The desktop also shows a weighted token usage percentage near the pet, such as `57%`. It is enabled by default and can be turned off in Settings with `Usage percent`, or by setting `showUsagePercent` to `false` in `~/.petdex/preferences.json`. By default the sampler uses `PETDEX_USAGE_MOOD_SOURCE=auto`, which does not mix agents: it prefers native Codex rate-limit percentages when available, otherwise it picks the most recent single local source. Set `PETDEX_USAGE_MOOD_SOURCE=codex` or `PETDEX_USAGE_MOOD_SOURCE=claude-code` before starting the desktop when you want to force one source.
 
 Ask your agent:
 

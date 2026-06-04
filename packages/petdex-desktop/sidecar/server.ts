@@ -90,7 +90,6 @@ const MANUAL_MOOD_HOLD_MS = Number(
   process.env.PETDEX_MANUAL_MOOD_HOLD_MS ?? 5 * 60 * 1000,
 );
 const USAGE_MOOD_CONFIG = tokenMoodConfigFromEnv(process.env);
-const USAGE_MOOD_SOURCE = process.env.PETDEX_USAGE_MOOD_SOURCE;
 
 const VALID_STATES = new Set([
   "idle",
@@ -356,10 +355,6 @@ function refreshMoodFromLocalUsage() {
   if (Date.now() - lastManualMoodAt < MANUAL_MOOD_HOLD_MS) return;
   const sample = scanLocalAgentUsage({
     config: USAGE_MOOD_CONFIG,
-    source:
-      USAGE_MOOD_SOURCE === "codex" || USAGE_MOOD_SOURCE === "claude-code"
-        ? USAGE_MOOD_SOURCE
-        : "all",
   });
   if (sample.tokens <= 0 && sample.usagePercent <= 0) return;
   const level = fatigueToLevel(sample.fatigue);

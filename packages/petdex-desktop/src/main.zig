@@ -85,7 +85,8 @@ const html_head =
     \\  /* hasn't been written yet (counter=0) or the setting is off. */
     \\  .fatigue-meter {
     \\    position: absolute;
-    \\    top: -20px;
+    \\    top: auto;
+    \\    bottom: -16px;
     \\    left: 50%;
     \\    transform: translateX(-50%);
     \\    width: 64px;

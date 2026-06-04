@@ -3,7 +3,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { scanLocalAgentUsage } from "./agent-usage";
+import { scanLocalAgentUsage, usageSourceFromEnv } from "./agent-usage";
 
 function tmpHome(): string {
   return join(
@@ -223,6 +223,109 @@ describe("scanLocalAgentUsage", () => {
     expect(sample.usagePercent).toBe(10);
     expect(sample.fatigue).toBe(0.1);
     expect(sample.reason).toBe("codex rate limit: 10% used");
+  });
+
+  test("auto source prefers Codex native rate limits over Claude totals", () => {
+    const home = tmpHome();
+    mkdirSync(join(home, ".claude"), { recursive: true });
+    mkdirSync(join(home, ".codex", "sessions", "2026", "06", "04"), {
+      recursive: true,
+    });
+    const nowMs = Date.parse("2026-06-04T08:00:00.000Z");
+    writeFileSync(
+      join(home, ".claude", "stats-cache.json"),
+      JSON.stringify({
+        dailyModelTokens: [
+          {
+            date: "2026-06-04",
+            tokensByModel: { "claude-sonnet": 1_000_000 },
+          },
+        ],
+      }),
+    );
+    writeFileSync(
+      join(home, ".codex", "sessions", "2026", "06", "04", "session.jsonl"),
+      JSON.stringify({
+        timestamp: "2026-06-04T07:00:00.000Z",
+        type: "event_msg",
+        payload: {
+          type: "token_count",
+          rate_limits: {
+            primary: {
+              used_percent: 12,
+            },
+          },
+        },
+      }),
+    );
+
+    const sample = scanLocalAgentUsage({
+      homeDir: home,
+      nowMs,
+      config: {
+        windowMs: 24 * 60 * 60 * 1000,
+        tokenBudget: 1_000,
+        weights: {
+          input: 1,
+          output: 1,
+          cacheRead: 1,
+          cacheCreation: 1,
+          textEstimate: 1,
+        },
+      },
+    });
+
+    expect(sample.agentSource).toBe("codex");
+    expect(sample.usagePercent).toBe(12);
+    expect(sample.fatigue).toBe(0.12);
+  });
+
+  test("auto source still supports Claude Code when it is the only source", () => {
+    const home = tmpHome();
+    mkdirSync(join(home, ".claude"), { recursive: true });
+    const nowMs = Date.parse("2026-06-04T08:00:00.000Z");
+    writeFileSync(
+      join(home, ".claude", "stats-cache.json"),
+      JSON.stringify({
+        dailyModelTokens: [
+          {
+            date: "2026-06-04",
+            tokensByModel: { "claude-sonnet": 2500 },
+          },
+        ],
+      }),
+    );
+
+    const sample = scanLocalAgentUsage({
+      homeDir: home,
+      nowMs,
+      config: {
+        windowMs: 24 * 60 * 60 * 1000,
+        tokenBudget: 10_000,
+        weights: {
+          input: 1,
+          output: 1,
+          cacheRead: 1,
+          cacheCreation: 1,
+          textEstimate: 1,
+        },
+      },
+    });
+
+    expect(sample.agentSource).toBe("claude-code");
+    expect(sample.tokens).toBe(2500);
+    expect(sample.fatigue).toBe(0.25);
+  });
+
+  test("defaults source selection to auto instead of all", () => {
+    expect(usageSourceFromEnv({})).toBe("auto");
+    expect(usageSourceFromEnv({ PETDEX_USAGE_MOOD_SOURCE: "all" })).toBe("all");
+    expect(usageSourceFromEnv({ PETDEX_USAGE_MOOD_SOURCE: "codex" })).toBe(
+      "codex",
+    );
+    expect(
+      usageSourceFromEnv({ PETDEX_USAGE_MOOD_SOURCE: "claude-code" }),
+    ).toBe("claude-code");
   });
 
   test("returns normal baseline when no recent token data exists", () => {

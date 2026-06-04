@@ -52,7 +52,7 @@ type UsageScanOptions = {
   tokenizer?: TextTokenizer | null;
 };
 
-export type UsageSource = "all" | "claude-code" | "codex";
+export type UsageSource = "auto" | "all" | "claude-code" | "codex";
 
 const DEFAULT_MAX_FILES = 24;
 const JSONL_TAIL_BYTES = 1024 * 1024;
@@ -69,7 +69,7 @@ export function scanLocalAgentUsage(
     opts.tokenizer === undefined ? loadDefaultTokenizer() : opts.tokenizer;
   const sinceMs = nowMs - config.windowMs;
   const codexRateLimit =
-    source === "codex"
+    source === "codex" || source === "auto"
       ? latestCodexRateLimit(
           [
             ...scanRecentJsonl(join(home, ".codex", "sessions"), maxFiles),
@@ -81,30 +81,33 @@ export function scanLocalAgentUsage(
           sinceMs,
         )
       : null;
-  const records = filterUsageRecords(
-    [
-      ...scanClaudeStats(join(home, ".claude", "stats-cache.json"), sinceMs),
-      ...scanClaudeProjectJsonl(
-        join(home, ".claude", "projects"),
-        sinceMs,
-        maxFiles,
-        tokenizer,
-      ),
-      ...scanCodexArchivedJsonl(
-        join(home, ".codex", "archived_sessions"),
-        sinceMs,
-        maxFiles,
-        tokenizer,
-      ),
-      ...scanCodexSessionJsonl(
-        join(home, ".codex", "sessions"),
-        sinceMs,
-        maxFiles,
-        tokenizer,
-      ),
-    ],
+  const allRecords = [
+    ...scanClaudeStats(join(home, ".claude", "stats-cache.json"), sinceMs),
+    ...scanClaudeProjectJsonl(
+      join(home, ".claude", "projects"),
+      sinceMs,
+      maxFiles,
+      tokenizer,
+    ),
+    ...scanCodexArchivedJsonl(
+      join(home, ".codex", "archived_sessions"),
+      sinceMs,
+      maxFiles,
+      tokenizer,
+    ),
+    ...scanCodexSessionJsonl(
+      join(home, ".codex", "sessions"),
+      sinceMs,
+      maxFiles,
+      tokenizer,
+    ),
+  ];
+  const selectedSource = nativeSourceForAuto(
     source,
+    codexRateLimit,
+    allRecords,
   );
+  const records = filterUsageRecords(allRecords, selectedSource);
 
   const totals = records.reduce(
     (acc, record) => {
@@ -136,11 +139,13 @@ export function scanLocalAgentUsage(
   const agentSource =
     nativeUsagePercent !== null
       ? "codex"
-      : totals.sources.size === 1
-        ? [...totals.sources][0]
-        : totals.sources.size > 1
-          ? "mixed"
-          : null;
+      : selectedSource !== "all" && sample.weightedTokens > 0
+        ? selectedSource
+        : totals.sources.size === 1
+          ? [...totals.sources][0]
+          : totals.sources.size > 1
+            ? "mixed"
+            : null;
   return {
     agentSource,
     fatigue,
@@ -226,10 +231,30 @@ function codexPrimaryUsedPercent(value: unknown): number | null {
 
 export function usageSourceFromEnv(env: NodeJS.ProcessEnv): UsageSource {
   const value = env.PETDEX_USAGE_MOOD_SOURCE?.trim().toLowerCase();
-  if (value === "codex" || value === "claude-code" || value === "all") {
+  if (
+    value === "auto" ||
+    value === "codex" ||
+    value === "claude-code" ||
+    value === "all"
+  ) {
     return value;
   }
-  return "all";
+  return "auto";
+}
+
+function nativeSourceForAuto(
+  source: UsageSource,
+  codexRateLimit: { usedPercent: number; timestampMs: number } | null,
+  records: UsageRecord[],
+): UsageSource {
+  if (source !== "auto") return source;
+  if (codexRateLimit) return "codex";
+  const latestMessage = records
+    .filter((record) => record.messages > 0)
+    .sort((a, b) => b.timestampMs - a.timestampMs)[0];
+  const latest =
+    latestMessage ?? records.sort((a, b) => b.timestampMs - a.timestampMs)[0];
+  return latest?.agentSource === "claude-code" ? "claude-code" : "codex";
 }
 
 function filterUsageRecords(

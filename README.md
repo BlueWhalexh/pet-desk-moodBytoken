@@ -269,7 +269,7 @@ fatigue = clamp(weightedTokens / tokenBudget, 0, 1)
 PETDEX_USAGE_MOOD_INTERVAL_MS=30000
 PETDEX_USAGE_MOOD_WINDOW_MS=86400000
 PETDEX_USAGE_MOOD_TOKEN_BUDGET=600000
-PETDEX_USAGE_MOOD_SOURCE=all
+PETDEX_USAGE_MOOD_SOURCE=auto
 
 PETDEX_TOKEN_WEIGHT_INPUT=1
 PETDEX_TOKEN_WEIGHT_OUTPUT=1.5
@@ -282,9 +282,10 @@ PETDEX_TOKEN_WEIGHT_TEXT_ESTIMATE=1
 
 | 值 | 含义 |
 | --- | --- |
-| `all` | 默认，合并所有支持的本地 agent 用量 |
-| `codex` | 只统计 Codex archived sessions |
+| `auto` | 默认，不混算；优先使用 Codex 原生百分比，否则选择最近有数据的单一 agent |
+| `codex` | 只统计 Codex active / archived sessions |
 | `claude-code` | 只统计 Claude Code transcripts / stats cache |
+| `all` | 高级调试用，合并所有支持的本地 agent 用量 |
 
 如果你主要用 Codex，但本机也有 Claude Code 的历史统计，建议先用：
 
