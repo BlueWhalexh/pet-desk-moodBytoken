@@ -8,6 +8,19 @@ The CLI behind pet-desk-moodBytoken. It installs Petdex Desktop, wires local age
 
 ## Install
 
+`pet-desk-moodbytoken` is not published to npm yet. Until the first publish, install from source:
+
+```sh
+git clone https://github.com/BlueWhalexh/pet-desk-moodBytoken.git
+cd pet-desk-moodBytoken/packages/petdex-cli
+bun install
+bun run build
+npm install -g .
+petdesk --help
+```
+
+After the npm package is published:
+
 ```sh
 # One-shot via npx (no global install)
 npx -y pet-desk-moodbytoken@latest --help
@@ -20,6 +33,17 @@ petdesk --help
 Requires Node.js 20+ (also runs on Bun).
 
 `npx` downloads the package into npm's temporary cache and runs its declared `bin`. It does not permanently install `petdesk` into your PATH. If you only used `npx -y pet-desk-moodbytoken@latest init`, use `npx -y pet-desk-moodbytoken@latest doctor` for later checks, or install globally first.
+
+Maintainers can publish with:
+
+```sh
+bun install
+bun run build
+npm login
+npm publish --access public
+```
+
+`npm publish --dry-run` currently succeeds and packages `README.md`, `dist/petdex.js`, and `package.json`; a real publish requires an authenticated npm account.
 
 ## Quick start
 

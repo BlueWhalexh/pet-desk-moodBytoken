@@ -10,6 +10,19 @@
 
 目标使用方式是：安装一次，然后在 agent 里直接输入 `/petdesk`。
 
+当前 `pet-desk-moodbytoken` 还没有发布到 npm registry，所以直接运行 `npx -y pet-desk-moodbytoken@latest init` 会得到 `404 Not Found`。在正式发布前，先用源码本地安装：
+
+```bash
+git clone https://github.com/BlueWhalexh/pet-desk-moodBytoken.git
+cd pet-desk-moodBytoken/packages/petdex-cli
+bun install
+bun run build
+npm install -g .
+petdesk init
+```
+
+发布到 npm 后，用户可以改用：
+
 ```bash
 npx -y pet-desk-moodbytoken@latest init
 ```
@@ -36,7 +49,7 @@ npx -y pet-desk-moodbytoken@latest init
 | `/petdesk status` | 查看 hooks 状态 |
 | `/petdesk doctor` | 检查安装问题 |
 
-说明：`npx` 是一次性下载并运行 npm 包，不会把命令永久安装到你的 PATH。为了避免和上游 Petdex 的 `petdex` 包名、全局命令冲突，本项目计划使用独立 npm 包名 `pet-desk-moodbytoken`，并只暴露 `petdesk` 这个 shell 命令。全局安装后可以直接用：
+说明：`npx` 是一次性下载并运行 npm 包，不会把命令永久安装到你的 PATH。为了避免和上游 Petdex 的 `petdex` 包名、全局命令冲突，本项目使用独立 npm 包名 `pet-desk-moodbytoken`，并只暴露 `petdesk` 这个 shell 命令。全局安装后可以直接用：
 
 ```bash
 npm install -g pet-desk-moodbytoken
@@ -45,6 +58,18 @@ petdesk doctor
 ```
 
 如果你只跑过 `npx -y pet-desk-moodbytoken@latest init`，然后在普通终端里输入 `petdesk` 找不到，这是正常的：`npx` 没有做全局安装。此时继续用 `npx -y pet-desk-moodbytoken@latest doctor`，或者执行上面的全局安装。
+
+维护者发布 npm 包时：
+
+```bash
+cd packages/petdex-cli
+bun install
+bun run build
+npm login
+npm publish --access public
+```
+
+当前 dry-run 已验证 tarball 可生成；正式发布需要 npm 账号登录。
 
 Windows 用户也可以用 `npx` 运行 Node CLI；需要 Node.js 20+。桌面宠物是否能完整启动取决于当前 release 是否提供 `win32` desktop 资产和目标 agent 的 hooks 支持。当前最稳定路径仍是 macOS；Windows 可以先按 CLI / hooks-only 路径验证，遇到桌面二进制缺失时 `doctor` 会提示。
 
