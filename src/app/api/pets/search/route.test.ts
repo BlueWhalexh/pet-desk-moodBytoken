@@ -1,0 +1,84 @@
+import * as BunTest from "bun:test";
+
+const { beforeEach, describe, expect, it } = BunTest;
+const testMock = (
+  BunTest as typeof BunTest & {
+    mock: { module: (specifier: string, factory: () => object) => void };
+  }
+).mock;
+
+const TEST_SEED = "0123456789abcdef";
+const calls: Array<{
+  input: { cursor?: number; shuffleSeed?: string };
+  options: { includeTotal?: boolean; includeFacets?: boolean };
+}> = [];
+
+testMock.module("@/lib/pet-search", () => ({
+  SEARCH_LIMITS: { DEFAULT_LIMIT: 24, MAX_LIMIT: 60 },
+  searchPets: async (
+    input: { cursor?: number; shuffleSeed?: string },
+    options: { includeTotal?: boolean; includeFacets?: boolean },
+  ) => {
+    calls.push({ input, options });
+    return {
+      pets: [],
+      total: 0,
+      nextCursor: input.cursor ? null : 24,
+      searchMode: "all",
+      facets: { kinds: {}, vibes: {}, colors: {}, batches: [] },
+    };
+  },
+}));
+
+testMock.module("@/lib/shuffle-seed", () => ({
+  createShuffleSeed: () => TEST_SEED,
+  normalizeShuffleSeed: (value: string | null | undefined) =>
+    value && /^[a-f0-9]{16}$/.test(value) ? value : null,
+  readShuffleSeed: async () => null,
+  setShuffleSeedCookie: (response: Response, seed: string) => {
+    response.headers.append(
+      "Set-Cookie",
+      `petdex_shuffle_seed=${seed}; Path=/; Max-Age=2592000; SameSite=Lax`,
+    );
+  },
+}));
+
+async function search(url: string): Promise<Response> {
+  const { GET } = await import("./route");
+  return GET(new Request(url));
+}
+
+describe("GET /api/pets/search", () => {
+  beforeEach(() => {
+    calls.length = 0;
+  });
+
+  it("returns the minted curated seed so no-cookie pagination can reuse it", async () => {
+    const first = await search("https://petdex.local/api/pets/search");
+    const firstBody = (await first.json()) as { shuffleSeed?: string };
+    const firstCall = calls[0];
+
+    expect(firstBody.shuffleSeed).toBe(TEST_SEED);
+    expect(first.headers.get("Cache-Control")).toBe("private, no-store");
+    expect(first.headers.get("Set-Cookie") ?? "").toContain(
+      `petdex_shuffle_seed=${TEST_SEED}`,
+    );
+    expect(firstCall?.input.shuffleSeed).toBe(TEST_SEED);
+
+    calls.length = 0;
+    const second = await search(
+      `https://petdex.local/api/pets/search?cursor=24&includeMeta=0&shuffleSeed=${TEST_SEED}`,
+    );
+    const secondBody = (await second.json()) as { shuffleSeed?: string };
+    const secondCall = calls[0];
+
+    expect(secondBody.shuffleSeed).toBe(TEST_SEED);
+    expect(second.headers.get("Set-Cookie")).toBeNull();
+    expect(secondCall?.input.cursor).toBe(24);
+    expect(secondCall?.input.shuffleSeed).toBe(TEST_SEED);
+    expect(secondCall?.options).toEqual({
+      includeTotal: false,
+      includeFacets: false,
+    });
+  });
+});

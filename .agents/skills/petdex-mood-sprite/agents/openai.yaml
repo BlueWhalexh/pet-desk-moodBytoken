@@ -1,0 +1,4 @@
+interface:
+  display_name: "Petdex Mood Sprite"
+  short_description: "Generate Petdex mood idle sprites"
+  default_prompt: "Use $petdex-mood-sprite to generate mood idle sprite rows for a Petdex pet slug."

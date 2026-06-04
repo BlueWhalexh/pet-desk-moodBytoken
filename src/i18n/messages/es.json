@@ -1,0 +1,2145 @@
+{
+  "common": {
+    "brand": "Petdex",
+    "codexCli": "Codex",
+    "submitPet": "Enviar una mascota",
+    "browseGallery": "Ver galería",
+    "github": "GitHub",
+    "petdexHome": "Inicio de Petdex"
+  },
+  "metadata": {
+    "root": {
+      "titleDefault": "Petdex: Compañeros animados para Codex",
+      "titleTemplate": "%s | Petdex",
+      "description": "Petdex es la galería pública de compañeros animados para Codex. Explora compañeros open source, previsualiza sus animaciones e instala uno con un solo comando.",
+      "ogTitle": "Petdex: Compañeros animados para Codex",
+      "twitterTitle": "Petdex: Compañeros animados para Codex",
+      "keywords": {
+        "codexPet": "mascota de Codex",
+        "codexCliPet": "mascota de Codex",
+        "openaiCodexPets": "mascotas de OpenAI Codex",
+        "pixelPet": "mascota pixel art",
+        "animatedPet": "mascota animada",
+        "developerMascot": "mascota para desarrolladores",
+        "terminalPet": "mascota para terminal",
+        "codexCompanion": "compañero de Codex",
+        "petdex": "petdex"
+      }
+    }
+  },
+  "header": {
+    "gallery": "Galería",
+    "create": "Crear",
+    "docs": "Docs",
+    "collections": "Colecciones",
+    "topCreators": "Creadores",
+    "creators": "Creadores",
+    "requests": "Pedidos",
+    "advertise": "Anunciarse",
+    "adDashboard": "Panel de anuncios",
+    "community": "Comunidad",
+    "discord": "Discord",
+    "about": "Acerca de",
+    "followOnX": "Seguir actualizaciones en X",
+    "language": "Idioma",
+    "settings": "Ajustes",
+    "submitCta": "Enviar",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "githubRepoAria": "Petdex en GitHub",
+    "githubRepoAriaWithStars": "Petdex en GitHub, {stars} estrellas",
+    "browse": "Explorar",
+    "browseDesc": "Descubre pets, creadores y colecciones",
+    "collectionsDesc": "Sets curados: South Park, Pokémon y más",
+    "creatorsDesc": "Ranking de quién está publicando más pets",
+    "requestsDesc": "Vota los pets que la comunidad quiere curados",
+    "kindsDesc": "Animales, personajes, criaturas, objetos",
+    "vibesDesc": "Cozy, edgy, místico, heroico y más",
+    "build": "Crear",
+    "buildDesc": "Hacé y publicá tu pixel pet",
+    "createDesc": "Crea un pet con la skill de Codex, 5 min de idea a sprite",
+    "submitDesc": "Subí tu carpeta y Petdex lo hostea para todos",
+    "docsDesc": "Instala el Petdex CLI y publicá pets por npm",
+    "earn": "Crecer",
+    "earnDesc": "Gestioná campañas, impresiones y clicks",
+    "advertiseDesc": "Llegá a devs que instalan tools vía sponsored cards",
+    "builtWith": "Hecho con Petdex",
+    "builtWithDesc": "Apps que la comunidad está shippeando sobre el formato Petdex",
+    "communityDesc": "Discord con canales de shipping y voice rooms",
+    "takedown": "Takedown",
+    "takedownDesc": "Reportar un pet que usa tu obra",
+    "openMore": "Más enlaces",
+    "discover": "Descubrir",
+    "make": "Crear",
+    "promote": "Promover",
+    "download": "Descargar",
+    "downloadDesc": "App de escritorio para macOS - tu mascota junto a cada agente",
+    "signIn": "Iniciar sesión",
+    "openUserMenu": "Abrir menú de usuario",
+    "myProfile": "Mi perfil",
+    "myFeedback": "Mi feedback",
+    "admin": "Admin",
+    "collaborator": "Colaborador",
+    "manageAccount": "Gestionar cuenta",
+    "signOut": "Cerrar sesión"
+  },
+  "theme": {
+    "toggle": "Cambiar tema",
+    "system": "Sistema ({resolvedTheme})",
+    "dark": "Oscuro",
+    "light": "Claro",
+    "ariaLabel": "Tema: {label}. Haz clic para alternar.",
+    "title": "Tema: {label}"
+  },
+  "footer": {
+    "rightsNotice": "Las mascotas son fan art enviado por usuarios. Petdex no reclama derechos sobre ninguna propiedad intelectual subyacente.",
+    "topCreators": "Creadores",
+    "takedown": "Retiro de contenido",
+    "advertise": "Anunciarse",
+    "brand": "Marca",
+    "github": "GitHub",
+    "discord": "Discord",
+    "sponsor": "Patrocinar",
+    "sponsorAria": "Patrocinar en GitHub"
+  },
+  "home": {
+    "eyebrow": "El índice de mascotas de Codex",
+    "title": "Petdex",
+    "tagline": "La galería pública de compañeros animados para <brand>Codex</brand>. Explora más de {totalPets} compañeros open source, previsualiza sus estados e instala uno con un solo comando.",
+    "heroCommand": "npx petdex install boba",
+    "downloadCta": "Descargar Petdex Desktop",
+    "submitCta": "Enviar",
+    "browseGallery": "Ver galería",
+    "joinDiscord": "Unirse al Discord",
+    "joinWeChat": "Unirse a WeChat",
+    "openPet": "Abrir {name}",
+    "petAnimated": "{name} animado",
+    "petParadeAria": "Mascotas destacadas",
+    "surprise": {
+      "eyebrow": "Sorpresa diaria",
+      "title": "Una mascota te encontró",
+      "dismiss": "Cerrar mascota sorpresa",
+      "view": "Ver",
+      "install": "Instalar",
+      "shuffle": "Otra",
+      "viewAria": "Ver {name}",
+      "spriteAlt": "{name} como mascota sorpresa"
+    },
+    "jsonLdDescription": "Galería pública de compañeros animados para Codex. Instala uno con un solo comando.",
+    "jsonLdFeaturedPets": "Mascotas destacadas de Codex",
+    "featuredCollections": {
+      "eyebrow": "Colecciones destacadas",
+      "title": "Colecciones destacadas para instalar",
+      "viewAll": "Ver todas",
+      "petsCount": "{count, plural, =1 {1 mascota} other {# mascotas}}"
+    }
+  },
+  "community": {
+    "metadata": {
+      "title": "Comunidad de Petdex",
+      "description": "Únete a creadores, coleccionistas y al equipo de Petdex para ver creadores destacados, feedback de trabajos en progreso y builds semanales."
+    },
+    "eyebrow": "Comunidad Petdex",
+    "title": "Crea pixel pets en buena compañía",
+    "description": "La comunidad de Petdex reúne a creadores, coleccionistas y al equipo detrás de la galería. Recibe feedback de WIP, sigue builds semanales y conoce creadores destacados.",
+    "joinDiscord": "Unirse al Discord",
+    "joinWeChat": "Unirse a WeChat",
+    "starGithub": "Dar star en GitHub",
+    "sections": {
+      "spotlight": {
+        "title": "Los creadores destacados tienen foco",
+        "body": "GRAYCRAFT, Scientific Minds, Crafter Originals. Cada colección tiene una persona real detrás, y la comunidad es donde reciben feedback y deciden qué sale después."
+      },
+      "channels": {
+        "title": "Canales para shippear, no solo para conversar",
+        "body": "#wip para sprites en progreso, #cli-feedback para bugs, #ideas sincronizado con el wishlist público y #ship-or-sink para competencias de fin de semana."
+      },
+      "roles": {
+        "title": "Roles que ganas participando",
+        "body": "@Creator se desbloquea cuando aprueban tu primera mascota. @Collector con tres mascotas capturadas. @Featured Creator cuando tu set entra como colección curada."
+      },
+      "voice": {
+        "title": "Salas de voz con actividad real",
+        "body": "Co-working para foco silencioso, pixel-jam para collabs de sprite art en vivo y office-hours con el equipo de Petdex los viernes a las 4pm GMT-5."
+      }
+    },
+    "rules": {
+      "eyebrow": "Reglas",
+      "title": "Sé amable, sé específico, shippea algo",
+      "items": {
+        "respect": "Nada de racismo, sexismo o hate speech. Baneo inmediato.",
+        "spam": "Nada de spam, solicitud por DM o NFT shilling.",
+        "critique": "Critica sprites, no creadores. Honesto, amable, específico.",
+        "languages": "Canales en inglés, español y chino son bienvenidos. Elige el tuyo.",
+        "ip": "La IP de cada mascota pertenece a su creador original. Siempre da crédito.",
+        "modlog": "El mod log de Petdex Team es público en #bot-logs. Sin secretos."
+      }
+    }
+  },
+  "gallery": {
+    "eyebrow": "Galería · {totalPets} mascotas",
+    "title": "Elige una compañera",
+    "searchPlaceholder": "Prueba 'programador noctámbulo' o 'dragón feroz'",
+    "searchAria": "Buscar mascotas",
+    "clearSearchAria": "Limpiar búsqueda",
+    "clearAll": "Limpiar todo",
+    "matches": "{count, plural, =1 {1 coincidencia} other {# coincidencias}}",
+    "sortAria": "Ordenar mascotas",
+    "filtersTitle": "Filtros",
+    "caughtTitle": "Capturada",
+    "featuredTitle": "Destacada"
+  },
+  "suggestCollection": {
+    "cta": "Sugerir para una colección",
+    "closeAria": "Cerrar",
+    "notePlaceholder": "Opcional: indica a los admins por qué esta mascota encaja en la colección"
+  },
+  "advertise": {
+    "metadata": {
+      "title": "Anúnciate en Petdex",
+      "description": "Llega a desarrolladores que descubren e instalan herramientas de IA y desarrollo mediante tarjetas patrocinadas en Petdex."
+    },
+    "eyebrow": "Anuncios de Petdex",
+    "hero": {
+      "title": "Pon tu herramienta frente a builders que prueban cosas nuevas.",
+      "body": "Petdex tiene una audiencia creciente de desarrolladores que exploran compañeros para Codex y cultura developer. Ya prueban herramientas CLI, flujos de IA y productos por suscripción, así que es un lugar enfocado para presentar herramientas de IA y desarrollo."
+    },
+    "heroCards": {
+      "starting": "Desde $50",
+      "impressions": "Impresiones visibles",
+      "native": "Tarjeta sponsor nativa",
+      "audience": "Audiencia developer"
+    },
+    "landing": {
+      "primaryCta": "Crear campaña",
+      "secondaryCta": "Abrir panel",
+      "pricingEyebrow": "Paquetes prepagados simples",
+      "pricingTitle": "Compra impresiones visibles sin llamada comercial.",
+      "finalTitle": "Listo cuando tu creatividad esté lista.",
+      "finalBody": "Crea una campaña, sube una imagen limpia para la tarjeta patrocinada, elige un paquete prepago y continúa a Stripe checkout. Puedes editar la creatividad desde tu panel después del lanzamiento."
+    },
+    "checkout": {
+      "successTitle": "Pago recibido",
+      "successBody": "Stripe está confirmando el pago. Tu campaña empezará automáticamente cuando el webhook la active.",
+      "dashboardCta": "Ver panel de anuncios",
+      "cancelTitle": "Checkout cancelado",
+      "cancelBody": "No se capturó ningún pago. Puedes ajustar el anuncio e intentarlo otra vez."
+    },
+    "sections": {
+      "audience": {
+        "title": "Audiencia developer",
+        "body": "Los visitantes de Petdex son desarrolladores y usuarios de herramientas de IA explorando un catálogo construido alrededor de Codex. Están cómodos instalando herramientas y evaluando suscripciones pagas."
+      },
+      "placement": {
+        "title": "Tarjetas patrocinadas sutiles",
+        "body": "Los anuncios aparecen como tarjetas claramente marcadas entre las mascotas, manteniendo el ritmo de la galería sin interrumpir la navegación."
+      },
+      "billing": {
+        "title": "Impresiones visibles garantizadas",
+        "body": "Compras impresiones visibles garantizadas. También reportamos hovers, clicks, CTR y tiempo promedio visible."
+      }
+    },
+    "acceptableUse": {
+      "title": "Uso aceptable",
+      "items": {
+        "malware": "Sin malware, phishing, estafas, descargas engañosas ni recolección de credenciales.",
+        "adult": "Sin contenido adulto, sexual o explícito.",
+        "hate": "Sin odio, acoso, discriminación ni abuso.",
+        "illegal": "Sin productos ilegales, bienes regulados o servicios que violen la ley aplicable.",
+        "impersonation": "Sin suplantar personas, empresas, comunidades o proyectos open source.",
+        "misleading": "Sin claims engañosos de IA, benchmarks falsos o anuncios que tergiversen lo que hace la herramienta."
+      }
+    },
+    "legal": {
+      "eyebrow": "Aviso legal",
+      "title": "Petdex puede quitar anuncios que no encajen con la comunidad.",
+      "body": "Nos reservamos el derecho de pausar, borrar o rechazar cualquier anuncio que no se alinee con las políticas de Petdex, expectativas de la comunidad o estándares de calidad. Los anuncios retirados no se reembolsan."
+    },
+    "form": {
+      "companyName": "Empresa",
+      "contactEmail": "Email de contacto",
+      "title": "Título del anuncio",
+      "description": "Descripción",
+      "creativeDisclosure": "El título, la imagen y la descripción de tu anuncio aparecerán en la tarjeta patrocinada que se muestra en el feed de Petdex.",
+      "destinationUrl": "URL de destino",
+      "image": "Imagen del anuncio",
+      "imageCta": "Sube una creatividad PNG, JPG o WebP",
+      "imageHelp": "Máximo 10 MB. Usa una imagen de producto, tarjeta de logo o screenshot claro.",
+      "previewTitle": "Vista previa del anuncio",
+      "previewHelp": "Así se verá tu tarjeta patrocinada en el feed de Petdex. Los enlaces están desactivados en la vista previa.",
+      "previewFallbackTitle": "Título de tu anuncio",
+      "previewFallbackDescription": "Aquí aparecerá una descripción breve de tu producto.",
+      "package": "Elige el tamaño de tu campaña",
+      "pricingTrust": "Solo contamos impresiones visibles: 50%+ del anuncio visible durante 2 segundos.",
+      "utmTitle": "UTM personalizados",
+      "utmHelp": "Opcional. Si lo dejas vacío, Petdex agrega utm_source=petdex al enlace del anuncio.",
+      "legalAccept": "Acepto que Petdex puede pausar o borrar anuncios que no se alineen con sus políticas, y que esas eliminaciones no se reembolsan.",
+      "signIn": "Inicia sesión para enviar un anuncio",
+      "submit": "Continuar a Stripe checkout",
+      "status": {
+        "uploading": "Subiendo imagen",
+        "creating": "Creando campaña",
+        "checkout": "Abriendo checkout"
+      },
+      "errors": {
+        "imageRequired": "Sube primero una imagen del anuncio.",
+        "imageTooLarge": "La imagen debe pesar 10 MB o menos.",
+        "submitFailed": "No se pudo crear la campaña.",
+        "checkoutFailed": "No se pudo iniciar Stripe checkout.",
+        "network": "Error de red. Inténtalo de nuevo."
+      }
+    },
+    "create": {
+      "metadata": {
+        "title": "Crear una campaña de anuncios en Petdex",
+        "description": "Crea una tarjeta patrocinada en Petdex, elige un paquete de impresiones prepagadas y continúa a Stripe checkout."
+      },
+      "eyebrow": "Configuración de campaña",
+      "title": "Crea tu tarjeta patrocinada.",
+      "body": "Agrega creatividad, destino, tracking y paquete de impresiones prepagadas para tu campaña en Petdex.",
+      "backToLanding": "Volver a anuncios",
+      "help": {
+        "creative": {
+          "title": "Usa una creatividad clara",
+          "body": "Una tarjeta con logo, captura de producto o visual simple funciona mejor en el feed de Petdex."
+        },
+        "review": {
+          "title": "Mantén la campaña segura",
+          "body": "Los anuncios siguen sujetos a las políticas de Petdex y pueden retirarse si engañan o dañan a la comunidad."
+        },
+        "billing": {
+          "title": "Checkout prepago",
+          "body": "Stripe cobra el pago después de crear la campaña. La entrega empieza tras la activación del pago."
+        }
+      }
+    },
+    "card": {
+      "sponsored": "Patrocinado",
+      "cta": "Visitar sponsor",
+      "dismiss": "Ocultar tarjeta patrocinada"
+    },
+    "dashboard": {
+      "metadata": {
+        "title": "Panel de anuncios | Petdex",
+        "description": "Revisa tus campañas de Petdex, gasto, estado y entrega de impresiones prepagadas."
+      },
+      "eyebrow": "Panel de anunciantes",
+      "title": "Tus campañas en Petdex",
+      "body": "Sigue el estado, la entrega de impresiones prepagadas y el inventario restante de cada tarjeta patrocinada enviada.",
+      "newCampaign": "Comprar otra campaña",
+      "editCreative": "Editar creatividad",
+      "progress": "Entrega",
+      "destination": "URL de destino",
+      "created": "Creada {date}",
+      "activated": "Activada {date}",
+      "removedFallback": "Esta campaña fue retirada porque no se alineó con las políticas de Petdex.",
+      "checkout": {
+        "successTitle": "Pago recibido",
+        "successBody": "Stripe está confirmando el pago. Tu campaña empezará automáticamente cuando el webhook la active."
+      },
+      "summary": {
+        "total": "Campañas",
+        "active": "Activas",
+        "served": "Impresiones",
+        "clicks": "Clicks",
+        "ctr": "CTR"
+      },
+      "metrics": {
+        "package": "Paquete",
+        "served": "Impresiones servidas",
+        "remaining": "Restantes",
+        "spend": "Gasto",
+        "hovers": "Hovers",
+        "clicks": "Clicks",
+        "ctr": "CTR",
+        "avgTime": "Tiempo visible prom."
+      },
+      "empty": {
+        "eyebrow": "Sin campañas todavía",
+        "title": "Lanza tu primera tarjeta patrocinada",
+        "body": "Envía una creatividad, elige un paquete de impresiones prepagadas y empieza a llegar a desarrolladores cuando Stripe confirme el pago.",
+        "cta": "Crear campaña"
+      },
+      "edit": {
+        "title": "Editar campaña",
+        "body": "Cambia la creatividad, el destino o los campos de tracking. Los cambios en campañas activas se publican de inmediato y siguen sujetos a las políticas de anuncios de Petdex.",
+        "titleLabel": "Título del anuncio",
+        "descriptionLabel": "Descripción",
+        "destinationUrlLabel": "URL de destino",
+        "imageLabel": "Imagen del anuncio",
+        "imageCta": "Subir creatividad de reemplazo",
+        "imageHelp": "PNG, JPG o WebP. Máximo 10 MB.",
+        "currentImage": "Vista previa",
+        "save": "Guardar cambios",
+        "saved": "Campaña guardada.",
+        "saving": "Guardando campaña",
+        "uploading": "Subiendo imagen",
+        "cancel": "Cancelar",
+        "backToDashboard": "Volver al panel",
+        "delivery": "Entrega",
+        "deliveryBody": "{served} de {total} impresiones servidas.",
+        "metadata": {
+          "title": "Editar campaña de anuncios | Petdex",
+          "description": "Actualiza la creatividad, el destino y los campos de tracking de tu tarjeta patrocinada en Petdex."
+        },
+        "notEditable": {
+          "title": "Esta campaña no se puede editar",
+          "body": "Las campañas borradas o retiradas no se pueden cambiar. Crea una campaña nueva si quieres publicar otra tarjeta patrocinada."
+        },
+        "utmTitle": "UTM personalizados",
+        "utmHelp": "Deja campos vacíos para limpiarlos. Si utm_source queda vacío, Petdex agrega utm_source=petdex a los clicks.",
+        "errors": {
+          "imageTooLarge": "La imagen debe pesar 10 MB o menos.",
+          "nothingChanged": "Cambia al menos un campo antes de guardar.",
+          "submitFailed": "No se pudo actualizar la campaña.",
+          "uploadFailed": "Falló la subida de imagen.",
+          "network": "Error de red. Inténtalo de nuevo.",
+          "imageInvalid": "Sube una imagen de anuncio válida para Petdex.",
+          "destinationInvalid": "Ingresa una URL HTTPS válida.",
+          "titleRequired": "Agrega un título para el anuncio.",
+          "descriptionRequired": "Agrega una descripción para el anuncio."
+        }
+      },
+      "chart": {
+        "label": "Impresiones en el tiempo",
+        "empty": "Todavía no hay actividad registrada.",
+        "windows": {
+          "eightHours": "Últimas 8 horas",
+          "day": "Últimas 24 horas",
+          "week": "Última semana",
+          "month": "Último mes"
+        }
+      }
+    }
+  },
+  "feedback": {
+    "trigger": "Comentarios",
+    "title": "Enviar comentarios",
+    "backToTop": "Volver arriba",
+    "close": "Cerrar",
+    "send": "Enviar",
+    "sending": "Enviando…",
+    "emailPlaceholder": "correo (opcional, solo si quieres una respuesta)",
+    "githubPrompt": "¿Encontraste un bug o quieres revisar el código fuente?",
+    "openIssue": "Abrir un issue en GitHub →",
+    "kinds": {
+      "suggestion": "Sugerencia",
+      "bug": "Bug",
+      "praise": "Elogio",
+      "other": "Otro"
+    },
+    "placeholders": {
+      "suggestion": "¿Qué haría mejor a Petdex?",
+      "bug": "¿Qué se rompió? Incluye pasos si puedes.",
+      "praise": "Cuéntanos qué te gustó.",
+      "other": "¿Qué tienes en mente?"
+    },
+    "success": {
+      "title": "Gracias. Recibido.",
+      "body": "Cada mensaje entra a la cola. Leemos todo."
+    },
+    "errors": {
+      "moreDetail": "Cuéntanos un poco más (4+ caracteres).",
+      "submitFailed": "No se pudo enviar ({status}).",
+      "network": "Error de red. Inténtalo de nuevo."
+    }
+  },
+  "admin": {
+    "metadata": {
+      "title": "Petdex Admin"
+    },
+    "tabs": {
+      "ariaLabel": "Secciones de admin",
+      "submissions": "Envíos",
+      "edits": "Ediciones",
+      "requests": "Pedidos",
+      "collections": "Colecciones",
+      "feedback": "Feedback",
+      "campaigns": "Campañas",
+      "mailing": "Mailing",
+      "manifest": "Manifest",
+      "insights": "Métricas",
+      "telemetry": "Telemetria"
+    },
+    "status": {
+      "pending": "Pendiente",
+      "held": "Retenido",
+      "review_failed": "Revisión fallida",
+      "auto_approved": "Autoaprobado",
+      "auto_rejected": "Autorechazado",
+      "approved": "Aprobado",
+      "rejected": "Rechazado",
+      "discovered": "Descubierto",
+      "all": "Todos",
+      "open": "Abierto",
+      "fulfilled": "Cumplido",
+      "dismissed": "Descartado",
+      "addressed": "Atendido",
+      "archived": "Archivado"
+    },
+    "kinds": {
+      "all": "Todos los tipos",
+      "suggestion": "Sugerencia",
+      "bug": "Bug",
+      "praise": "Elogio",
+      "other": "Otro",
+      "suggestShort": "Sug."
+    },
+    "queue": {
+      "eyebrow": "Cola de envíos",
+      "title": "Revisar mascotas",
+      "empty": "No hay mascotas en esta vista."
+    },
+    "review": {
+      "needsName": "Falta nombre",
+      "edit": "Editar",
+      "placeholders": {
+        "displayName": "Nombre visible de la mascota",
+        "slug": "slug (seguro para URL)",
+        "description": "Descripción"
+      },
+      "rejectPrompt": "Razón del rechazo (opcional)",
+      "requestFailed": "La solicitud falló ({status})",
+      "save": "Guardar",
+      "cancel": "Cancelar",
+      "approve": "Aprobar",
+      "reject": "Rechazar",
+      "revive": "Volver a pendiente",
+      "links": {
+        "zip": "zip",
+        "sprite": "sprite",
+        "petJson": "pet.json"
+      },
+      "relative": {
+        "justNow": "ahora mismo"
+      },
+      "petTime": "PET",
+      "petAnimation": "animación de la mascota",
+      "similar": {
+        "possibleDuplicate": "Posible duplicado",
+        "looksSimilar": "Se parece",
+        "sameCharacter": "¿Mismo personaje?",
+        "hide": "Ocultar",
+        "show": "Mostrar"
+      }
+    },
+    "edits": {
+      "eyebrow": "Cola de ediciones",
+      "title": "Ediciones pendientes",
+      "description": "Cambios de texto enviados por dueños que esperan re-aprobación. La página en vivo sigue mostrando los valores aprobados hasta que actúes.",
+      "empty": "No hay ediciones pendientes.",
+      "submitted": "enviado",
+      "displayName": "Nombre visible",
+      "descriptionLabel": "Descripción",
+      "tags": "Etiquetas",
+      "emptyValue": "vacío",
+      "noChanges": "Sin cambios",
+      "noDiff": "Se envió una edición pero no se detectaron cambios. Recházala para limpiarla."
+    },
+    "editActions": {
+      "approve": "Aprobar edición",
+      "reject": "Rechazar",
+      "rejectPrompt": "Razón (opcional, se envía al dueño):",
+      "failed": "Falló: {error}"
+    },
+    "feedback": {
+      "eyebrow": "Inbox",
+      "title": "Feedback",
+      "empty": "No hay feedback en esta vista.",
+      "thread": "Hilo",
+      "threadWithCount": "Hilo ({count})",
+      "profile": "Perfil",
+      "viewProfile": "Ver el perfil de @{handle}",
+      "sendEmail": "Enviar email en su lugar",
+      "anonymous": "Anónimo",
+      "clerk": "clerk",
+      "filters": {
+        "pending": "Pendiente",
+        "addressed": "Atendido",
+        "archived": "Archivado",
+        "all": "Todos"
+      },
+      "mailto": {
+        "bodyIntro": "Gracias por el {kind} en Petdex",
+        "subject": "Re: tu feedback de Petdex: {excerpt}"
+      }
+    },
+    "feedbackActions": {
+      "address": "Marcar como atendido",
+      "archive": "Archivar",
+      "reopen": "Reabrir como pendiente",
+      "failed": "Falló: {error}"
+    },
+    "campaigns": {
+      "eyebrow": "Operaciones de ads",
+      "title": "Campañas de ads",
+      "description": "Revisa todas las campañas de anunciantes, con datos del dueño, métricas de entrega y actividad en gráficos.",
+      "overview": {
+        "totalCampaigns": "Campañas totales",
+        "totalSpend": "{value} de gasto reservado",
+        "active": "Activas",
+        "statusDetail": "{paused} pausadas, {exhausted} agotadas",
+        "pendingPayment": "Pago pendiente",
+        "deletedDetail": "{count} eliminadas",
+        "inventory": "Impresiones compradas",
+        "servedDetail": "{value} servidas",
+        "impressions": "Impresiones raw",
+        "rawImpressionsDetail": "Filas en ad_impressions",
+        "clicks": "Clics",
+        "ctr": "{value} CTR",
+        "hovers": "Hovers",
+        "dismissals": "{value} descartes",
+        "avgTime": "Tiempo medio visible",
+        "avgTimeDetail": "En eventos time-in-view"
+      },
+      "filters": {
+        "status": "Estado",
+        "search": "Buscar",
+        "searchPlaceholder": "Título, empresa, email, user ID, URL",
+        "limit": "Límite",
+        "apply": "Aplicar filtros",
+        "clear": "Limpiar"
+      },
+      "statuses": {
+        "all": "Todos los estados",
+        "pending_payment": "Pago pendiente",
+        "active": "Activa",
+        "exhausted": "Agotada",
+        "paused": "Pausada",
+        "deleted": "Eliminada"
+      },
+      "owner": {
+        "title": "Dueño",
+        "userId": "User ID",
+        "contactEmail": "Email de contacto",
+        "company": "Empresa"
+      },
+      "showing": "Mostrando {shown} de {total} campañas coincidentes",
+      "empty": "Ninguna campaña coincide con estos filtros."
+    },
+    "requests": {
+      "eyebrow": "Wishlist de la comunidad",
+      "title": "Pedidos de mascotas",
+      "summary": "{open} abiertos · {fulfilled} cumplidos · {dismissed} descartados",
+      "openSection": "Abiertos",
+      "fulfilledSection": "Cumplidos",
+      "dismissedSection": "Descartados",
+      "emptyOpen": "No hay pedidos abiertos ahora mismo.",
+      "votes": "votos",
+      "moreVoters": "+{count} más",
+      "anonymous": "anónimo"
+    },
+    "requestActions": {
+      "fulfill": "Cumplir",
+      "dismiss": "Descartar",
+      "reopen": "Reabrir",
+      "approveImage": "Aprobar imagen",
+      "rejectImage": "Rechazar imagen",
+      "slug": "slug",
+      "placeholder": "cool-clippy",
+      "mark": "Marcar"
+    },
+    "manifest": {
+      "eyebrow": "Telemetría",
+      "title": "Fetches del manifest",
+      "description": "Quién está llamando a /api/manifest. Las IP se hashean con SHA-256 por día, así que se agrupan dentro del mismo día pero no se pueden revertir.",
+      "total": "Total (histórico)",
+      "last24": "Últimas 24 h",
+      "distinct24": "IPs distintas (24 h)",
+      "byDay": "Por día · últimos 14 d",
+      "loudestIps": "IPs más ruidosas · últimos 7 d",
+      "topUserAgents": "User-agents más frecuentes · últimos 7 d",
+      "byCountry": "Por país · últimos 7 d",
+      "headers": {
+        "ipHash": "Hash IP",
+        "country": "País",
+        "lastUa": "Último UA",
+        "fetches": "Fetches"
+      },
+      "noUa": "sin UA"
+    },
+    "threadPage": {
+      "back": "← Inbox"
+    },
+    "telemetry": {
+      "eyebrow": "Telemetria",
+      "title": "Telemetria de uso del CLI",
+      "description": "Volumen de instalaciones, distribucion de SO y adopcion de agentes de forma anonima.",
+      "stats": {
+        "totalInstalls": "Total instalaciones",
+        "weeklyActive": "Instalaciones activas (semana)",
+        "totalEvents": "Total eventos"
+      },
+      "sections": {
+        "adoptionCurve": "Adopcion en 30 dias",
+        "osDistribution": "Distribucion de SO",
+        "archDistribution": "Distribucion de arquitectura",
+        "versionAdoption": "Adopcion de versiones",
+        "topAgents": "Agentes mas usados",
+        "funnel": "Embudo de conversion",
+        "geoTop10": "Top 10 paises"
+      },
+      "funnel": {
+        "install": "Instalar desktop",
+        "hooks": "Instalar hooks",
+        "start": "Iniciar desktop",
+        "firstEvent": "Primer estado"
+      },
+      "empty": "Sin eventos de telemetria aun.",
+      "noData": "Sin datos"
+    }
+  },
+  "submit": {
+    "metadata": {
+      "title": "Enviar una mascota | Petdex",
+      "description": "Sube y valida un paquete de mascota de Codex para Petdex."
+    },
+    "eyebrow": "Enviar",
+    "title": "Agrega tu mascota a Petdex",
+    "body": "Comparte un paquete de mascota animada compatible con Codex. Petdex revisa los archivos localmente, previsualiza el sprite y prepara el envío.",
+    "createCta": "¿Todavía no tienes una mascota? Créala en Codex",
+    "legalPrefix": "Al enviar, confirmas que tienes derechos sobre la ilustración o que estás creando fan content. Los titulares pueden pedir la eliminación mediante nuestro",
+    "legalLink": "aviso de retiro",
+    "legalSuffix": ".",
+    "form": {
+      "drop": {
+        "title": "Sube un paquete de mascota",
+        "instructions": "Arrastra una carpeta o un ZIP con <petJson>pet.json</petJson> y <spritesheet>spritesheet.webp</spritesheet> (o .png). Recomendado {width}×{height}, grilla de 8×9 frames.",
+        "short": "Arrastra una carpeta o un ZIP con pet.json + spritesheet.",
+        "ariaLabel": "Zona para soltar el paquete de mascota",
+        "pickFolder": "Elegir carpeta",
+        "pickZip": "Elegir .zip"
+      },
+      "auth": {
+        "signIn": "Inicia sesión para enviar"
+      },
+      "check": {
+        "title": "Revisión del envío",
+        "reading": "Leyendo paquete...",
+        "ready": "Todo listo para enviar.",
+        "empty": "Los paquetes se quedan locales hasta que confirmes. Petdex revisa el manifest y las dimensiones del sprite antes de subirlo."
+      },
+      "path": {
+        "prefix": "Los assets viven en",
+        "platforms": "(macOS / Linux)"
+      },
+      "copy": {
+        "ariaCopied": "Ruta copiada",
+        "ariaCopy": "Copiar ruta al portapapeles",
+        "copied": "Copiado",
+        "copy": "Copiar"
+      },
+      "submitButton": {
+        "validating": "Validando...",
+        "uploading": "Subiendo...",
+        "finalizing": "Finalizando...",
+        "submitted": "Enviado",
+        "idle": "Enviar mascota"
+      },
+      "preview": {
+        "ariaLabel": "Vista previa de la animación subida"
+      },
+      "success": {
+        "approved": "{name} pasó la revisión automática y ya está publicada.",
+        "rejected": "{name} fue rechazada por la revisión automática. Puedes ajustar el paquete y enviarlo de nuevo.",
+        "hold": "{name} necesita revisión manual. Te avisaremos cuando un admin decida.",
+        "review": "{name} está en revisión. Te avisaremos cuando se apruebe.",
+        "viewPet": "Ver mascota",
+        "details": {
+          "duplicate": "Motivo: parece duplicar una mascota existente. {summary}",
+          "duplicateFallback": "Los archivos enviados coincidieron con un paquete de mascota existente.",
+          "policy": "Motivo: la revisión automática encontró posibles problemas de política, así que un admin debe revisarla antes de publicarla.",
+          "assets": "Motivo: la revisión automática encontró un problema con los archivos del paquete o la spritesheet.",
+          "timeout": "Motivo: la revisión automática tardó demasiado, así que la dejamos para revisión manual en vez de tomar una decisión arriesgada.",
+          "reviewFailed": "Motivo: la revisión automática falló, así que la dejamos para revisión manual en vez de tomar una decisión arriesgada.",
+          "rejectedGeneric": "Motivo: la revisión automática encontró un problema de alta confianza con este envío.",
+          "holdGeneric": "Motivo: la revisión automática no tuvo suficiente confianza para aprobarla automáticamente."
+        }
+      },
+      "fallback": {
+        "beforeLink": "¿Atascado?",
+        "link": "Abre un issue de GitHub con tus assets",
+        "afterLink": "y Hunter lo subirá manualmente."
+      },
+      "defaults": {
+        "missingFiles": "Faltan archivos",
+        "untitledPet": "Mascota sin nombre",
+        "description": "Una mascota digital compatible con Codex."
+      },
+      "errors": {
+        "uploadFailed": "Falló la subida: {reason}",
+        "submissionFailed": "No se pudo enviar",
+        "submissionFailedWithCode": "No se pudo enviar: {code}",
+        "rateLimited": "Llegaste al límite: 10 envíos cada 24 horas. Inténtalo mañana.",
+        "missingField": "Al paquete le faltan datos requeridos para el envío.",
+        "invalidSpritesheet": "El spritesheet es muy pequeño o tiene dimensiones inválidas.",
+        "invalidAssetUrl": "Los assets subidos no pasaron la revisión de hosting.",
+        "invalidSlug": "El id de la mascota no pudo convertirse en una URL válida.",
+        "unauthorized": "Inicia sesión antes de enviar.",
+        "invalidJson": "No se pudo leer el JSON enviado."
+      },
+      "issues": {
+        "folderMissingPetJson": "A la carpeta le falta pet.json.",
+        "folderMissingSpritesheet": "A la carpeta le falta spritesheet.webp (o .png). Encontrado: {present}",
+        "dropPetFolderOrZip": "Arrastra una carpeta de mascota o un archivo .zip.",
+        "allPetsBundle": "Esto parece el paquete de todas las mascotas (petdex-approved.zip). Envía una sola carpeta de mascota o su zip individual.",
+        "zipMissingPetJson": "Falta pet.json en la raíz del zip.",
+        "zipMissingSpritesheet": "Falta spritesheet.webp (o .png) en la raíz del zip. Encontrado: {present}",
+        "invalidJson": "pet.json no es JSON válido.",
+        "unreadableSpritesheet": "No se puede leer la imagen del spritesheet.",
+        "tooSmall": "El spritesheet parece muy pequeño ({width}×{height}). Usa una grilla de 8×9 frames (recomendado {recommendedWidth}×{recommendedHeight})."
+      }
+    }
+  },
+  "collaborator": {
+    "metadata": {
+      "title": "Petdex Collaborator"
+    },
+    "tabs": {
+      "ariaLabel": "Secciones de colaborador",
+      "submissions": "Envíos",
+      "moderation": "Moderación publicada",
+      "edits": "Ediciones de metadata",
+      "requests": "Pedidos de mascotas",
+      "collections": "Colecciones",
+      "wechatQr": "QR de WeChat"
+    },
+    "moderation": {
+      "eyebrow": "Moderación",
+      "title": "Mascotas publicadas",
+      "searchPlaceholder": "Busca por nombre, slug, descripción o owner",
+      "search": "Buscar",
+      "clear": "Limpiar",
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "empty": "Ninguna mascota publicada coincide con este filtro."
+    }
+  },
+  "requests": {
+    "metadata": {
+      "title": "Pedidos de mascotas",
+      "description": "Vota por las mascotas que la comunidad quiere ver en Petdex. Los pedidos con más votos reciben prioridad."
+    },
+    "eyebrow": "Lista de deseos de la comunidad",
+    "title": "Mascotas que la gente está pidiendo",
+    "body": "Cuando alguien busca una mascota que todavía no existe, puede pedirla. Vota por las que también quieras ver: las más votadas suben al tope de la lista de curación.",
+    "backToGallery": "← Volver a la galería",
+    "view": {
+      "form": {
+        "title": "Pide una mascota",
+        "titlePet": "Pide una mascota",
+        "titleCollection": "Pide una colección",
+        "body": "Describe la mascota que te gustaría ver: personaje, tema, vibra. Si alguien ya pidió lo mismo, tu envío se convierte en un voto para esa petición.",
+        "bodyPet": "Describe la mascota que te gustaría ver: personaje, tema, vibra. Si alguien ya pidió lo mismo, tu envío se convierte en un voto para esa petición.",
+        "bodyCollection": "Describe el set que quieres: IP, marca, personajes, tema y qué mascotas deberían ir juntas.",
+        "type": {
+          "pet": "Mascota",
+          "petBody": "Un compañero, personaje, objeto o criatura.",
+          "collection": "Colección",
+          "collectionBody": "Un set coleccionable como Pixar, Star Wars o GRAYCRAFT."
+        },
+        "petHint": "Usa Mascota para un compañero específico: personaje, criatura, objeto o buddy de escritorio.",
+        "collectionHint": "Usa Colección para sets como Pixar, Star Wars, iniciales de Pokémon o GRAYCRAFT: marca/IP, mascotas que van juntas y el sitio oficial.",
+        "placeholder": "p. ej. una chinchilla estilo Ghibli, un ajolote programador con sueño, Spider-Pig",
+        "placeholderPet": "p. ej. una chinchilla estilo Ghibli, un ajolote programador con sueño, Spider-Pig",
+        "placeholderCollection": "p. ej. buddies de Pixar, droides de Star Wars, iniciales de Pokémon",
+        "imageLabel": "Agregar imagen",
+        "imageBody": "Opcional. Las imágenes quedan ocultas hasta revisión admin.",
+        "submit": "Pedir",
+        "submitPet": "Pedir mascota",
+        "submitCollection": "Pedir colección",
+        "sending": "Enviando…"
+      },
+      "success": {
+        "created": "Se pidió \"{query}\". Otras personas ya pueden votarla.",
+        "upvoted": "Se votó el pedido existente para \"{query}\": ahora va en {count} votos."
+      },
+      "sort": {
+        "top": "Más votadas",
+        "new": "Más nuevas",
+        "fulfilled": "Cumplidas",
+        "searchPlaceholder": "Buscar pedidos…"
+      },
+      "badges": {
+        "pet": "Mascota",
+        "collection": "Colección",
+        "fulfilled": "Cumplida",
+        "imagePending": "Imagen en revisión"
+      },
+      "empty": {
+        "title": "Todavía no hay pedidos. Sé la primera persona.",
+        "beforeLink": "O busca en",
+        "link": "la galería",
+        "afterLink": "y pide una mascota directamente desde la pantalla sin resultados.",
+        "noMatches": "Ningún pedido coincide con \"{search}\".",
+        "nothingInView": "Todavía no hay nada en esta vista."
+      },
+      "upvoteAria": "Votar \"{query}\"",
+      "moreVoters": "+{count} más",
+      "errors": {
+        "moreDetail": "Cuéntanos un poco más ({min}-{max} caracteres).",
+        "signInRequest": "Inicia sesión para pedir una mascota.",
+        "submitFailed": "No se pudo enviar ({status})",
+        "imageType": "Usa una imagen PNG, JPG o WebP.",
+        "imageTooLarge": "La imagen de referencia debe pesar 4 MB o menos.",
+        "imageUpload": "No se pudo subir la imagen. Inténtalo de nuevo.",
+        "networkRetry": "Error de red, inténtalo de nuevo.",
+        "signInUpvote": "Inicia sesión para votar.",
+        "voteFailed": "No se pudo votar ({status})",
+        "network": "Error de red"
+      }
+    }
+  },
+  "create": {
+    "metadata": {
+      "title": "Crea una mascota | Petdex",
+      "description": "Incuba tu propia mascota de Codex en 5 minutos y luego compártela en Petdex."
+    },
+    "eyebrow": "Haz la tuya",
+    "title": "Incuba una mascota en Codex",
+    "body": "Codex trae una skill integrada llamada <strong>Hatch Pet</strong> que genera un compañero totalmente animado (9 estados, 1536×1872) a partir de una descripción corta. Cinco minutos desde la idea hasta un sprite que vive dentro de la app.",
+    "steps": {
+      "install": {
+        "title": "Consigue la skill Hatch Pet",
+        "body": "Abre Codex → <skills>Skills</skills> en la barra superior → encuentra <strong>Hatch Pet</strong> → instala."
+      },
+      "hatch": {
+        "title": "Incuba tu mascota",
+        "beforeCommand": "En el chat de Codex, escribe",
+        "afterCommand": ". Describe la mascota que quieres (una idea, una vibra, algo de tu escritorio). La skill genera automáticamente el spritesheet y las animaciones.",
+        "tip": "Tip: lo específico llega más lejos. \"Un duende-calcetín diminuto con ojos verdes\" supera a \"una criatura\"."
+      },
+      "activate": {
+        "title": "Actívala",
+        "beforeSettings": "Reinicia Codex y luego ve a",
+        "settingsPath": "Settings → Appearance → Pets",
+        "middle": "y haz clic en",
+        "select": "Select",
+        "afterSelect": "sobre tu nueva mascota dentro de",
+        "customPets": "Custom pets",
+        "tipBefore": "Usa",
+        "tipAfter": "después para despertarla o guardarla."
+      },
+      "share": {
+        "title": "Compártela en Petdex",
+        "beforePath": "La mascota vive en",
+        "beforeLink": ". Arrastra esa carpeta (o su zip) a",
+        "afterLink": "y Petdex la aloja para que cualquiera la instale con un solo curl."
+      }
+    },
+    "guide": {
+      "title": "Qué hace grande a una mascota",
+      "items": {
+        "specific": {
+          "label": "Mejor específica que genérica.",
+          "body": "\"Una nutria de bubble tea\" supera a \"una nutria\"."
+        },
+        "twist": {
+          "label": "Dale un giro a un oficio, rol u objeto.",
+          "body": "Asistente sujetapapeles, duende-calcetín, compañero microondas: lo inesperado se queda."
+        },
+        "vibe": {
+          "label": "Una sola vibra.",
+          "body": "Cozy, focused, mischievous, heroic. No intentes ser todas a la vez."
+        },
+        "ip": {
+          "label": "Evita IP demasiado clara.",
+          "body": "El fan art es bienvenido, pero espera retiros. Los conceptos originales envejecen mejor."
+        }
+      }
+    },
+    "cards": {
+      "submit": {
+        "title": "¿Ya tienes una mascota?",
+        "body": "Suelta la carpeta o el zip y la publicamos.",
+        "cta": "Envía tu mascota"
+      },
+      "request": {
+        "title": "¿Te estás gastando los tokens de Codex?",
+        "body": "Deja un deseo en la cola de pedidos: la comunidad (y nosotros) lo recogerá.",
+        "cta": "Pide una mascota"
+      }
+    },
+    "creator": {
+      "title": "Creador web de mascotas",
+      "soon": "Pronto",
+      "body": "Un estudio nativo del navegador para que bocetes, animes y previsualices tu mascota sin salir de Petdex, sin necesidad de tokens de Codex. Inicia sesión para enterarte cuando llegue."
+    }
+  },
+  "builtWith": {
+    "metadata": {
+      "titleTemplate": "Hecho con Petdex: {total} proyectos de la comunidad",
+      "description": "{total} proyectos open source construidos sobre Petdex: companions de escritorio, apps de wellness, wearables, SDKs y creadores de pets."
+    },
+    "eyebrow": "Hecho con Petdex",
+    "title": "Apps que la comunidad está shippeando sobre Petdex",
+    "subtitle": "{total} proyectos open source consumen la galería, la API o el formato de Petdex. Apps de wellness, wearables, SDKs y creadores. Curado, con evidencia, sin vibes.",
+    "stats": {
+      "stars": "{total} stars combinadas",
+      "projects": "{total} proyectos",
+      "categories": "{total} categorías"
+    },
+    "cta": {
+      "submit": "Enviá tu proyecto",
+      "starPetdex": "Dale star a Petdex"
+    },
+    "categoryCount": "{count}",
+    "categories": {
+      "desktopCompanion": {
+        "label": "Companions de escritorio",
+        "description": "Apps que ponen un pet de Petdex en tu desktop."
+      },
+      "wellness": {
+        "label": "Wellness & focus",
+        "description": "Pomodoros, descansos y herramientas de focus que usan pets de Petdex como personaje en pantalla."
+      },
+      "wearable": {
+        "label": "Wearable",
+        "description": "Pets de Petdex corriendo en Apple Watch, Garmin y otros wearables."
+      },
+      "sdk": {
+        "label": "SDKs y runtimes",
+        "description": "Librerías y runtimes que envuelven la API o el formato de Petdex para otras plataformas."
+      },
+      "bundled": {
+        "label": "Bundleados en apps más grandes",
+        "description": "Pets de Petdex shippeados como feature de productos más grandes."
+      },
+      "petCreator": {
+        "label": "Creadores de pets",
+        "description": "Creadores solos distribuyendo pets originales en formato Petdex."
+      }
+    },
+    "submit": {
+      "eyebrow": "Cómo entrar a la lista",
+      "title": "Shippeá algo con Petdex, después postulá",
+      "step1": "Construí algo que consuma la galería, la API o el formato de Petdex con atribución explícita.",
+      "step2": "Abrí un issue de GitHub usando el template \"Add my project to /built-with\".",
+      "step3": "Mandanos una cita como evidencia (link al README o ruta del código que prueba la integración).",
+      "step4": "Revisamos, tomamos un screenshot 1280x720 y mergeamos.",
+      "openIssue": "Abrir issue de submission"
+    },
+    "card": {
+      "screenshotAlt": "Screenshot de {name}",
+      "site": "Sitio"
+    }
+  },
+  "brand": {
+    "metadata": {
+      "title": "Kit de marca de Petdex",
+      "description": "Descarga logos, íconos, tokens de color y notas de uso de Petdex para prensa, proyectos y posts de la comunidad.",
+      "ogTitle": "Kit de marca de Petdex"
+    },
+    "eyebrow": "Kit de marca",
+    "hero": {
+      "title": "Usa Petdex de forma clara y consistente.",
+      "body": "Descarga las marcas oficiales para posts de lanzamiento, integraciones de apps, proyectos de la comunidad y documentación que mencione Petdex.",
+      "primaryCtaSvg": "Descargar SVG",
+      "primaryCtaPng": "PNG",
+      "secondaryCta": "Ver en GitHub",
+      "iconAlt": "Ícono de la app de escritorio Petdex"
+    },
+    "assets": {
+      "eyebrow": "Descargas",
+      "title": "Archivos de logo listos para usar",
+      "body": "Usa assets SVG para web e impresión. Usa el ícono PNG cuando necesites la marca del producto de escritorio o una vista previa social cuadrada.",
+      "formats": {
+        "svg": "SVG",
+        "png": "PNG"
+      },
+      "modes": {
+        "light": "Modo claro",
+        "dark": "Modo oscuro"
+      },
+      "items": {
+        "mark": {
+          "title": "Marca de Petdex",
+          "description": "El símbolo principal para layouts compactos, avatares, favicons y badges.",
+          "alt": "Marca de Petdex"
+        },
+        "wordmark": {
+          "title": "Wordmark claro de Petdex",
+          "description": "Úsalo sobre fondos claros o neutros cálidos cuando el nombre deba leerse sin contexto alrededor.",
+          "alt": "Wordmark de Petdex"
+        },
+        "wordmarkDark": {
+          "title": "Wordmark oscuro de Petdex",
+          "description": "Úsalo sobre fondos oscuros, screenshots y gráficos de lanzamiento donde el wordmark negro pierde contraste.",
+          "alt": "Wordmark de Petdex para fondos oscuros"
+        },
+        "desktopIcon": {
+          "title": "Ícono de escritorio",
+          "description": "Ícono redondeado para referencias de Petdex Desktop, tarjetas de prensa y gráficos de lanzamiento.",
+          "alt": "Ícono de escritorio de Petdex"
+        }
+      }
+    },
+    "usage": {
+      "eyebrow": "Uso",
+      "title": "Mantén reconocible a la mascota",
+      "do": {
+        "title": "Haz",
+        "item1": "Deja suficiente espacio libre alrededor de la marca.",
+        "item2": "Usa los archivos originales sin redibujar las formas.",
+        "item3": "Acompaña Petdex con atribución clara cuando muestres mascotas de la comunidad."
+      },
+      "dont": {
+        "title": "No hagas",
+        "item1": "No estires, rotes, deformes ni recolorees el logo de forma arbitraria.",
+        "item2": "No pongas la marca sobre fondos de bajo contraste o visualmente ruidosos.",
+        "item3": "No uses la marca Petdex para sugerir aprobación oficial de productos no relacionados."
+      }
+    },
+    "system": {
+      "eyebrow": "Sistema de diseño",
+      "title": "Colores y tipografía",
+      "body": "Petdex usa superficies frías de app, acentos púrpura-azules y la familia Geist para sentirse como una herramienta útil con un poco de energía de criatura.",
+      "colors": {
+        "brand": "Marca",
+        "brandDeep": "Marca profunda",
+        "brandLight": "Marca clara",
+        "bgApp": "Fondo de app",
+        "brandTint": "Tinte de marca",
+        "ink": "Tinta"
+      },
+      "type": {
+        "title": "Tipografía"
+      }
+    }
+  },
+  "about": {
+    "metadata": {
+      "title": "Acerca de Petdex: Compañeros animados para Codex",
+      "description": "Petdex es una galería open source de compañeros animados para Codex. Recorre el catálogo, instala con un comando o envía el tuyo.",
+      "ogTitle": "Acerca de Petdex",
+      "ogDescription": "Una galería open source de compañeros animados para Codex."
+    },
+    "eyebrow": "Acerca de",
+    "hero": {
+      "title": "Petdex es el índice de mascotas de Codex",
+      "body": "Una galería open source de más de {totalPets} compañeros animados para <strong>Codex</strong>. Instala uno con un solo comando y programa con compañía."
+    },
+    "sections": {
+      "what": {
+        "title": "Qué es Petdex",
+        "body1": "Petdex es un registro público y open source. Cada entrada es un paquete de mascota: un pequeño bundle de metadata y pixel art que Codex sabe mostrar mientras trabajas. Piénsalo como una Pokédex de compañeros para la app.",
+        "body2": {
+          "beforeCozy": "La plataforma te ahorra las dudas: hay un CLI para instalar y enviar, una galería con etiquetas para encontrar el compañero correcto sin scrollear sin fin y colecciones por vibra como",
+          "cozyLabel": "mascotas acogedoras",
+          "middle": "o",
+          "focusedLabel": "mascotas enfocadas",
+          "afterFocused": "."
+        }
+      },
+      "pack": {
+        "title": "Cómo funciona un paquete de mascota",
+        "beforePetJson": "Cada mascota son dos archivos.",
+        "betweenFiles": "define la metadata (nombre, los 9 estados de animación, duraciones de frames) y",
+        "afterSpritesheet": "guarda el pixel art en una tira horizontal. Codex los carga al iniciar y cambia de estado según lo que esté pasando en tu sesión."
+      }
+    },
+    "faq": {
+      "title": "FAQ",
+      "items": {
+        "whatIs": {
+          "q": "¿Qué es una mascota de Codex?",
+          "a": "Una mascota de Codex es un pequeño compañero animado en pixel art para la app. Cada mascota viene como un solo pet.json que describe 9 estados (idle, working, sleeping, etc.) más un spritesheet horizontal. Codex elige el estado correcto automáticamente según lo que estés haciendo en tu sesión."
+        },
+        "install": {
+          "q": "¿Cómo instalo una mascota?",
+          "a": "Desde la galería o cualquier página de detalle, copia el comando de instalación (se ve como `npx petdex install boba`) y pégalo en tu terminal. El CLI trae la mascota desde R2, la deja en ~/.codex/pets/<slug>/ y le dice a Codex que la use. Funciona en macOS, Linux y Windows (vía PowerShell)."
+        },
+        "origin": {
+          "q": "¿De dónde salen las mascotas?",
+          "a": "La mayoría las envía la comunidad desde la web o el CLI de petdex. Unas cuantas son entradas curadas y destacadas seleccionadas por Crafter Station. Cada mascota pasa por revisión de un admin antes de aparecer en la galería."
+        },
+        "submit": {
+          "q": "¿Puedo enviar mi propia mascota?",
+          "a": "Sí. Inicia sesión con el CLI de petdex (`npx petdex login`) y corre `npx petdex submit ./my-pet/`: el CLI sube los assets a R2 y deja el envío en cola para revisión. También puedes enviarla desde la web en /submit. Solo necesitas un archivo pet.json y un spritesheet de 9 estados."
+        },
+        "openSource": {
+          "q": "¿Las mascotas de Petdex son gratis y open source?",
+          "a": "Cada mascota de Petdex es gratis para instalar y usar. Las mascotas conservan el crédito de sus autores originales. La plataforma Petdex en sí (CLI + sitio) es open source bajo el paraguas de Crafter Station."
+        },
+        "taxonomy": {
+          "q": "¿Qué es una vibe? ¿Qué es un kind?",
+          "a": "Cada mascota se etiqueta con un kind (creature, object, character) y entre una y tres vibes (cozy, playful, focused, mystical, …). Eso alimenta los filtros de la galería y las landing pages por vibe o kind para que encuentres un compañero que encaje con tu mood sin revisar más de 70 entradas."
+        },
+        "money": {
+          "q": "¿Cómo gana dinero Petdex?",
+          "a": "No gana. Petdex es un proyecto comunitario gestionado por Crafter Station. El equipo de plataforma absorbe el storage y la base de datos: sin anuncios, sin upsells y sin telemetría más allá de la analítica estándar sobre qué mascotas se instalan."
+        }
+      }
+    },
+    "browse": {
+      "title": "Explora por kind o vibe",
+      "links": {
+        "creatures": "Criaturas",
+        "objects": "Objetos",
+        "characters": "Personajes",
+        "cozy": "Acogedoras",
+        "playful": "Juguetonas",
+        "focused": "Enfocadas",
+        "mystical": "Místicas",
+        "wholesome": "Tiernas"
+      }
+    }
+  },
+  "myPets": {
+    "metadata": {
+      "title": "Mis envíos",
+      "description": "Sigue el estado de cada mascota que enviaste a Petdex, personaliza tu perfil y edita entradas ya publicadas."
+    },
+    "edit": {
+      "confirmWithdraw": "¿Retirar esta edición? Los valores aprobados actuales seguirán visibles.",
+      "pendingReview": "Pendiente de revisión",
+      "submittedPrefix": "Tu edición se envió el",
+      "submittedSuffix": ". La página de abajo sigue mostrando la versión aprobada hasta que Hunter la revise.",
+      "viewEdit": "Ver edición",
+      "withdraw": "Retirar",
+      "rejected": "Edición rechazada",
+      "tryAgain": "Intentar de nuevo",
+      "open": "Editar mascota",
+      "modalTitle": "Editar mascota",
+      "modalBody": "Los cambios de texto pueden autoaprobarse si cumplen todos los criterios. Los cambios de assets siempre van a revision manual.",
+      "fields": {
+        "displayName": "Nombre visible",
+        "description": "Descripción",
+        "tags": "Tags"
+      },
+      "tagsPlaceholder": "gato, desk-companion, tierno",
+      "tagsHelp": "Separados por coma o espacio. En minúsculas, máximo 8, se permiten guiones.",
+      "actions": {
+        "cancel": "Cancelar",
+        "submit": "Enviar edición para revisión"
+      },
+      "spritesheetLabel": "Spritesheet",
+      "spritesheetHelp": "Reemplaza el sprite actual. Va a revision manual.",
+      "metaLabel": "Metadatos (pet.json)",
+      "metaHelp": "Reemplaza los metadatos actuales. Va a revision manual.",
+      "fileTooBig": "El archivo supera los 2 MB",
+      "invalidImage": "Archivo de imagen no valido",
+      "invalidJson": "Archivo JSON no valido",
+      "autoApproved": "Edicion aplicada",
+      "queuedForReview": "Edicion enviada para revision",
+      "uploading": "Subiendo..."
+    },
+    "eyebrow": "Dashboard",
+    "submissionCount": "{count, plural, =0 {sin envíos} =1 {1 envío} other {# envíos}}",
+    "tabs": {
+      "all": "Todas",
+      "pending": "Pendientes",
+      "approved": "Aprobadas",
+      "rejected": "Rechazadas"
+    },
+    "submitAnother": "Enviar otra",
+    "emptyState": "Sin envíos en este estado."
+  },
+  "myFeedback": {
+    "metadata": {
+      "title": "Mi feedback",
+      "description": "Hilos con el equipo de Petdex sobre el feedback que ya compartiste."
+    },
+    "eyebrow": "Hilos",
+    "title": "Mi feedback",
+    "subtitle": "Conversaciones con el equipo de Petdex sobre el feedback que enviaste.",
+    "empty": "Todavía no enviaste feedback. Usa el botón Feedback para compartir tus ideas.",
+    "emptyFiltered": "No hay hilos en esta vista.",
+    "badges": {
+      "newReply": "Nueva respuesta",
+      "replied": "Respondido",
+      "waiting": "En espera"
+    },
+    "filters": {
+      "unread": "Sin leer",
+      "replied": "Respondido",
+      "waiting": "En espera",
+      "all": "Todos"
+    },
+    "replyAuthor": "Hunter",
+    "replyCount": "{count, plural, one {# respuesta} other {# respuestas}}",
+    "noReplies": "Todavía no hay respuestas"
+  },
+  "myFeedbackThread": {
+    "metadata": {
+      "title": "Hilo de feedback"
+    },
+    "back": "← Todos los hilos"
+  },
+  "notFound": {
+    "metadata": {
+      "title": "Mascota no encontrada",
+      "description": "Esta mascota se salió del índice. Prueba una de estas en su lugar."
+    },
+    "eyebrow": "Error 404",
+    "title": "Esta mascota se perdió",
+    "body": "La página que intentaste abrir no está en el índice. Puede ser un error de escritura, un envío retirado o una mascota que todavía no ha sido aprobada. Prueba con una de estas opciones.",
+    "lostPetAnimated": "{name} recorriendo sus estados",
+    "caughtWandering": "Encontrada deambulando: {name}",
+    "browsePets": "Ver {count}+ mascotas",
+    "browseGallery": "Ver la galería",
+    "about": "Acerca de Petdex",
+    "submit": "Enviar una mascota",
+    "featuredEyebrow": "Prueba una destacada",
+    "featuredTitle": "Mascotas que sí están aquí",
+    "featuredPetAnimated": "{name} animada",
+    "terminalEyebrow": "O instala una desde la terminal"
+  },
+  "leaderboard": {
+    "metadata": {
+      "title": "Ranking de Petdex",
+      "description": "Los mejores creadores en Petdex: más mascotas aprobadas, más amor y más instalaciones."
+    },
+    "eyebrow": "Creadores destacados",
+    "title": "Ranking de Petdex",
+    "subtitle": "Los artistas que publican más mascotas, reciben más cariño y logran más instalaciones. Se actualiza en vivo.",
+    "categoryAria": "Categoría del ranking",
+    "secondaryStats": {
+      "pets": "mascotas",
+      "likes": "me gusta",
+      "installs": "instalaciones"
+    },
+    "tabs": {
+      "pets": {
+        "label": "Más mascotas",
+        "unit": "aprobadas",
+        "blurb": "Creadores ordenados por mascotas aprobadas en el catálogo.",
+        "empty": "Todavía no hay envíos aprobados."
+      },
+      "likes": {
+        "label": "Más queridas",
+        "unit": "me gusta",
+        "blurb": "Total de me gusta acumulados entre todas las mascotas que publicó un creador.",
+        "empty": "Las mascotas de nadie han recibido me gusta todavía."
+      },
+      "installs": {
+        "label": "Más instaladas",
+        "unit": "instalaciones",
+        "blurb": "Total de instalaciones por CLI acumuladas entre las mascotas de un creador.",
+        "empty": "Todavía no hay instalaciones registradas."
+      },
+      "rising": {
+        "label": "En ascenso",
+        "unit": "esta semana",
+        "blurb": "Mascotas aprobadas en los últimos 7 días. ¿Se encendió? Publica más.",
+        "empty": "No se aprobaron mascotas nuevas esta semana."
+      },
+      "collectors": {
+        "label": "Coleccionistas",
+        "unit": "capturadas",
+        "blurb": "Coleccionistas ordenados por cuántas mascotas aprobadas han capturado.",
+        "empty": "Todavía no hay coleccionistas."
+      }
+    }
+  },
+  "claim": {
+    "cta": "Inicia sesión para reclamar",
+    "body": "¿Es tu mascota, <strong>{author}</strong>? Inicia sesión con GitHub para reclamar {petName}, editar los detalles y ver las instalaciones."
+  },
+  "submittedBy": {
+    "eyebrow": "Publicado por",
+    "viewProfile": "Ver el perfil de {name}"
+  },
+  "installCommand": {
+    "installStep": "1. Instalar",
+    "activateStep": "2. Activar en Codex",
+    "dropsInto": "Coloca el paquete del pet en",
+    "methodAria": "Método de instalación",
+    "platformAria": "Plataforma de instalación",
+    "tabs": {
+      "cli": "CLI"
+    },
+    "macHelp": {
+      "title": "En Mac, usa Terminal.app",
+      "openTerminal": "Abre Spotlight con Command + Space, escribe Terminal y presiona Return.",
+      "pasteCommand": "Pega el comando de arriba y presiona Return. Si macOS pide permiso, acéptalo.",
+      "returnToCodex": "Cuando termine, abre Codex Settings, Appearance, Pets y selecciona esta mascota."
+    },
+    "steps": {
+      "openCodex": "Abre Codex,",
+      "insideCodex": "dentro de Codex para activarlo u ocultarlo.",
+      "andClick": "y haz clic en",
+      "use": "Usa",
+      "findPet": "Busca <strong>{displayName}</strong> en"
+    }
+  },
+  "commandLine": {
+    "copyAria": "Copiar comando",
+    "openInCodexAria": "Abrir en Codex",
+    "copiedAria": "Comando copiado",
+    "failedAria": "No se pudo copiar el comando"
+  },
+  "profileShare": {
+    "share": "Compartir",
+    "eyebrow": "Compartir este perfil",
+    "close": "Cerrar",
+    "copyLink": "Copiar enlace",
+    "copied": "Copiado",
+    "shareToX": "Compartir en X",
+    "shareToLinkedIn": "Compartir en LinkedIn",
+    "more": "Más…",
+    "shareText": "Mira la colección de mascotas de Codex de {name} en Petdex"
+  },
+  "petActions": {
+    "moreActions": "Más acciones para {name}",
+    "share": "Compartir",
+    "reportTakedown": "Reportar",
+    "reportTakedownAria": "Reportar {name} para retirada",
+    "takedownDialog": {
+      "eyebrow": "Legal · Retirada",
+      "title": "Reportar una mascota",
+      "body": "Petdex aloja mascotas pixel art de fan art enviadas por usuarios. No reclamamos derechos sobre la IP subyacente de ningún personaje que un miembro de la comunidad haya elegido interpretar. Si eres titular de derechos o representante autorizado y quieres retirar una mascota, la vía más rápida es un issue de GitHub.",
+      "howItWorks": "Cómo funciona",
+      "step1": "Abre una solicitud de retirada con el botón de abajo.",
+      "step2": "Indica qué mascota es y cuál es tu relación con la IP.",
+      "step3": "Revisamos manualmente. La respuesta típica llega en menos de 48 horas. Las solicitudes quedan públicas en GitHub por transparencia.",
+      "step4": "Las retiradas aprobadas eliminan la mascota de la galería y de los endpoints de instalación.",
+      "nonIp": "Para problemas que no sean de IP, como sprites rotos o descripciones incorrectas, abre un issue normal.",
+      "prefillLabel": "Esta solicitud incluirá:",
+      "confirmation": "Al enviar contenido a Petdex confirmas que tienes derechos sobre la obra o que estás creando contenido de fan art. Petdex actúa ante solicitudes de retirada hechas de buena fe.",
+      "cancel": "Cancelar",
+      "openRequest": "Abrir solicitud de retirada"
+    },
+    "closeMenu": "Cerrar menú",
+    "openInCodex": "Abrir en Codex",
+    "openInCodexHint": "Codex Desktop ejecuta el install",
+    "copiedInstall": "Instalación copiada",
+    "copyInstall": "Copiar instalación",
+    "copiedLink": "Enlace copiado",
+    "copyPageLink": "Copiar enlace de la página",
+    "shareToX": "Compartir en X",
+    "shareToLinkedIn": "Compartir en LinkedIn",
+    "more": "Más…",
+    "downloadZip": "Descargar ZIP",
+    "removeFromPetdex": "Eliminar de Petdex",
+    "removing": "Eliminando…",
+    "withdrawSubmission": "Retirar envío",
+    "withdrawing": "Retirando…",
+    "submitNewVersion": "Enviar una nueva versión",
+    "editDetails": "Editar nombre y descripción"
+  },
+  "petStateViewer": {
+    "eyebrow": "Visor de estados",
+    "frames": "{count} frames",
+    "rowFrames": "Fila {row} - {count} frames",
+    "animationLabel": "{petName} animación {state}",
+    "states": {
+      "idle": {
+        "label": "Inactivo",
+        "purpose": "Ciclo neutral de respiración y parpadeo"
+      },
+      "running-right": {
+        "label": "Corre derecha",
+        "purpose": "Locomoción direccional hacia la derecha"
+      },
+      "running-left": {
+        "label": "Corre izquierda",
+        "purpose": "Locomoción direccional hacia la izquierda"
+      },
+      "waving": {
+        "label": "Saludando",
+        "purpose": "Saludo o gesto para llamar la atención"
+      },
+      "jumping": {
+        "label": "Saltando",
+        "purpose": "Anticipación, impulso, pico, descenso, aterrizaje"
+      },
+      "failed": {
+        "label": "Falló",
+        "purpose": "Reacción de error o tristeza visible"
+      },
+      "waiting": {
+        "label": "Esperando",
+        "purpose": "Variante paciente del estado inactivo"
+      },
+      "running": {
+        "label": "Corriendo",
+        "purpose": "Ciclo de carrera genérico en el lugar"
+      },
+      "review": {
+        "label": "Revisión",
+        "purpose": "Ciclo de inspección o pensamiento concentrado"
+      }
+    }
+  },
+  "pet": {
+    "navigation": {
+      "ariaLabel": "Navegación del Dex",
+      "shuffleTitle": "Cambiar a una mascota aleatoria (Space)"
+    },
+    "keyboardHint": {
+      "tip": "Tip:",
+      "browse": "navegar",
+      "shuffle": "mezclar"
+    },
+    "stats": {
+      "title": "Stats del Dex",
+      "ariaLabel": "Gráfico radar de stats de la mascota",
+      "vibrance": "VIBRANCIA",
+      "popularity": "POPULARIDAD",
+      "loved": "QUERIDA",
+      "freshness": "FRESCURA"
+    },
+    "variants": {
+      "title": "Variantes de este personaje",
+      "description": "Otras mascotas aprobadas con sprites muy parecidos."
+    }
+  },
+  "collectionDetail": {
+    "backToCollections": "← Ver todas las colecciones"
+  },
+  "download": {
+    "eyebrow": "Setup desde la terminal",
+    "title": "Corre un comando. Petdex hace el resto.",
+    "subtitle": "Instala la app de escritorio, conecta tus agentes y despierta tu mascota desde la terminal.",
+    "hero": {
+      "downloadCta": "Descargar para macOS",
+      "primaryTitle": "Instalar y conectar Petdex",
+      "cliSubtext": "Copia el setup recomendado para terminal",
+      "manualLabel": "Descargar .dmg",
+      "manualSubtext": "Para terminales bloqueadas, instalacion manual en macOS o guardar el instalador localmente.",
+      "comingSoon": "Proximamente",
+      "desktopOnly": "Solo escritorio. Visita desde una Mac"
+    },
+    "activation": {
+      "items": {
+        "hooks": "Hooks de agentes",
+        "desktop": "App de escritorio",
+        "pet": "Mascota despierta"
+      }
+    },
+    "preview": {
+      "title": "Petdex Desktop",
+      "status": "Una mascota flotante se queda junto a Codex, Claude, Gemini y OpenCode.",
+      "terminalLabel": "Terminal",
+      "agentLabel": "Hooks de agentes instalados",
+      "defaultPet": "Mascota despierta",
+      "demoPet": "{slug} despierta",
+      "pendingPet": "{slug} en cola"
+    },
+    "features": {
+      "eyebrow": "Que hace",
+      "title": "Una mascota que vive en tu flujo de trabajo",
+      "crossAgent": {
+        "title": "Reacciones entre agentes",
+        "description": "Los hooks se instalan en Claude Code, Codex CLI, Gemini CLI y OpenCode. Tu mascota reacciona a cada tool call."
+      },
+      "alwaysWithYou": {
+        "title": "Siempre contigo",
+        "description": "Flotante, sin marco, siempre encima. Arrastra con momentum, como Codex Desktop."
+      },
+      "pickYourFighter": {
+        "title": "Elige tu luchador",
+        "description": "Click derecho alterna 9 estados del sprite. Mas de 200 mascotas de la coleccion."
+      }
+    },
+    "setup": {
+      "eyebrow": "Empezar",
+      "title": "Listo en 30 segundos",
+      "step1": {
+        "title": "Conecta todo",
+        "hint": "Detecta tus agentes (Claude Code, Codex, Gemini, OpenCode), instala los hooks y despierta la mascota"
+      },
+      "installPet": {
+        "title": "Instala {slug}",
+        "hint": "Anade esta mascota a tu coleccion local"
+      },
+      "installPets": {
+        "title": "Instala {count} mascotas",
+        "hint": "Anade estas mascotas a tu coleccion local"
+      },
+      "stayUpdated": {
+        "title": "Mantente actualizado",
+        "hint": "Descarga la ultima version del escritorio y reinicia la mascota si estaba corriendo. Corre cuando quieras."
+      }
+    },
+    "platforms": {
+      "eyebrow": "Soporte de plataformas",
+      "title": "Donde funciona",
+      "available": "Disponible",
+      "comingSoon": "Proximamente",
+      "macos": {
+        "name": "macOS",
+        "detail": "Apple Silicon e Intel"
+      },
+      "linux": {
+        "name": "Linux",
+        "detail": "Proximamente"
+      },
+      "windows": {
+        "name": "Windows",
+        "detail": "Proximamente"
+      },
+      "footer": "¿Quieres un lanzamiento mas rapido en Linux o Windows? Dale una estrella al repo o abre un issue."
+    },
+    "docsLink": "Leer la documentacion",
+    "pendingPet": {
+      "eyebrow": "Casi listo.",
+      "messageBefore": "Mascota en cola:",
+      "messageAfter": "despues del setup.",
+      "hint": "Solo macOS por ahora"
+    }
+  },
+  "openInPetdex": {
+    "eyebrow": "App de escritorio macOS",
+    "label": "Abrir en Petdex Desktop",
+    "subtitle": "Que esta mascota flote junto a tu agente",
+    "opening": "Abriendo Petdex...",
+    "ariaLabel": "Abrir {slug} en Petdex Desktop"
+  },
+  "installCompact": {
+    "seeGuide": "Ver guia de instalacion completa",
+    "themeCodexLabel": "Tematizar mi Codex",
+    "themeCodexHint": "Repintar Codex Desktop"
+  },
+  "desktopAnnouncement": {
+    "eyebrow": "Nuevo · App de escritorio",
+    "title": "Petdex ahora flota junto a tu agente de código",
+    "description": "Pon una mascota en tu pantalla que reacciona a cada tool call de Claude, Codex, Gemini u OpenCode. Sin marco, siempre encima, arrastra con momentum.",
+    "platforms": "macOS hoy. Linux y Windows pronto.",
+    "downloadCta": "Descargar",
+    "seeHowCta": "Ver cómo funciona"
+  },
+  "githubStar": {
+    "eyebrow": "Open source · Petdex",
+    "title": "Ayuda a Petdex a crecer. Dale una estrella en GitHub",
+    "description": "Petdex es completamente open source. Cada estrella ayuda a más creadores a encontrar el proyecto y nos da impulso para seguir publicando libremente (sonidos, leaderboard, el futuro web pet studio).",
+    "note": "Toma diez segundos. No necesitas cuenta si ya tienes GitHub.",
+    "starCta": "Dar estrella en GitHub",
+    "laterCta": "Después"
+  },
+  "profileAnnouncement": {
+    "dismissAria": "Descartar",
+    "closeAria": "Cerrar"
+  },
+  "buildUpdate": {
+    "title": "Nueva versión disponible",
+    "body": "Actualiza para usar la versión más reciente de Petdex.",
+    "later": "Más tarde",
+    "refresh": "Actualizar"
+  },
+  "collectionsPage": {
+    "metadata": {
+      "title": "Colecciones destacadas",
+      "description": "Explora colecciones de Petdex por franquicia, categoría o temática. Busca, ordena y filtra para encontrar tu set."
+    },
+    "hero": {
+      "eyebrow": "Colecciones destacadas",
+      "title": "Encuentra tu set, instala en una línea",
+      "description": "{count, plural, =1 {1 colección} other {# colecciones}} del catálogo Petdex. Explora por franquicia, categoría o temática."
+    }
+  },
+  "collectionsBrowser": {
+    "searchAria": "Buscar colecciones",
+    "sortAria": "Ordenar colecciones",
+    "filters": {
+      "all": "Todas",
+      "franchise": "Franquicias",
+      "category": "Categorías",
+      "categorySub": "Temáticas",
+      "other": "Curadas"
+    },
+    "sort": {
+      "size": "Más grandes",
+      "title": "A → Z"
+    },
+    "sortPrefix": "Orden:",
+    "searchPlaceholder": "Prueba 'pokemon' o 'gato acogedor' o 'developer'",
+    "showingCount": "Mostrando {visible} de {total}",
+    "empty": "Ninguna colección coincide con esos filtros.",
+    "loadingMore": "Cargando más...",
+    "endOfResults": "Fin de resultados · {count, plural, =1 {1 colección} other {# colecciones}}",
+    "card": {
+      "petCount": "{count, plural, =1 {1 mascota} other {# mascotas}}",
+      "siteLink": "Sitio",
+      "byOwner": "por {name}"
+    },
+    "kindLabel": {
+      "franchise": "Franquicia",
+      "category": "Categoría",
+      "categorySub": "Temática",
+      "other": "Curada"
+    }
+  },
+  "profile": {
+    "creatorBadge": "Creador Petdex",
+    "creatorOfPetdex": "Creador de Petdex",
+    "yourAlbum": "TU ÁLBUM: {caught}/{total} ({pct}%)",
+    "editProfile": "Editar perfil",
+    "petsTab": "Mascotas",
+    "likedTab": "Favoritos",
+    "collectionsTab": "Colecciones",
+    "submitPet": "Enviar mascota",
+    "approvedSection": "Aprobadas ({count})",
+    "editOrder": "Editar orden",
+    "joined": "se unió {date}",
+    "installs": "{count} instalaciones",
+    "petsCount": "{count, plural, =1 {1 mascota} other {# mascotas}}"
+  },
+  "galleryReorder": {
+    "dragInstruction": "Arrastra cualquier mascota para reordenar. Los cambios se guardan al hacer clic en Listo."
+  },
+  "pinnedReorder": {
+    "reorderLabel": "No se pudo guardar el orden",
+    "saveError": "No se pudo guardar el orden: {error}"
+  },
+  "ownerCollections": {
+    "title": "Mis colecciones",
+    "description": "Las colecciones personales son privadas en tu perfil.",
+    "editAria": "Editar colección",
+    "deleteAria": "Eliminar colección",
+    "cancelAria": "Cancelar",
+    "namePlaceholder": "Pandilla de South Park",
+    "petsSelected": "Mascotas ({selected} de {total} seleccionadas)"
+  },
+  "collectionEditor": {
+    "selectPetsFirst": "Selecciona mascotas primero"
+  },
+  "onboarding": {
+    "skip": "Saltar tour"
+  },
+  "adminReview": {
+    "namePlaceholder": "Nombre de la mascota",
+    "descriptionPlaceholder": "Descripción",
+    "editAria": "Editar mascota",
+    "automationEvidence": "Evidencia automática",
+    "noSummary": "Sin resumen.",
+    "confidence": "Confianza: {confidence}%.",
+    "evidenceAssets": "Archivos",
+    "evidenceSecurity": "Seguridad",
+    "evidencePolicy": "Política",
+    "evidenceVisualText": "Texto visual",
+    "evidenceVisualSignals": "Señales visuales"
+  },
+  "sticker": {
+    "ctaWeChat": "Guardar para WeChat",
+    "ctaGeneric": "Guardar para WhatsApp",
+    "ctaShort": "Guardar sticker",
+    "hintWeChat": "WebP animado · WeChat, WhatsApp, Discord",
+    "hintGeneric": "WebP animado · WeChat, WhatsApp, Discord",
+    "recommendedTag": "Mejor",
+    "downloadAnimated": "Descargar animado (WebP)",
+    "downloadAnimatedDesc": "240×240 en loop · ideal para WeChat y Discord",
+    "downloadGif": "Descargar GIF",
+    "downloadGifDesc": "240×240 animado · mejor para WhatsApp Desktop / Slack",
+    "downloadPack": "Pack de WhatsApp (9 stickers)",
+    "downloadPackDesc": "Pack animado completo · 9 estados · zip",
+    "downloadPng": "Descargar PNG estático",
+    "downloadPngDesc": "240×240 primer frame",
+    "copyImage": "Copiar imagen al portapapeles",
+    "copyImageDesc": "Pega directo en cualquier chat",
+    "preview": "Previsualizar",
+    "previewDesc": "Abrir en otra pestaña",
+    "howToWeChat": "WeChat: mantén presionada → Añadir a favoritos",
+    "howToWhatsApp": "WhatsApp: importa el zip con Sticker Maker",
+    "desktopNote": "WhatsApp Desktop muestra solo el primer frame · en celular se anima",
+    "errorGeneric": "Algo salió mal, intenta de nuevo"
+  },
+  "collaboratorWechatQr": {
+    "panelTitle": "Gestión de QR de WeChat",
+    "currentQr": "QR actual",
+    "expiresIn": "Expira en {days} días",
+    "expired": "Expirado",
+    "uploadCta": "Subir nuevo QR",
+    "dropZoneHint": "Arrastra JPG / PNG aquí, máx 200KB",
+    "validating": "Validando con IA...",
+    "validationFailed": "Validación fallida",
+    "uploadSuccess": "¡Subida exitosa!",
+    "history": "Historial de subidas",
+    "historyEmpty": "Sin subidas aún",
+    "statusActive": "Activo",
+    "statusReplaced": "Reemplazado",
+    "statusRejected": "Rechazado",
+    "uploadedBy": "Subido por",
+    "rotateNow": "Rotar ahora",
+    "viewOnPublic": "Ver en página pública"
+  },
+  "collectionActionMenu": {
+    "moreActions": "Más acciones para {title}",
+    "closeMenu": "Cerrar menú",
+    "openInPetdex": "Abrir en Petdex Desktop",
+    "openInPetdexDesc": "Instala toda la colección",
+    "openInCodex": "Abrir en Codex",
+    "openInCodexDesc": "Codex Desktop ejecuta la instalación",
+    "copyInstallAll": "Copiar instalar todo",
+    "copiedInstall": "Comando copiado",
+    "copyCollectionLink": "Copiar enlace de la colección",
+    "copiedLink": "Enlace copiado",
+    "shareToX": "Compartir en X",
+    "viewCollection": "Ver colección",
+    "installHint": "{count, plural, =1 {1 mascota} other {# mascotas}}",
+    "installHintTruncated": "{shown} de {total} mascotas · pega el resto manual",
+    "shareXText": "Colección {title} de mascotas en Petdex - instala con una línea"
+  },
+  "takedownPage": {
+    "metadata": {
+      "title": "Takedown | Petdex",
+      "description": "How to report a pet that infringes your rights."
+    },
+    "eyebrow": "Legal · Takedown",
+    "title": "Report a pet",
+    "intro": "Petdex hosts user-submitted fan-art pixel pets. We don't claim rights to the underlying IP of any character a community member chose to interpret. If you're a rights holder or authorized representative and want a pet removed, the fastest path is a GitHub issue.",
+    "howItWorks": "How it works",
+    "steps": {
+      "open": "Open a takedown request with the link below.",
+      "identify": "Tell us which pet it is, using the slug from the URL, and your relationship to the IP.",
+      "review": "We review manually. Typical response is under 48 hours. Filings stay public on GitHub for transparency.",
+      "remove": "Approved takedowns remove the pet from the gallery and installer endpoints."
+    },
+    "nonIpBefore": "For non-IP issues, such as broken sprites or wrong descriptions, open a regular issue or contact us by",
+    "emailLink": "email",
+    "nonIpAfter": ".",
+    "openRequest": "Open takedown request",
+    "confirmation": "By submitting to Petdex you confirm you have rights to the artwork or are creating fan content. Petdex acts on good-faith takedown requests."
+  },
+  "unsubscribePage": {
+    "metadata": {
+      "title": "Unsubscribe | Petdex",
+      "description": "Manage your Petdex email preferences."
+    },
+    "eyebrow": "Email · Preferences",
+    "title": "Unsubscribe",
+    "invalidTitle": "This link looks invalid.",
+    "invalidBody": "We couldn't find that unsubscribe token. It may be expired or malformed. If you keep getting emails you don't want, reply to the latest one and we'll remove you manually.",
+    "form": {
+      "account": "Account",
+      "unsubscribedTitle": "You're unsubscribed from Petdex updates.",
+      "unsubscribedBody": "You'll still receive required notifications when your pet is approved, your edits are reviewed, or someone replies to your feedback.",
+      "subscribedTitle": "Stop receiving Petdex updates?",
+      "subscribedBody": "We send occasional curated updates: new collections, pet drops, and community moments. Required emails such as review results and feedback replies are not affected.",
+      "working": "Working…",
+      "resubscribe": "Resubscribe",
+      "unsubscribe": "Unsubscribe",
+      "error": "Could not update your preference. Try again."
+    }
+  },
+  "telemetryPage": {
+    "metadata": {
+      "title": "Telemetry | Petdex",
+      "description": "What petdex CLI telemetry collects and how to opt out."
+    },
+    "eyebrow": "Legal · Telemetry",
+    "title": "CLI telemetry",
+    "intro": "The petdex CLI collects anonymous usage statistics to help us understand install volume, supported platforms, and which coding agents people wire up. This page explains exactly what is collected and how to opt out.",
+    "collectTitle": "What we collect",
+    "table": {
+      "field": "Field",
+      "type": "Type",
+      "description": "Description"
+    },
+    "fields": {
+      "installId": "Random ID generated on first run and stored at <code>~/.petdex/telemetry.json</code>. Never linked to your account, email, or any other identity.",
+      "event": "Which lifecycle step fired: <code>cli_install_desktop_success</code>, <code>cli_hooks_install_success</code>, <code>cli_desktop_start_success</code>, or <code>desktop_first_state_received</code>. The desktop sidecar emits the last one once per session when a hook first reaches the mascot.",
+      "cliVersion": "Version of the petdex CLI package, for example <code>0.1.4</code>.",
+      "binaryVersion": "Version of the desktop binary that was installed, for example <code>0.1.4</code>. Only sent on <code>cli_install_desktop_success</code>.",
+      "os": "Operating system: <code>darwin</code>, <code>linux</code>, or <code>win32</code>.",
+      "arch": "CPU architecture: <code>arm64</code> or <code>x64</code>.",
+      "agents": "Which coding agents were wired up during <code>petdex hooks install</code>, for example <code>[\"claude-code\", \"codex\"]</code>. Only sent on <code>cli_hooks_install_success</code>.",
+      "state": "Sprite animation state the first hook triggered, for example <code>running</code>, <code>idle</code>, or <code>waving</code>. Only sent on <code>desktop_first_state_received</code>.",
+      "agentSource": "Optional self-reported label of the agent that fired the first hook, for example <code>claude-code</code>. Capped at 64 characters and only sent if the hook command included it.",
+      "country": "Two-letter ISO country code inferred from your IP by Vercel edge infrastructure. The raw IP is never stored."
+    },
+    "notCollectTitle": "What we do not collect",
+    "notCollect": {
+      "email": "Email address, username, or any account identifier.",
+      "files": "File names, file contents, or any data from your project directory.",
+      "ip": "Raw IP addresses. Only the country code inferred at the edge is stored.",
+      "crashes": "Crash reports, stack traces, or error messages from your local environment.",
+      "pets": "Any data from the pets you install or submit."
+    },
+    "optOutTitle": "How to opt out",
+    "optOutIntro": "Telemetry is on by default but can be turned off at any time. Settings are stored at <code>~/.petdex/telemetry.json</code> and persist across CLI updates.",
+    "codeComments": {
+      "disable": "# Disable telemetry",
+      "enable": "# Re-enable",
+      "status": "# Check current status"
+    },
+    "optOutEnv": "You can also set <code>PETDEX_TELEMETRY=0</code> to disable telemetry for one invocation or permanently in your shell profile.",
+    "retentionTitle": "Data retention",
+    "retentionBody": "Telemetry events are stored in a Postgres database hosted by Neon. Events older than 12 months may be deleted. No data is sold or shared with third parties."
+  },
+  "facetPages": {
+    "notFound": {
+      "kind": "Kind not found",
+      "vibe": "Vibe not found"
+    },
+    "kindEyebrow": "Kind: {kind}",
+    "vibeEyebrow": "Vibe: {vibe}",
+    "relatedKinds": "Other kinds",
+    "relatedVibes": "Related vibes",
+    "count": "{count, plural, =1 {1 pet in this collection} other {# pets in this collection}}",
+    "kinds": {
+      "creature": {
+        "label": "creature",
+        "title": "Codex creature pets",
+        "intro": "Animals, critters, and made-up beasts. The biggest collection in the index. Most contributors start here: otters, capybaras, foxes, and things with too many legs.",
+        "metaDescription": "Animated creature pets for Codex. Otters, capybaras, foxes and more, installable with one command."
+      },
+      "object": {
+        "label": "object",
+        "title": "Codex object pets",
+        "intro": "Pets that aren't alive but absolutely have personality. Paperclips, mugs, ice cream scoops: everyday objects that earned a soul.",
+        "metaDescription": "Codex object pets. Animated pixel companions made from everyday objects."
+      },
+      "character": {
+        "label": "character",
+        "title": "Codex character pets",
+        "intro": "Humanoids, mascots, fictional figures, original characters, and homages, all in 9-state pixel form.",
+        "metaDescription": "Animated character pets for Codex. Humanoid pixel companions installable with one command."
+      }
+    },
+    "vibes": {
+      "cozy": {
+        "label": "cozy",
+        "title": "Cozy Codex pets",
+        "intro": "Warm, soft companions with gentle poses, subtle blinks, and quiet idle states. Pick one to keep your terminal feeling easy to sit with.",
+        "metaDescription": "Cozy animated pixel pets for Codex. Soft, calming companions you can install with one command."
+      },
+      "calm": {
+        "label": "calm",
+        "title": "Calm Codex pets",
+        "intro": "Steady, low-key companions for focused sessions. Their idle animations breathe instead of bounce.",
+        "metaDescription": "Calm pixel pets for Codex. Low-motion animated companions for deep work."
+      },
+      "playful": {
+        "label": "playful",
+        "title": "Playful Codex pets",
+        "intro": "Bouncy companions that refuse to sit still. Expect tail wags, spins, and little interruptions beside your prompt.",
+        "metaDescription": "Playful animated companions for Codex. Bouncy pixel art you can install with one command."
+      },
+      "cheerful": {
+        "label": "cheerful",
+        "title": "Cheerful Codex pets",
+        "intro": "The optimists of the index. Bright palettes, smiling sprites, and idle states that seem glad you opened the terminal.",
+        "metaDescription": "Cheerful Codex pets. Bright, smiling animated companions installable with one command."
+      },
+      "focused": {
+        "label": "focused",
+        "title": "Focused Codex pets",
+        "intro": "Companions in deep work mode. Headphones, monitors, concentrated stares, and ready-to-ship energy.",
+        "metaDescription": "Focused Codex pets. Concentrated, deep-work companions for Codex."
+      },
+      "mischievous": {
+        "label": "mischievous",
+        "title": "Mischievous Codex pets",
+        "intro": "Sneaky idle poses, side-eye, and the suspicion that your linter errors might be their fault.",
+        "metaDescription": "Mischievous Codex pets. Sneaky animated pixel companions for your terminal."
+      },
+      "heroic": {
+        "label": "heroic",
+        "title": "Heroic Codex pets",
+        "intro": "Capes, stances, and saving-the-day energy. These pets believe in you and your unmerged PR.",
+        "metaDescription": "Heroic Codex pets. Brave, animated pixel companions installable with one command."
+      },
+      "edgy": {
+        "label": "edgy",
+        "title": "Edgy Codex pets",
+        "intro": "Darker palettes, sharper silhouettes, and more attitude for terminals that need a little bite.",
+        "metaDescription": "Edgy Codex pets. Bold, animated pixel companions for Codex."
+      },
+      "mystical": {
+        "label": "mystical",
+        "title": "Mystical Codex pets",
+        "intro": "Moons, sparkles, robes, and the feeling that this companion knows the answer before the model does.",
+        "metaDescription": "Mystical Codex pets. Magical animated pixel companions for Codex."
+      },
+      "wholesome": {
+        "label": "wholesome",
+        "title": "Wholesome Codex pets",
+        "intro": "Pure-hearted companions with big eyes and small gestures. A little softness for your workspace.",
+        "metaDescription": "Wholesome Codex pets. Sweet animated pixel companions installable with one command."
+      },
+      "chaotic": {
+        "label": "chaotic",
+        "title": "Chaotic Codex pets",
+        "intro": "Maximum energy, minimum predictability. Their states cycle a little strangely, in a good way.",
+        "metaDescription": "Chaotic Codex pets. High-energy animated pixel companions for Codex."
+      },
+      "melancholic": {
+        "label": "melancholic",
+        "title": "Melancholic Codex pets",
+        "intro": "Pensive, soft, and a little wistful. Companions for the part of the night when the build keeps failing.",
+        "metaDescription": "Melancholic Codex pets. Pensive animated pixel companions for Codex."
+      }
+    }
+  },
+  "docsPage": {
+    "metadata": {
+      "title": "Docs · Petdex",
+      "description": "How to install, distribute, and automate Codex pets with the Petdex CLI.",
+      "ogTitle": "Petdex CLI · Docs"
+    },
+    "nav": {
+      "getStarted": "Get started",
+      "quickStart": "Quick start",
+      "install": "Install",
+      "authenticate": "Authenticate",
+      "cli": "CLI",
+      "commands": "Commands",
+      "desktop": "Desktop app",
+      "distribute": "Distribute pets",
+      "validation": "Validation",
+      "failure": "Failure modes",
+      "agents": "Agents",
+      "agentUsage": "Agent-first usage",
+      "reference": "Reference",
+      "config": "Configuration",
+      "contribute": "Contribute"
+    },
+    "hero": {
+      "eyebrow": "Petdex CLI · v0.1",
+      "title": "Docs",
+      "description": "The Petdex CLI lets you install, browse, and submit Codex pets from your terminal. Authentication uses OAuth 2.0 + PKCE through Clerk, and tokens persist in your OS keychain.",
+      "npmCta": "npmjs.com/petdex",
+      "repoCta": "Repo"
+    },
+    "sections": {
+      "quickStart": {
+        "title": "Quick start",
+        "intro": "Install a curated pet into your Codex setup with one command. No account required to install. Sign in only when you submit.",
+        "afterCommand": "The CLI fetches the pet pack and drops it into <code>~/.codex/pets/boba/</code>. To activate it inside Codex go to <strong>Settings → Appearance → Pets</strong> and click <strong>Select</strong>. Use <code>/pet</code> inside Codex to wake or tuck it away.",
+        "callout": "Don't have a pet idea yet? <link>Hatch your own</link> with the Codex Hatch Pet skill, then come back to <code>petdex submit</code>."
+      },
+      "install": {
+        "title": "Install",
+        "intro": "The CLI runs on Node 20+ (or Bun). Pick the workflow that fits you. Both are equivalent in capability and persistence.",
+        "casualTitle": "Casual / one-off",
+        "casualBody": "Use <code>npx</code>. No setup, package is cached after first run.",
+        "powerTitle": "Power user",
+        "powerBody": "Install globally for instant invocation and easier muscle memory.",
+        "persistence": "<strong>Auth persistence is identical in both.</strong> Tokens live in your OS keychain (macOS Keychain, Windows Credential Manager, Linux Secret Service) under the service name <code>petdex-cli</code>. Even if npx clears its package cache, your session survives."
+      },
+      "authenticate": {
+        "title": "Authenticate",
+        "intro": "Sign in once, then any command that needs auth, such as submit, works seamlessly.",
+        "flow": "The flow is OAuth 2.0 + PKCE: the CLI opens your browser, you sign in with Clerk on <code>accounts.petdex.crafter.run</code>, and the browser redirects to a one-shot localhost listener with the authorization code. The CLI exchanges it for a token set and stores it in the keychain. No secrets touch disk.",
+        "otherCommands": "Other auth commands:"
+      },
+      "commands": {
+        "title": "Commands",
+        "intro": "The CLI covers the full lifecycle: discover, install, hatch, publish, plus the desktop app and agent hooks. All commands accept <code>--help</code>.",
+        "listBody": "Print every approved pet with credit. Useful for discovery before installing.",
+        "installBody": "Drop a pet into <code>~/.codex/pets/{petName}/</code>. Equivalent to <code>curl -sSf https://petdex.crafter.run/install/{petName} | sh</code>.",
+        "submitIntro": "Publish your pet(s) to the gallery. The CLI accepts three shapes:",
+        "submitSingle": "<strong>Single folder</strong>: <code>petdex submit ~/.codex/pets/boba</code>",
+        "submitZip": "<strong>Single zip</strong>: <code>petdex submit ~/Downloads/boba.zip</code>",
+        "submitBulk": "<strong>Bulk</strong>: <code>petdex submit ~/.codex/pets</code>: every direct subfolder is treated as its own pet",
+        "bulkNote": "Bulk mode shows a progress spinner per pet and a final summary of failures. Slugs auto-deduplicate so you will not hit a slug-taken bounce.",
+        "authBody": "See the Authenticate section above.",
+        "installSyntax": "petdex install {petName}",
+        "submitSyntax": "petdex submit {path}"
+      },
+      "desktop": {
+        "title": "Desktop app",
+        "intro": "Petdex Desktop is a floating mascot that lives on top of your workspace and reacts to your coding agent tool calls. macOS today, Linux and Windows soon. See <download>/download</download> for the visual tour.",
+        "installDesktopBody": "Fetches the latest binary from GitHub Releases for your platform and drops it at <code>~/.petdex/bin/petdex-desktop</code>. The CLI strips the macOS quarantine attribute so the app opens without a Gatekeeper prompt.",
+        "hooksInstallBody": "Wires the desktop app into your coding agents so the pet animates as you work. Picks the agents present on your machine and writes hooks for each:",
+        "hookEvents": "Tool events map to pet states: <code>tool.before</code> → <code>running</code>, <code>tool.after</code> → <code>idle</code>, <code>session.end</code> → <code>waving</code>, <code>session.error</code> → <code>failed</code>. Each hook POSTs to the local sidecar at <code>http://127.0.0.1:7777/state</code>.",
+        "desktopManageBody": "Manage the running pet. <code>start</code> spawns it detached (PID at <code>~/.petdex/desktop.pid</code>, log at <code>~/.petdex/desktop.log</code>). <code>stop</code> sends SIGTERM. <code>status</code> reports running, stopped, or stale.",
+        "toggleBody": "One-shot wake/sleep for the mascot. <code>up</code> enables hooks AND launches the desktop. <code>down</code> disables hooks AND stops the desktop. <code>toggle</code> flips between them based on current state. That is what the <code>/petdex</code> slash command runs from inside your agent.",
+        "slashTitleSuffix": "(slash command)",
+        "slashBody": "Once <code>petdex hooks install</code> has run, every supported agent (Claude Code, Codex, Gemini, OpenCode) gets a <code>/petdex</code> command in its picker. Type it inside the agent and the mascot wakes or sleeps without leaving the chat:",
+        "slashToggle": "<code>/petdex</code>: toggle (wake if asleep, sleep if awake)",
+        "slashUp": "<code>/petdex up</code>: force-wake",
+        "slashDown": "<code>/petdex down</code>: force-sleep",
+        "slashStatus": "<code>/petdex status</code>: show whether hooks are enabled",
+        "slashDoctor": "<code>/petdex doctor</code>: diagnose install + agent wiring",
+        "killSwitchSuffix": "(kill-switch)",
+        "hooksKillBody": "Even with hooks installed, you can pause them without touching your agent settings. <code>petdex hooks off</code> drops a flag file at <code>~/.petdex/runtime/hooks-disabled</code>; every installed hook checks for it first and exits 0 immediately. <code>petdex hooks on</code> removes the file. Useful when a sidecar has gone weird and you do not want stray curls in your agent log.",
+        "uninstallBody": "Reverses <code>hooks install</code>: removes the petdex entries from each agent config (preserving your own hooks), deletes the <code>/petdex</code> slash command files, and removes the OpenCode plugin. Pass <code>--remove-token</code> to also drop the auth token at <code>~/.petdex/runtime/update-token</code>.",
+        "doctorBody": "Diagnostic. Verifies binary, sidecar bundle, sidecar reachability, pid file format, token mode, kill-switch state, hooks installed in each agent, Codex <code>codex_hooks</code> feature flag, and usable pet count. Each failed check ships an actionable hint.",
+        "updateBody": "Compares your installed version against the latest GitHub Release tag and downloads it if newer. If the desktop app was running, it stops it, swaps the binary, and restarts. Pass <code>--force</code> to re-download the same version.",
+        "sidecarCallout": "The sidecar is a local HTTP server on port <code>7777</code>. Anything that can <code>curl</code> + read the per-session token at <code>~/.petdex/runtime/update-token</code> can drive the pet. The token rotates every sidecar boot and lives at mode <code>0600</code>, so only your user can read it. Browsers and remote sites cannot:",
+        "manageSyntax": "petdex desktop {desktopAction}"
+      },
+      "distribute": {
+        "title": "Distribute your pets",
+        "intro": "Once you have hatched a pet inside Codex, sharing it takes one command. Here's the full lifecycle:",
+        "create": "<strong>Create.</strong> In Codex Desktop, install the <strong>Hatch Pet</strong> skill and run <code>/pet</code>. Codex generates the spritesheet and pet.json into <code>~/.codex/pets/{petName}/</code>. Full tutorial at <create>/create</create>.",
+        "signIn": "<strong>Sign in.</strong> <code>npx petdex login</code> if you have not.",
+        "submit": "<strong>Submit.</strong> <code>npx petdex submit ~/.codex/pets/{petName}</code>. Or bulk all at once with the parent dir.",
+        "review": "<strong>Wait for review.</strong> Submissions land as “pending” in the admin queue. You will receive a Resend email when approved or rejected (if rejected, the reason is included).",
+        "install": "<strong>Anyone can install your pet.</strong> Once approved, share <code>npx petdex install {yourPetName}</code> with anyone. They get your pet in their <code>~/.codex/pets/</code> instantly.",
+        "callout": "Pets are user-submitted fan art. Petdex does not claim rights to underlying IP. If you are a rights holder requesting a takedown, see <takedown>/legal/takedown</takedown>."
+      },
+      "validation": {
+        "title": "Validation rules",
+        "intro": "The server enforces these rules; the CLI checks locally too.",
+        "files": "<code>pet.json</code> and <code>spritesheet.webp</code> (or <code>.png</code>) must be at the root of the folder/zip.",
+        "spritesheet": "Spritesheet ≥ 256×256. Recommended <strong>1536×1872</strong> (8×9 frame grid).",
+        "rateLimit": "Rate limit: <strong>10 submissions / 24h per user</strong>. Admins bypass.",
+        "slugs": "Slugs auto-deduplicate (<code>boba</code> → <code>boba-2</code> → <code>boba-3</code> → …). You always get a successful submission.",
+        "identity": "Identity (userId, email, credit) comes from the verified OAuth token. Never trusted from request body."
+      },
+      "failure": {
+        "title": "Failure modes",
+        "headers": {
+          "symptom": "Symptom",
+          "cause": "Cause",
+          "fix": "Fix"
+        },
+        "then": "then",
+        "rows": {
+          "notSignedIn": {
+            "symptom": "Not signed in",
+            "cause": "No tokens or session expired"
+          },
+          "presign401": {
+            "cause": "Bearer rejected by Clerk userinfo"
+          },
+          "presign429": {
+            "cause": "10/24h rate limit hit",
+            "fixBefore": "Wait 24h or open a",
+            "fixLink": "submit-fallback issue"
+          },
+          "invalidSpritesheet": {
+            "cause": "Sprite < 256×256",
+            "fix": "Regenerate at 1536×1872"
+          },
+          "missingField": {
+            "cause": "Folder missing pet.json or spritesheet",
+            "fix": "Inspect folder contents"
+          },
+          "r2Put403": {
+            "cause": "Presigned URL expired (60s TTL)",
+            "fix": "Retry: CLI auto-presigns fresh URLs"
+          }
+        }
+      },
+      "agents": {
+        "title": "Agent-first usage (Skill)",
+        "intro": "Petdex ships a Claude Code / Codex / Cursor compatible <strong>skill</strong> at <code>.claude/skills/petdex/SKILL.md</code>. Compatible agents load it automatically and learn <em>when</em> and <em>how</em> to call the CLI on your behalf.",
+        "enablesTitle": "What this enables",
+        "enableCozy": "Say <em>“install something cozy for my Codex”</em> in any agent tool. It runs <code>petdex list</code>, suggests Boba/Boxcat, installs your pick, and reminds you to activate via <strong>Settings → Appearance → Pets</strong>.",
+        "enableShare": "Say <em>“share all my pets”</em>. Agent runs <code>petdex login</code> if needed, then <code>petdex submit ~/.codex/pets</code>, surfaces the bulk summary.",
+        "enableMake": "Say <em>“how do I make my own?”</em>. Agent walks you through Codex Desktop → Hatch Pet skill → <code>/pet</code> → <code>petdex submit</code>.",
+        "enableTitle": "How to enable it",
+        "enableIntro": "If you use Claude Code, save the skill globally so every project has it:",
+        "enableOther": "Other agent tools can load the same SKILL.md from the repo. The file is plain markdown. No agent-specific syntax beyond <code>allowed-tools</code>.",
+        "buildTitle": "Build your own skill on top",
+        "buildBody": "The CLI is the executable surface; the skill is the cognitive one. If you build a derivative skill (for example, one that auto-tags new pets or curates a daily digest), you can use the Petdex skill as a reference. Read it directly:"
+      },
+      "config": {
+        "title": "Configuration",
+        "intro": "The CLI ships with sensible defaults pointing at production. You only need to override env vars if you are testing against a non-production deployment.",
+        "petdexUrl": "<code>PETDEX_URL</code>: base URL, default <code>https://petdex.crafter.run</code>",
+        "clerkIssuer": "<code>CLERK_ISSUER</code>: OAuth issuer, default <code>https://clerk.petdex.crafter.run</code>",
+        "clerkClientId": "<code>CLERK_OAUTH_CLIENT_ID</code>: public client id (baked into the CLI binary)"
+      },
+      "contribute": {
+        "title": "Contribute",
+        "prBefore": "PRs welcome at",
+        "issuesBefore": "Bug reports and feature requests:",
+        "issueLink": "open an issue",
+        "sponsorBefore": "Sponsor on",
+        "sponsorAfter": "if Petdex saves you time."
+      }
+    },
+    "placeholders": {
+      "petName": "<slug>",
+      "yourPetName": "<your-slug>",
+      "path": "<path>",
+      "desktopAction": "start | stop | status"
+    }
+  }
+}
