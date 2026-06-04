@@ -188,7 +188,7 @@ node .agents/skills/petdex-mood-sprite/scripts/postprocess-ai-mood-sheet.mjs \
 
 ## Token 心情算法
 
-桌面端会在宠物上方显示一个 token 用量百分比，例如 `57%`。这个百分比来自当前统计窗口内的 weighted token 用量：
+桌面端会在宠物附近显示一个 token 用量百分比，例如 `57%`。这个百分比来自当前统计窗口内的 weighted token 用量，或 Codex 本地 session 暴露的原生用量百分比：
 
 ```text
 usagePercent = round(weightedTokens / tokenBudget * 100)

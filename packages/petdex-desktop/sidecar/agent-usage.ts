@@ -65,8 +65,6 @@ export function scanLocalAgentUsage(
   const config = opts.config ?? tokenMoodConfigFromEnv(process.env);
   const source = opts.source ?? usageSourceFromEnv(process.env);
   const maxFiles = Math.max(1, opts.maxFiles ?? DEFAULT_MAX_FILES);
-  const tokenizer =
-    opts.tokenizer === undefined ? loadDefaultTokenizer() : opts.tokenizer;
   const sinceMs = nowMs - config.windowMs;
   const codexRateLimit =
     source === "codex" || source === "auto"
@@ -81,6 +79,25 @@ export function scanLocalAgentUsage(
           sinceMs,
         )
       : null;
+  if (codexRateLimit) {
+    const usagePercent = Math.round(codexRateLimit.usedPercent);
+    return {
+      agentSource: "codex",
+      fatigue: clamp01(codexRateLimit.usedPercent / 100),
+      tokens: 0,
+      weightedTokens: 0,
+      rawTokens: 0,
+      tokenBudget: Math.max(1, config.tokenBudget),
+      usagePercent,
+      messages: 0,
+      sinceMs,
+      breakdown: emptyBreakdown(),
+      reason: `codex rate limit: ${usagePercent}% used`,
+    };
+  }
+
+  const tokenizer =
+    opts.tokenizer === undefined ? loadDefaultTokenizer() : opts.tokenizer;
   const allRecords = [
     ...scanClaudeStats(join(home, ".claude", "stats-cache.json"), sinceMs),
     ...scanClaudeProjectJsonl(

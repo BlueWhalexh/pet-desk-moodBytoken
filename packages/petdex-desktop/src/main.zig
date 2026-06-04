@@ -513,7 +513,7 @@ const html_tail =
     \\  // and the fatigue meter. Independent of state — POSTs to /mood
     \\  // never interfere with what the agent is doing on /state.
     \\  // The MOOD_SCALES table mirrors the CSS so the JS animation
-    \\  // loop and the CSS filter stay in sync without measuring the
+    \\  // loop and the CSS mood pacing stay in sync without measuring the
     \\  // CSS variable each tick (see comment on moodAnimScale above).
     \\  const MOOD_SCALES = {
     \\    energetic: 0.85,
