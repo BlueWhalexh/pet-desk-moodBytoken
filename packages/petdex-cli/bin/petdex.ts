@@ -1193,7 +1193,7 @@ function translateLoginError(message: string): string {
     return [
       "Clerk OAuth rejected this CLI build (invalid_client).",
       "This usually means your installed CLI is out of date. Try:",
-      "  npm cache clean --force && npx -y pet-desk-moodbytoken@latest login",
+      "  cd packages/petdex-cli && bun run build && npm install -g . && petdesk login",
       "If it still fails: https://github.com/crafter-station/petdex/issues",
     ].join("\n");
   }

@@ -499,6 +499,44 @@ describe("installStarterPet", () => {
     expect(existsSync(join(codexPetsDir(), "aka-shiba"))).toBe(false);
   });
 
+  test("installs bundled aka-shiba before consulting the remote manifest", async () => {
+    const bundledDir = join(tmpHome, "bundle", "aka-shiba");
+    mkdirSync(join(bundledDir, "moods"), { recursive: true });
+    writeFileSync(
+      join(bundledDir, "pet.json"),
+      '{"slug":"aka-shiba","displayName":"Aka Shiba"}',
+    );
+    writeFileSync(join(bundledDir, "spritesheet.webp"), "WEBP");
+    writeFileSync(join(bundledDir, "moods", "dying.webp"), "MOOD");
+
+    let manifestCalls = 0;
+    const fetchImpl = makeFetch((url) => {
+      if (url.endsWith("/api/manifest")) manifestCalls += 1;
+      return new Response("should not be called", { status: 500 });
+    });
+
+    const result = await _installStarterPetForTest({
+      fetchOverride: fetchImpl,
+      petdexUrl: "https://petdex.test",
+      bundledStarterDir: bundledDir,
+    });
+
+    expect(result).toBe("aka-shiba");
+    expect(manifestCalls).toBe(0);
+    for (const root of [petsDir(), codexPetsDir()]) {
+      const slugDir = join(root, "aka-shiba");
+      expect(readFileSync(join(slugDir, "pet.json"), "utf8")).toBe(
+        '{"slug":"aka-shiba","displayName":"Aka Shiba"}',
+      );
+      expect(readFileSync(join(slugDir, "spritesheet.webp"), "utf8")).toBe(
+        "WEBP",
+      );
+      expect(readFileSync(join(slugDir, "moods", "dying.webp"), "utf8")).toBe(
+        "MOOD",
+      );
+    }
+  });
+
   test("aborts when petJsonUrl is on an untrusted host", async () => {
     const fetchImpl = makeFetch((url) => {
       if (url.endsWith("/api/manifest")) {

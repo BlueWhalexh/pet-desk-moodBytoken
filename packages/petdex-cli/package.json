@@ -17,6 +17,7 @@
     "petdesk": "dist/petdex.js"
   },
   "files": [
+    "assets",
     "dist",
     "README.md"
   ],

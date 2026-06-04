@@ -8,7 +8,7 @@ The CLI behind pet-desk-moodBytoken. It installs Petdex Desktop, wires local age
 
 ## Install
 
-`pet-desk-moodbytoken` is not published to npm yet. Until the first publish, install from source:
+Install from source:
 
 ```sh
 git clone https://github.com/BlueWhalexh/pet-desk-moodBytoken.git
@@ -19,45 +19,21 @@ npm install -g .
 petdesk --help
 ```
 
-After the npm package is published:
-
-```sh
-# One-shot via npx (no global install)
-npx -y pet-desk-moodbytoken@latest --help
-
-# Or install globally. This exposes the petdesk command.
-npm install -g pet-desk-moodbytoken
-petdesk --help
-```
-
 Requires Node.js 20+ (also runs on Bun).
-
-`npx` downloads the package into npm's temporary cache and runs its declared `bin`. It does not permanently install `petdesk` into your PATH. If you only used `npx -y pet-desk-moodbytoken@latest init`, use `npx -y pet-desk-moodbytoken@latest doctor` for later checks, or install globally first.
-
-Maintainers can publish with:
-
-```sh
-bun install
-bun run build
-npm login
-npm publish --access public
-```
-
-`npm publish --dry-run` currently succeeds and packages `README.md`, `dist/petdex.js`, and `package.json`; a real publish requires an authenticated npm account.
 
 ## Quick start
 
 ```sh
-npx -y pet-desk-moodbytoken@latest init          # install desktop, starter pet, hooks, and /petdesk
-petdesk install aka-shiba           # install a pet by slug
+petdesk init                        # install/start desktop, starter pet, hooks, and /petdesk
+petdesk install aka-shiba           # install another pet by slug
 petdesk submit ~/.codex/pets/aka-shiba
 ```
 
 After `init`, open Codex / Claude Code / Gemini CLI / OpenCode and run `/petdesk`.
 
-`aka-shiba` is the preferred starter pet for this fork. If it is unavailable in the online manifest, the installer falls back to the first available pet so the desktop still has something to render.
+`aka-shiba` is bundled as the starter pet for this fork. If the user has no usable local pet, `petdesk init` installs the bundled copy first so the desktop always has something to render. If the bundled target directory is already occupied, the installer falls back to the online manifest.
 
-Windows users can run the Node CLI with `npx` as long as Node.js 20+ is installed. Full desktop behavior depends on a matching `win32` desktop release asset and the target agent's hook support; macOS is the currently most verified path.
+Windows users can run the Node CLI as long as Node.js 20+ is installed. Full desktop behavior depends on a matching `win32` desktop release asset and the target agent's hook support; macOS is the currently most verified path.
 
 ## Commands
 
@@ -174,16 +150,17 @@ node .agents/skills/petdex-mood-sprite/scripts/postprocess-ai-mood-sheet.mjs \
 ## Common install issues
 
 The CLI is a single bundled JS file with no native dependencies.
-install path is just `fetch a JSON manifest, write two files to
-~/.codex/pets/<slug>/`. Most "stuck" reports trace to one of these:
+Pet install writes local files under `~/.petdex/pets/<slug>/` and
+`~/.codex/pets/<slug>/`; the default `aka-shiba` starter is bundled,
+while gallery pets are resolved from the manifest. Most "stuck"
+reports trace to one of these:
 
 | Symptom | Cause | Fix |
 | --- | --- | --- |
-| Hangs at `Need to install the following packages: pet-desk-moodbytoken@x` | `npx`'s own confirmation prompt, not a hang. Press `y` or auto-confirm | `npx -y pet-desk-moodbytoken@latest install <slug>` |
 | `npm ERR! engine Unsupported engine` | Node < 20 | Upgrade Node to 20+ (`nvm install 20` is the easiest path) |
-| `manifest fetch 5xx` / network timeout | Slow connection or corporate/national firewall blocking `petdex.crafter.run` | Set a proxy: `HTTPS_PROXY=http://your.proxy:port npx -y pet-desk-moodbytoken@latest install <slug>` |
+| `manifest fetch 5xx` / network timeout | Slow connection or corporate/national firewall blocking `petdex.crafter.run` | Set a proxy before running `petdesk install <slug>` |
 | `EACCES: permission denied … ~/.codex/pets/` | Pets dir owned by another user | `sudo chown -R "$USER" ~/.codex` or remove the dir and retry |
-| Windows: `'sh' is not recognized` | CLI version older than 0.1.1 piped through `curl … \| sh` | Upgrade: `npm i -g pet-desk-moodbytoken@latest` or `npx -y pet-desk-moodbytoken@latest install <slug>` |
+| Windows: `'sh' is not recognized` | Old CLI path piped through `curl … \| sh` | Rebuild and reinstall this package from source, then run `petdesk install <slug>` |
 
 The CLI bundles `@clack/prompts`, `picocolors`, and `jszip` into the
 shipped JS. There is no separate dependency-install step on your

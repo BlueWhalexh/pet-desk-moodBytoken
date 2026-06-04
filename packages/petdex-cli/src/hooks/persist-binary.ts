@@ -4,14 +4,12 @@
  * with an absolute path.
  *
  * Why: hooks fire from the agent's shell, which doesn't necessarily
- * have `petdex` in PATH. Users who run `npx -y pet-desk-moodbytoken init` have a
- * temporary binary that won't exist when the agent actually fires
- * the hook. We solve this by copying the running binary to a known
- * location at install time.
+ * have `petdesk` in PATH. We solve this by copying the running
+ * binary to a known location at install time.
  *
  * The persisted copy is a SNAPSHOT: it doesn't auto-update. Users who
- * upgrade petdex (npx -y pet-desk-moodbytoken@latest) just re-run `petdesk init` (or
- * `petdesk hooks install`) to refresh the snapshot. Worse outcomes —
+ * upgrade petdesk just re-run `petdesk init` (or `petdesk hooks
+ * install`) to refresh the snapshot. Worse outcomes —
  * silently using a stale snapshot on `petdesk update` — would surprise
  * us when behavior diverges between the running CLI and the hooks.
  */

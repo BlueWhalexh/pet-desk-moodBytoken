@@ -9,7 +9,7 @@
 
 它不是把宠物变透明、变灰或套滤镜，而是根据本地 agent 用量切换真实的表情和姿态精灵图：精神、正常、疲惫、力竭、趴倒。
 
-![Petdex icon](public/brand/petdex-desktop-icon.png)
+![Petdesk token mood demo](docs/assets/demo-token-mood.png)
 
 ## 适合谁
 
@@ -30,9 +30,7 @@
 
 ## 快速开始
 
-目标体验是：安装一次，然后在 agent 里直接输入 `/petdesk`。
-
-> 当前 `pet-desk-moodbytoken` 尚未发布到 npm registry。直接运行 `npx -y pet-desk-moodbytoken@latest init` 会得到 `404 Not Found`。发布前请先用源码安装。
+目标体验是：从源码安装一次，然后在 agent 里直接输入 `/petdesk`。
 
 ### 从源码安装
 
@@ -48,24 +46,8 @@ petdesk init
 `init` 会尽量完成三件事：
 
 - 安装或启动 Petdex Desktop。
-- 安装一只 starter pet，默认优先使用 `aka-shiba`。
+- 安装内置 starter pet：`aka-shiba`，避免首次启动因为没有宠物失败。
 - 给本机已检测到的 agent 写入 hooks 和 `/petdesk` 原生命令。
-
-### npm 发布后的安装方式
-
-```bash
-npx -y pet-desk-moodbytoken@latest init
-```
-
-`npx` 是一次性下载并运行 npm 包，不会把 `petdesk` 永久安装到你的 `PATH`。如果希望终端里长期可用：
-
-```bash
-npm install -g pet-desk-moodbytoken
-petdesk init
-petdesk doctor
-```
-
-包名使用 `pet-desk-moodbytoken`，命令名使用 `petdesk`，是为了避免和上游 Petdex 的 `petdex` 包名、全局命令混淆。
 
 ## Agent 内用法
 
@@ -97,7 +79,7 @@ petdesk doctor
 
 ## 默认宠物
 
-默认 starter pet 首选 `aka-shiba`。如果远端 manifest 暂时没有 `aka-shiba`，CLI 会回退安装 manifest 中第一只可用宠物，保证用户至少能看到桌宠。
+默认 starter pet 是内置打包的 `aka-shiba`。`petdesk init` 会在本机没有可用宠物时优先把它安装到本地，保证用户首次启动至少能看到桌宠；只有内置资产不可用或目标目录已被占用时，才会尝试从远端 manifest 选择可用宠物。
 
 桌面端按这个优先级找宠物：
 
@@ -313,10 +295,10 @@ PETDEX_MANUAL_MOOD_HOLD_MS=300000
 | 平台 | 状态 |
 | --- | --- |
 | macOS | 当前主验证路径 |
-| Windows | Node CLI / `npx` 可运行；桌面二进制取决于 release 资产 |
+| Windows | Node CLI 可运行；桌面二进制取决于 release 资产 |
 | Linux | Node CLI 可运行；桌面端需要后续补齐 release 资产和验证 |
 
-Windows 用户可以用 `npx` 运行 Node CLI，但完整桌宠启动取决于当前 release 是否提供 `win32` desktop 资产和目标 agent 的 hooks 支持。遇到桌面二进制缺失时，先运行：
+Windows 用户可以运行 Node CLI，但完整桌宠启动取决于当前 release 是否提供 `win32` desktop 资产和目标 agent 的 hooks 支持。遇到桌面二进制缺失时，先运行：
 
 ```bash
 petdesk doctor
@@ -399,16 +381,13 @@ PETDEX_USAGE_MOOD_SOURCE=codex bun -e "import { scanLocalAgentUsage } from './pa
 
 ## 常见问题
 
-### `npx -y pet-desk-moodbytoken@latest init` 报 404
+### 终端找不到 `petdesk`
 
-说明 npm 包还没有发布到 registry。发布前请使用源码安装；发布后这条命令才会可用。
-
-### `npx` 之后终端找不到 `petdesk`
-
-这是正常的。`npx` 只运行一次，不会全局安装命令。需要长期使用请运行：
+确认你已经在 `packages/petdex-cli` 目录里执行过：
 
 ```bash
-npm install -g pet-desk-moodbytoken
+bun run build
+npm install -g .
 ```
 
 ### `/petdesk` 识别不到
@@ -463,7 +442,6 @@ PETDEX_USAGE_MOOD_SOURCE=codex petdesk up
 
 ## Roadmap
 
-- 发布 `pet-desk-moodbytoken` 到 npm，补齐 `npx` 一键安装链路。
 - 给 `aka-shiba` 和 `kabi` 补完整官方 mood sprite 资产。
 - 增加设置面板，用 UI 调整 token budget、weights 和 agent source。
 - 支持更多 agent 的本地 transcript 格式。

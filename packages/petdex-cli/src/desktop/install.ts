@@ -17,11 +17,12 @@
  */
 import { randomBytes } from "node:crypto";
 import { existsSync, statSync } from "node:fs";
-import { chmod, mkdir, rename, rm, writeFile } from "node:fs/promises";
+import { chmod, cp, mkdir, rename, rm, writeFile } from "node:fs/promises";
 import { homedir, arch as nodeArch, platform as nodePlatform } from "node:os";
 import path from "node:path";
 import { Readable } from "node:stream";
 import { pipeline } from "node:stream/promises";
+import { fileURLToPath } from "node:url";
 
 import * as p from "@clack/prompts";
 import pc from "picocolors";
@@ -94,7 +95,7 @@ export function desktopBinPath(): string {
   // Returning the first that exists lets `petdesk up`, `petdesk update`,
   // and `petdesk desktop start` find the binary regardless of how the
   // user installed it. Net effect: DMG-only installs no longer need a
-  // follow-up `npx -y pet-desk-moodbytoken install desktop` to make the CLI commands
+  // follow-up `petdesk install desktop` to make the CLI commands
   // work.
   const ext = nodePlatform() === "win32" ? ".exe" : "";
   if (nodePlatform() === "darwin") {
@@ -801,14 +802,31 @@ export async function ensureStarterPet(): Promise<StarterPetResult> {
 // manually. Returns the slug it installed, or null if it skipped
 // or failed.
 export async function _installStarterPetForTest(
-  options: { fetchOverride?: typeof fetch; petdexUrl?: string } = {},
+  options: {
+    fetchOverride?: typeof fetch;
+    petdexUrl?: string;
+    bundledStarterDir?: string | null;
+  } = {},
 ): Promise<string | null> {
-  return installStarterPet(options);
+  return installStarterPet({ bundledStarterDir: null, ...options });
 }
 
 async function installStarterPet(
-  options: { fetchOverride?: typeof fetch; petdexUrl?: string } = {},
+  options: {
+    fetchOverride?: typeof fetch;
+    petdexUrl?: string;
+    bundledStarterDir?: string | null;
+  } = {},
 ): Promise<string | null> {
+  const bundledDir =
+    options.bundledStarterDir === undefined
+      ? findBundledStarterPetDir()
+      : options.bundledStarterDir;
+  if (bundledDir) {
+    const installed = await installBundledStarterPet(bundledDir);
+    if (installed) return installed;
+  }
+
   const fetchImpl = options.fetchOverride ?? fetch;
   const baseUrl = options.petdexUrl ?? PETDEX_URL;
   type Pet = {
@@ -857,6 +875,60 @@ async function installStarterPet(
     if (installed) return installed;
   }
   return null;
+}
+
+function findBundledStarterPetDir(): string | null {
+  const here = path.dirname(fileURLToPath(import.meta.url));
+  const candidates = [
+    // Source/test layout: packages/petdex-cli/src/desktop/install.ts
+    path.join(here, "..", "..", "assets", "starter-pets", DEFAULT_PET_SLUG),
+    // Built npm layout: packages/petdex-cli/dist/petdex.js
+    path.join(here, "..", "assets", "starter-pets", DEFAULT_PET_SLUG),
+  ];
+  for (const candidate of candidates) {
+    if (
+      isPetUsable(candidate) &&
+      existsSync(path.join(candidate, "pet.json"))
+    ) {
+      return candidate;
+    }
+  }
+  return null;
+}
+
+async function installBundledStarterPet(
+  sourceDir: string,
+): Promise<string | null> {
+  const targets = [
+    path.join(petsRoot(), DEFAULT_PET_SLUG),
+    path.join(codexPetsRoot(), DEFAULT_PET_SLUG),
+  ];
+
+  for (const t of targets) {
+    if (existsSync(t)) return null;
+  }
+
+  const stagedDirs: string[] = [];
+  const renamedDirs: string[] = [];
+  try {
+    for (const t of targets) {
+      const stage = `${t}.partial-${randomBytes(6).toString("hex")}`;
+      await mkdir(path.dirname(stage), { recursive: true });
+      await cp(sourceDir, stage, { recursive: true });
+      stagedDirs.push(stage);
+      await mkdir(path.dirname(t), { recursive: true });
+      await rename(stage, t);
+      stagedDirs.pop();
+      renamedDirs.push(t);
+    }
+    return DEFAULT_PET_SLUG;
+  } catch {
+    await Promise.all([
+      ...stagedDirs.map((d) => rm(d, { recursive: true, force: true })),
+      ...renamedDirs.map((d) => rm(d, { recursive: true, force: true })),
+    ]);
+    return null;
+  }
 }
 
 async function tryInstallStarterCandidate(

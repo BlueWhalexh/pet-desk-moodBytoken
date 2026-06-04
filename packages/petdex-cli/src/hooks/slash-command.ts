@@ -22,7 +22,7 @@ import type { Agent } from "./agents.js";
 // persistRunningBinary during hooks install), so the slash command
 // uses that absolute path. This avoids the "petdesk: command not
 // found" failure in agents whose shell doesn't have npm globals on
-// PATH (common when users install via `npx -y pet-desk-moodbytoken init`).
+// PATH.
 const PETDEX_INVOKE = `node "$HOME/.petdex/bin/petdex.js"`;
 
 const SLASH_COMMAND_BODY = `---
@@ -42,7 +42,7 @@ Run the matching command using the persisted petdex binary at \`$HOME/.petdex/bi
 
 Show the command output verbatim to the user. Don't reinterpret, don't explain. The CLI's output is already user-facing.
 
-If \`$HOME/.petdex/bin/petdex.js\` doesn't exist, the user hasn't run \`petdesk hooks install\` yet. Tell them to run \`npx -y pet-desk-moodbytoken@latest init\` first, then retry.
+If \`$HOME/.petdex/bin/petdex.js\` doesn't exist, the user hasn't run \`petdesk hooks install\` yet. Tell them to install from source, run \`petdesk init\`, then retry.
 
 Arguments: \`$ARGUMENTS\`
 `;
@@ -63,7 +63,7 @@ Run the matching command using the persisted petdex binary at \`$HOME/.petdex/bi
 
 Show the command output verbatim to the user. Don't reinterpret, don't explain. The CLI's output is already user-facing.
 
-If \`$HOME/.petdex/bin/petdex.js\` doesn't exist, the user hasn't run \`petdesk hooks install\` yet. Tell them to run \`npx -y pet-desk-moodbytoken@latest init\` first, then retry.
+If \`$HOME/.petdex/bin/petdex.js\` doesn't exist, the user hasn't run \`petdesk hooks install\` yet. Tell them to install from source, run \`petdesk init\`, then retry.
 
 Arguments: \`{{args}}\`
 """

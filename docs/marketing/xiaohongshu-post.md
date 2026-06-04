@@ -146,7 +146,7 @@ https://github.com/BlueWhalexh/pet-desk-moodBytoken
 https://github.com/BlueWhalexh/pet-desk-moodBytoken
 
 目前主要验证路径是 macOS + Codex / Claude Code。
-npm 一键安装还在准备中，当前可先按 README 源码安装。
+当前按 README 源码安装；默认会内置 aka-shiba，首次启动不会因为没宠物失败。
 ```
 
 ## Hashtags
@@ -158,6 +158,6 @@ npm 一键安装还在准备中，当前可先按 README 源码安装。
 ## 发布建议
 
 - 第一版重点卖“直观”和“可爱”，不要把安装命令放太前面。
-- 评论区置顶项目地址和当前限制，减少用户因 npm 尚未发布而踩坑。
+- 评论区置顶项目地址和当前限制，减少用户因平台支持差异而踩坑。
 - 如果能录 5 秒 GIF，优先展示 `57% -> 90%` 时小狗从站着到趴下的变化。
 - 配图尽量用真实截图，不要只放 logo；小红书用户会先看效果，再决定是否点开链接。
