@@ -2,22 +2,111 @@
 
 一个会根据本地 Coding Agent token 用量改变心情的桌面小宠物。
 
-当你的 agent 用得不多时，小狗保持正常 idle；当 Claude/Codex 等本地 agent 的 token 用量变重时，它会逐渐变成 tired、exhausted，最后进入 dying 的趴倒/濒临崩溃姿态。这里的 mood 不是透明度、滤镜、变灰这种视觉假象，而是切换真实的宠物表情和姿态精灵图。
+它不是把宠物变透明、变灰或套滤镜，而是按 token 压力切换真实的表情和姿态精灵图：精神、正常、疲惫、力竭、趴倒。
 
 ![Petdex icon](public/brand/petdex-desktop-icon.png)
 
-## 项目目标
+## 快速开始
 
-Coding Agent 大多数时候是不可见的。它会消耗 context、cache read、output tokens，也会在工具调用循环里跑很久，但你通常只能看到一个 spinner，或者之后才从账单里意识到用量已经很高。
+目标使用方式是：安装一次，然后在 agent 里直接输入 `/petdesk`。
 
-这个项目把这些不可见的用量变成一个桌面上的环境反馈：
+```bash
+npx petdex@latest init
+```
 
-- token 用量会被计算成 `0..1` 的 fatigue 分数
-- fatigue 会映射成五档 mood
-- mood 会切换真实的宠物 idle sprite row
-- 计算逻辑完全本地、可配置、容易改
+`init` 会尽量完成三件事：
 
-## 效果逻辑
+- 安装或启动 Petdex Desktop。
+- 安装一只 starter pet。
+- 给本机已检测到的 agent 写入 hooks 和原生 slash command。
+
+安装完成后，打开 Codex / Claude Code / Gemini CLI / OpenCode，在对话里输入：
+
+```text
+/petdesk
+```
+
+常用命令：
+
+| Agent 内命令 | 作用 |
+| --- | --- |
+| `/petdesk` | 智能切换：已启动就收起，未启动就唤醒 |
+| `/petdesk up` | 强制唤醒并启用 hooks |
+| `/petdesk down` | 收起并暂停 hooks |
+| `/petdesk status` | 查看 hooks 状态 |
+| `/petdesk doctor` | 检查安装问题 |
+
+说明：当前 npm/CLI 包名仍沿用上游 `petdex`，所以 shell 里还是 `petdex ...`；agent 里的原生命令是本项目面向用户的 `/petdesk`。
+
+## 默认宠物
+
+本 fork 的默认 starter pet 首选是 `aka-shiba`。如果在线 manifest 里暂时没有 `aka-shiba`，CLI 会回退安装 manifest 中第一只可用宠物，保证用户至少能看到桌面宠物。
+
+桌面端会按这个优先级找宠物：
+
+```text
+~/.petdex/pets/<slug>
+~/.codex/pets/<slug>
+```
+
+当前激活宠物记录在：
+
+```text
+~/.petdex/active.json
+```
+
+如果当前宠物目录里存在 mood sprites，桌面会按 token 心情切换真实姿态；如果不存在，会回退到上游 Petdex 的兼容显示方式。
+
+## 新增自己的宠物
+
+每只宠物是一个目录，最小结构如下：
+
+```text
+~/.petdex/pets/my-pet/
+  pet.json
+  spritesheet.webp
+```
+
+`pet.json` 最小示例：
+
+```json
+{
+  "slug": "my-pet",
+  "displayName": "My Pet"
+}
+```
+
+基础 `spritesheet.webp` 或 `spritesheet.png` 用于普通 idle 动画。要让 token mood 变成真实神态变化，再加上五张 mood idle sprite row：
+
+```text
+~/.petdex/pets/my-pet/moods/energetic.webp
+~/.petdex/pets/my-pet/moods/normal.webp
+~/.petdex/pets/my-pet/moods/tired.webp
+~/.petdex/pets/my-pet/moods/exhausted.webp
+~/.petdex/pets/my-pet/moods/dying.webp
+```
+
+每张 mood 图固定为透明背景 WebP，尺寸 `1152x208`，横向 6 帧，每帧 `192x208`。
+
+开发时可以先生成 mock 姿态测试渲染链路：
+
+```bash
+node .agents/skills/petdex-mood-sprite/scripts/generate-mood-sprites.mjs \
+  my-pet \
+  --mock-postures
+```
+
+如果你用 AI 生成了一张 5x6 mood sheet，可以用脚本切成五张标准 WebP：
+
+```bash
+node .agents/skills/petdex-mood-sprite/scripts/postprocess-ai-mood-sheet.mjs \
+  --input /path/to/generated-5x6-green-screen-sheet.png \
+  --slug my-pet
+```
+
+注意：mock 只用于测试。正式宠物应该为五档 mood 画出明确不同的表情和姿态。
+
+## Token 心情算法
 
 Mood 分档：
 
@@ -29,34 +118,19 @@ Mood 分档：
 | `< 0.90` | `exhausted` | 坐下、塌下去 |
 | `>= 0.90` | `dying` | 趴倒、濒临崩溃 |
 
-桌面应用会查找当前宠物目录下的 mood sprites：
+采样器读取本地 agent 用量：
 
-```text
-~/.petdex/pets/<slug>/moods/energetic.webp
-~/.petdex/pets/<slug>/moods/normal.webp
-~/.petdex/pets/<slug>/moods/tired.webp
-~/.petdex/pets/<slug>/moods/exhausted.webp
-~/.petdex/pets/<slug>/moods/dying.webp
-```
+- Claude Code JSONL transcripts：`~/.claude/projects/**.jsonl`
+- Claude stats cache：`~/.claude/stats-cache.json`
+- Codex archived JSONL transcripts：`~/.codex/archived_sessions/**.jsonl`
 
-每个文件都是透明背景 WebP，尺寸固定为 `1152x208`，也就是 6 个横向排列的 `192x208` idle frames。
+计算优先级：
 
-如果某只宠物没有这些 mood sprites，桌面应用会自动回退到原 Petdex 的 CSS filter 方案，保证旧宠物仍然能显示。
+1. 优先读取原生 usage 字段，例如 `input_tokens`、`output_tokens`、`cache_read_input_tokens`、`cache_creation_input_tokens`。
+2. 没有原生 usage 时，用 `js-tiktoken` 按 `gpt-4o` / `o200k_base` 估算 transcript 文本 token。
+3. tokenizer 不可用时，回退到 `ceil(text.length / 4)`。
 
-## Token 心情算法
-
-核心代码：
-
-- `packages/petdex-desktop/sidecar/token-mood.ts`
-- `packages/petdex-desktop/sidecar/agent-usage.ts`
-
-采样器使用三层策略：
-
-1. 优先读取 agent 日志里的原生 usage 字段，例如 `input_tokens`、`output_tokens`、`cache_read_input_tokens`、`cache_creation_input_tokens`。
-2. 如果没有原生 usage，就用 `js-tiktoken` 按 `gpt-4o` / `o200k_base` tokenizer 估算 transcript 文本 token。
-3. 如果 tokenizer 加载失败，则回退到 `ceil(text.length / 4)` 的字符估算。
-
-计算公式：
+公式：
 
 ```text
 weightedTokens =
@@ -81,21 +155,11 @@ fatigue = clamp(weightedTokens / tokenBudget, 0, 1)
 | Cache creation 权重 | `0.5` |
 | 文本估算权重 | `1` |
 
-默认权重会让 output 和 cache creation 比 cache read 更“累”。这样 mood 更接近 agent 的真实工作强度，而不是简单看 raw token 总数。
+所有扫描都在本地完成，不上传 prompt、response、token 明细或 telemetry。
 
-## 当前支持的数据源
+## 高级配置
 
-当前会读取这些本地数据源：
-
-- Claude Code JSONL transcripts：`~/.claude/projects/**.jsonl`
-- Claude stats cache：`~/.claude/stats-cache.json`
-- Codex archived JSONL transcripts：`~/.codex/archived_sessions/**.jsonl`
-
-扫描器只读取本地文件，只提取数字 usage 和时间戳。不会上传 prompt、response、token 明细或 telemetry。
-
-## 配置方式
-
-启动 desktop 或 sidecar 前设置环境变量即可：
+启动 desktop 或 sidecar 前设置环境变量：
 
 ```bash
 PETDEX_USAGE_MOOD_INTERVAL_MS=30000
@@ -109,13 +173,13 @@ PETDEX_TOKEN_WEIGHT_CACHE_CREATION=0.5
 PETDEX_TOKEN_WEIGHT_TEXT_ESTIMATE=1
 ```
 
-关闭自动 token mood 采样：
+关闭自动 token mood：
 
 ```bash
 PETDEX_USAGE_MOOD=0
 ```
 
-你也可以通过本地 sidecar endpoint 手动设置 mood：
+手动设置 mood：
 
 ```bash
 TOKEN="$(cat ~/.petdex/runtime/update-token)"
@@ -125,40 +189,13 @@ curl -sS http://127.0.0.1:7777/mood \
   --data '{"level":"tired","reason":"manual demo","agent_source":"demo"}'
 ```
 
-手动 mood 默认会保持 5 分钟，然后才允许自动 token mood 覆盖：
+手动 mood 默认保持 5 分钟：
 
 ```bash
 PETDEX_MANUAL_MOOD_HOLD_MS=300000
 ```
 
-## 生成 Mood Sprites
-
-仓库里包含一个本地 Codex skill：
-
-```text
-.agents/skills/petdex-mood-sprite/
-```
-
-生成 mock 数据用于 renderer 链路测试：
-
-```bash
-node .agents/skills/petdex-mood-sprite/scripts/generate-mood-sprites.mjs \
-  aka-shiba \
-  --mock-postures \
-  --out-dir /tmp/aka-shiba-moods
-```
-
-处理 AI 生成的 5x6 绿幕 sprite sheet：
-
-```bash
-node .agents/skills/petdex-mood-sprite/scripts/postprocess-ai-mood-sheet.mjs \
-  --input /path/to/generated-5x6-green-screen-sheet.png \
-  --slug aka-shiba
-```
-
-注意：正式 mood sprites 应该是真实的表情和姿态变化。mock 输出只用于测试渲染链路，不适合作为官方资产。
-
-## 本地构建
+## 本地开发
 
 安装依赖：
 
@@ -183,7 +220,7 @@ cd packages/petdex-desktop
 ZERO_NATIVE_PATH=/absolute/path/to/zero-native zig build
 ```
 
-运行：
+运行本地 desktop：
 
 ```bash
 PETDEX_SIDECAR_DIR="$PWD/packages/petdex-desktop/sidecar" \
@@ -196,22 +233,26 @@ PETDEX_SIDECAR_DIR="$PWD/packages/petdex-desktop/sidecar" \
 
 ```bash
 bun test \
+  packages/petdex-cli/src/hooks/agents.test.ts \
+  packages/petdex-cli/src/hooks/killswitch.test.ts \
+  packages/petdex-cli/src/desktop/install.test.ts \
   packages/petdex-desktop/sidecar/token-mood.test.ts \
   packages/petdex-desktop/sidecar/agent-usage.test.ts \
-  packages/petdex-desktop/sidecar/mood-level.test.ts \
-  packages/petdex-desktop/sidecar/state-queue.test.ts \
-  packages/petdex-desktop/sidecar/update-utils.test.ts \
-  packages/petdex-desktop/sidecar/running-variant.test.ts
+  packages/petdex-desktop/sidecar/mood-level.test.ts
 ```
 
 格式和 lint：
 
 ```bash
 bunx biome check \
+  packages/petdex-cli/src/hooks/agents.ts \
+  packages/petdex-cli/src/hooks/slash-command.ts \
+  packages/petdex-cli/src/hooks/killswitch.ts \
+  packages/petdex-cli/src/desktop/doctor.ts \
+  packages/petdex-cli/src/desktop/install.ts \
+  packages/petdex-cli/bin/petdex.ts \
   packages/petdex-desktop/sidecar/token-mood.ts \
-  packages/petdex-desktop/sidecar/token-mood.test.ts \
   packages/petdex-desktop/sidecar/agent-usage.ts \
-  packages/petdex-desktop/sidecar/agent-usage.test.ts \
   packages/petdex-desktop/sidecar/server.ts
 ```
 
@@ -221,19 +262,13 @@ bunx biome check \
 bun -e "import { scanLocalAgentUsage } from './packages/petdex-desktop/sidecar/agent-usage.ts'; console.log(scanLocalAgentUsage())"
 ```
 
-## 技术调研结论
-
-- `js-tiktoken` 是 OpenAI tiktoken 的 JavaScript port，适合作为本地 token 估算器。
-- OpenAI tiktoken 相关实践建议按模型使用对应 encoding，当前 GPT-4o 系列可使用 `o200k_base`。
-- Claude transcript 通常会暴露 `input_tokens`、`output_tokens`、`cache_read_input_tokens`、`cache_creation_input_tokens` 等 usage 字段，本项目会优先使用这些原生数据。
-
 ## Roadmap
 
-- 增加一个小设置面板，用 UI 调整 token budget 和 weights。
-- 给默认 mood sprites 补完整截图/GIF。
+- 发布独立包名，减少 `petdex` / `petdesk` 命名混用。
+- 给 `aka-shiba` 和 `kabi` 补完整官方 mood sprite 资产。
+- 增加设置面板，用 UI 调整 token budget 和 weights。
 - 支持更多 agent 的本地 transcript 格式。
-- 支持 per-agent pets，让 Codex、Claude Code、Gemini 等分别驱动不同宠物。
-- 打包 macOS `.app`，降低安装门槛。
+- 支持 per-agent pets，让 Codex、Claude Code、Gemini 分别驱动不同宠物。
 
 ## 致谢
 

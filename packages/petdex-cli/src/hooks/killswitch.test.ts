@@ -65,7 +65,7 @@ describe("killswitch", () => {
     const { readFileSync } = await import("node:fs");
     const body = readFileSync(killswitchPath(), "utf8");
     expect(body).toMatch(/petdex hooks on/);
-    expect(body).toMatch(/\/petdex/);
+    expect(body).toMatch(/\/petdesk/);
   });
 
   test("flag file is mode 0600", async () => {

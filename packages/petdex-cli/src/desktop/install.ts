@@ -683,10 +683,10 @@ export type RunInstallDesktopResult = {
 // happy-path setup (install desktop / hooks install / desktop
 // start) silently dead-ends.
 //
-// "boba" is the canonical example slug used elsewhere in the app
+// "aka-shiba" is the canonical example slug used elsewhere in the app
 // (404 page, facet pages). Easy to swap if we later want to make
 // this configurable per-release.
-const DEFAULT_PET_SLUG = "boba";
+const DEFAULT_PET_SLUG = "aka-shiba";
 const PETDEX_URL = process.env.PETDEX_URL ?? "https://petdex.crafter.run";
 
 // Hosts we trust for serving pet assets (spritesheet + pet.json).
@@ -888,7 +888,7 @@ async function tryInstallStarterCandidate(
   ];
 
   // Refuse to touch a pet directory that already exists. The user
-  // could have a partial/custom install at ~/.petdex/pets/boba.
+  // could have a partial/custom install at ~/.petdex/pets/aka-shiba.
   // We don't repair: skip this slug and try the next manifest
   // candidate. The starter flow's whole point is to give the user
   // SOMETHING to render, and another pet is a strictly better

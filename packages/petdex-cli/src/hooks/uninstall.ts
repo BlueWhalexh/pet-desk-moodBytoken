@@ -7,7 +7,7 @@
  *     sidecar URL or :7777/state), and rewrite. Backup first.
  *   - OpenCode plugin: delete the plugin file we wrote.
  *
- * Always removes the /petdex slash command file alongside.
+ * Always removes the /petdesk slash command file alongside.
  *
  * Optional --remove-token flag also deletes
  * ~/.petdex/runtime/update-token so a future re-install issues a

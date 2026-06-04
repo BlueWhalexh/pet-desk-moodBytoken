@@ -474,10 +474,10 @@ describe("installStarterPet", () => {
           JSON.stringify({
             pets: [
               {
-                slug: "boba",
-                displayName: "Boba",
+                slug: "aka-shiba",
+                displayName: "Aka Shiba",
                 spritesheetUrl: "https://evil.example.com/track.gif",
-                petJsonUrl: `${TRUSTED_HOST}/pets/boba/pet.json`,
+                petJsonUrl: `${TRUSTED_HOST}/pets/aka-shiba/pet.json`,
               },
             ],
           }),
@@ -495,8 +495,8 @@ describe("installStarterPet", () => {
 
     expect(result).toBeNull();
     // No directories created — the host check happens before mkdir.
-    expect(existsSync(join(petsDir(), "boba"))).toBe(false);
-    expect(existsSync(join(codexPetsDir(), "boba"))).toBe(false);
+    expect(existsSync(join(petsDir(), "aka-shiba"))).toBe(false);
+    expect(existsSync(join(codexPetsDir(), "aka-shiba"))).toBe(false);
   });
 
   test("aborts when petJsonUrl is on an untrusted host", async () => {
@@ -506,9 +506,9 @@ describe("installStarterPet", () => {
           JSON.stringify({
             pets: [
               {
-                slug: "boba",
-                displayName: "Boba",
-                spritesheetUrl: `${TRUSTED_HOST}/pets/boba/spritesheet.webp`,
+                slug: "aka-shiba",
+                displayName: "Aka Shiba",
+                spritesheetUrl: `${TRUSTED_HOST}/pets/aka-shiba/spritesheet.webp`,
                 petJsonUrl: "http://attacker.lan/pet.json",
               },
             ],
@@ -557,10 +557,10 @@ describe("installStarterPet", () => {
           JSON.stringify({
             pets: [
               {
-                slug: "boba",
-                displayName: "Boba",
-                spritesheetUrl: `${TRUSTED_HOST}/pets/boba/spritesheet.webp`,
-                petJsonUrl: `${TRUSTED_HOST}/pets/boba/pet.json`,
+                slug: "aka-shiba",
+                displayName: "Aka Shiba",
+                spritesheetUrl: `${TRUSTED_HOST}/pets/aka-shiba/spritesheet.webp`,
+                petJsonUrl: `${TRUSTED_HOST}/pets/aka-shiba/pet.json`,
               },
             ],
           }),
@@ -581,9 +581,9 @@ describe("installStarterPet", () => {
       petdexUrl: "https://petdex.test",
     });
 
-    expect(result).toBe("boba");
+    expect(result).toBe("aka-shiba");
     for (const root of [petsDir(), codexPetsDir()]) {
-      const slugDir = join(root, "boba");
+      const slugDir = join(root, "aka-shiba");
       expect(existsSync(join(slugDir, "pet.json"))).toBe(true);
       expect(existsSync(join(slugDir, "spritesheet.webp"))).toBe(true);
       expect(readFileSync(join(slugDir, "pet.json"), "utf8")).toBe(
@@ -601,10 +601,10 @@ describe("installStarterPet", () => {
           JSON.stringify({
             pets: [
               {
-                slug: "boba",
-                displayName: "Boba",
-                spritesheetUrl: `${TRUSTED_HOST}/pets/boba/spritesheet.webp`,
-                petJsonUrl: `${TRUSTED_HOST}/pets/boba/pet.json`,
+                slug: "aka-shiba",
+                displayName: "Aka Shiba",
+                spritesheetUrl: `${TRUSTED_HOST}/pets/aka-shiba/spritesheet.webp`,
+                petJsonUrl: `${TRUSTED_HOST}/pets/aka-shiba/pet.json`,
               },
             ],
           }),
@@ -631,8 +631,8 @@ describe("installStarterPet", () => {
     expect(manifestCalls).toBe(1);
     // Rollback must remove BOTH target directories so the next retry
     // doesn't see a half-installed pet.
-    expect(existsSync(join(petsDir(), "boba"))).toBe(false);
-    expect(existsSync(join(codexPetsDir(), "boba"))).toBe(false);
+    expect(existsSync(join(petsDir(), "aka-shiba"))).toBe(false);
+    expect(existsSync(join(codexPetsDir(), "aka-shiba"))).toBe(false);
   });
 
   test("refuses to overwrite a pre-existing slug directory", async () => {
@@ -640,8 +640,11 @@ describe("installStarterPet", () => {
     // maybe with custom files). The previous rollback path would have
     // mkdir'd over it and rm-rf'd on failure — destroying user data.
     // Now we abort before touching anything if the dir exists.
-    mkdirSync(join(petsDir(), "boba"), { recursive: true });
-    writeFileSync(join(petsDir(), "boba", "user-custom.txt"), "DO NOT TOUCH");
+    mkdirSync(join(petsDir(), "aka-shiba"), { recursive: true });
+    writeFileSync(
+      join(petsDir(), "aka-shiba", "user-custom.txt"),
+      "DO NOT TOUCH",
+    );
 
     let manifestCalls = 0;
     const fetchImpl = makeFetch((url) => {
@@ -651,10 +654,10 @@ describe("installStarterPet", () => {
           JSON.stringify({
             pets: [
               {
-                slug: "boba",
-                displayName: "Boba",
-                spritesheetUrl: `${TRUSTED_HOST}/pets/boba/spritesheet.webp`,
-                petJsonUrl: `${TRUSTED_HOST}/pets/boba/pet.json`,
+                slug: "aka-shiba",
+                displayName: "Aka Shiba",
+                spritesheetUrl: `${TRUSTED_HOST}/pets/aka-shiba/spritesheet.webp`,
+                petJsonUrl: `${TRUSTED_HOST}/pets/aka-shiba/pet.json`,
               },
             ],
           }),
@@ -674,22 +677,24 @@ describe("installStarterPet", () => {
     // there's a slug to install), but the user's existing file is
     // intact.
     expect(manifestCalls).toBe(1);
-    expect(existsSync(join(petsDir(), "boba", "user-custom.txt"))).toBe(true);
+    expect(existsSync(join(petsDir(), "aka-shiba", "user-custom.txt"))).toBe(
+      true,
+    );
     expect(
-      readFileSync(join(petsDir(), "boba", "user-custom.txt"), "utf8"),
+      readFileSync(join(petsDir(), "aka-shiba", "user-custom.txt"), "utf8"),
     ).toBe("DO NOT TOUCH");
   });
 
-  test("falls through to a different manifest pet when boba's slug dir is taken", async () => {
-    // User has a stale ~/.petdex/pets/boba folder (maybe from a
+  test("falls through to a different manifest pet when aka-shiba's slug dir is taken", async () => {
+    // User has a stale ~/.petdex/pets/aka-shiba folder (maybe from a
     // previous incomplete install). The desktop binary won't accept
     // it because hasSpritesheet rejects empty/oversized sprites,
     // but the dir blocks the canonical starter slug. The CLI must
     // try the next manifest entry rather than dead-end.
-    mkdirSync(join(petsDir(), "boba"), { recursive: true });
+    mkdirSync(join(petsDir(), "aka-shiba"), { recursive: true });
     // No spritesheet inside — desktop would skip it on startup.
 
-    let bobaPetJsonFetched = 0;
+    let akaShibaAssetFetches = 0;
     let foxAssetsFetched = 0;
     const fetchImpl = makeFetch((url) => {
       if (url.endsWith("/api/manifest")) {
@@ -697,10 +702,10 @@ describe("installStarterPet", () => {
           JSON.stringify({
             pets: [
               {
-                slug: "boba",
-                displayName: "Boba",
-                spritesheetUrl: `${TRUSTED_HOST}/pets/boba/spritesheet.webp`,
-                petJsonUrl: `${TRUSTED_HOST}/pets/boba/pet.json`,
+                slug: "aka-shiba",
+                displayName: "Aka Shiba",
+                spritesheetUrl: `${TRUSTED_HOST}/pets/aka-shiba/spritesheet.webp`,
+                petJsonUrl: `${TRUSTED_HOST}/pets/aka-shiba/pet.json`,
               },
               {
                 slug: "fox",
@@ -713,9 +718,9 @@ describe("installStarterPet", () => {
           { status: 200 },
         );
       }
-      if (url.includes("/pets/boba/")) {
-        bobaPetJsonFetched += 1;
-        // Should never be called — boba slug is taken, candidate
+      if (url.includes("/pets/aka-shiba/")) {
+        akaShibaAssetFetches += 1;
+        // Should never be called — aka-shiba slug is taken, candidate
         // skipped before any download starts.
         return new Response("should not have been called", { status: 500 });
       }
@@ -736,12 +741,12 @@ describe("installStarterPet", () => {
     });
 
     expect(result).toBe("fox");
-    // We never even tried to download boba's assets — we saw the
+    // We never even tried to download aka-shiba's assets — we saw the
     // existing dir during the dir-free check and moved on.
-    expect(bobaPetJsonFetched).toBe(0);
+    expect(akaShibaAssetFetches).toBe(0);
     expect(foxAssetsFetched).toBe(2);
-    // Stale boba dir is preserved untouched.
-    expect(existsSync(join(petsDir(), "boba"))).toBe(true);
+    // Stale aka-shiba dir is preserved untouched.
+    expect(existsSync(join(petsDir(), "aka-shiba"))).toBe(true);
     // Fox lands in both roots.
     expect(existsSync(join(petsDir(), "fox", "spritesheet.webp"))).toBe(true);
     expect(existsSync(join(codexPetsDir(), "fox", "spritesheet.webp"))).toBe(
@@ -753,7 +758,7 @@ describe("installStarterPet", () => {
     // Edge case: every pet in the manifest already has a stale dir.
     // We can't pick anything to install — the function returns null
     // and the caller surfaces a hint to the user.
-    mkdirSync(join(petsDir(), "boba"), { recursive: true });
+    mkdirSync(join(petsDir(), "aka-shiba"), { recursive: true });
     mkdirSync(join(petsDir(), "fox"), { recursive: true });
 
     const fetchImpl = makeFetch((url) => {
@@ -762,10 +767,10 @@ describe("installStarterPet", () => {
           JSON.stringify({
             pets: [
               {
-                slug: "boba",
-                displayName: "Boba",
-                spritesheetUrl: `${TRUSTED_HOST}/pets/boba/spritesheet.webp`,
-                petJsonUrl: `${TRUSTED_HOST}/pets/boba/pet.json`,
+                slug: "aka-shiba",
+                displayName: "Aka Shiba",
+                spritesheetUrl: `${TRUSTED_HOST}/pets/aka-shiba/spritesheet.webp`,
+                petJsonUrl: `${TRUSTED_HOST}/pets/aka-shiba/pet.json`,
               },
               {
                 slug: "fox",
@@ -799,8 +804,8 @@ describe("installStarterPet", () => {
           JSON.stringify({
             pets: [
               {
-                slug: "boba",
-                displayName: "Boba",
+                slug: "aka-shiba",
+                displayName: "Aka Shiba",
                 spritesheetUrl: "https://attacker.example.com/spritesheet.webp",
                 petJsonUrl: "https://attacker.example.com/pet.json",
               },
@@ -835,10 +840,10 @@ describe("installStarterPet", () => {
     expect(result).toBe("fox");
     expect(existsSync(join(petsDir(), "fox", "spritesheet.webp"))).toBe(true);
     // The poisoned slug must NOT have been touched.
-    expect(existsSync(join(petsDir(), "boba"))).toBe(false);
+    expect(existsSync(join(petsDir(), "aka-shiba"))).toBe(false);
   });
 
-  test("falls back to the first manifest entry when boba is missing", async () => {
+  test("falls back to the first manifest entry when aka-shiba is missing", async () => {
     const fetchImpl = makeFetch((url) => {
       if (url.endsWith("/api/manifest")) {
         return new Response(
@@ -885,7 +890,7 @@ describe("isTrustedAssetUrl", () => {
   test("accepts the R2 public bucket", () => {
     expect(
       isTrustedAssetUrl(
-        "https://pub-94495283df974cfea5e98d6a9e3fa462.r2.dev/pets/boba/spritesheet.webp",
+        "https://pub-94495283df974cfea5e98d6a9e3fa462.r2.dev/pets/aka-shiba/spritesheet.webp",
       ),
     ).toBe(true);
   });
@@ -897,7 +902,7 @@ describe("isTrustedAssetUrl", () => {
   test("rejects http (must be https)", () => {
     expect(
       isTrustedAssetUrl(
-        "http://pub-94495283df974cfea5e98d6a9e3fa462.r2.dev/pets/boba/spritesheet.webp",
+        "http://pub-94495283df974cfea5e98d6a9e3fa462.r2.dev/pets/aka-shiba/spritesheet.webp",
       ),
     ).toBe(false);
   });
@@ -986,18 +991,18 @@ describe("hasAnyInstalledPet usability", () => {
   });
 
   test("returns true when a usable webp exists", async () => {
-    mkdirSync(join(petsDir(), "boba"), { recursive: true });
+    mkdirSync(join(petsDir(), "aka-shiba"), { recursive: true });
     writeFileSync(
-      join(petsDir(), "boba", "spritesheet.webp"),
+      join(petsDir(), "aka-shiba", "spritesheet.webp"),
       Buffer.from("WEBP-SMALL"),
     );
     expect(await _hasAnyInstalledPetForTest()).toBe(true);
   });
 
   test("returns true when a usable png exists", async () => {
-    mkdirSync(join(petsDir(), "boba"), { recursive: true });
+    mkdirSync(join(petsDir(), "aka-shiba"), { recursive: true });
     writeFileSync(
-      join(petsDir(), "boba", "spritesheet.png"),
+      join(petsDir(), "aka-shiba", "spritesheet.png"),
       Buffer.from("PNG-SMALL"),
     );
     expect(await _hasAnyInstalledPetForTest()).toBe(true);

@@ -70,14 +70,14 @@ export type Agent = {
   docsUrl: string;
   /**
    * Where this agent looks for user-defined slash commands. We drop a
-   * /petdex command file here so users can toggle the killswitch from
+   * /petdesk command file here so users can toggle the killswitch from
    * inside their agent without leaving for a shell.
    *
    * Each agent has its own directory:
-   *   - Claude Code:  ~/.claude/commands/petdex.md
-   *   - Codex:        ~/.codex/prompts/petdex.md
-   *   - OpenCode:     ~/.config/opencode/command/petdex.md
-   *   - Gemini:       ~/.gemini/commands/petdex.toml
+   *   - Claude Code:  ~/.claude/commands/petdesk.md
+   *   - Codex:        ~/.codex/prompts/petdesk.md
+   *   - OpenCode:     ~/.config/opencode/command/petdesk.md
+   *   - Gemini:       ~/.gemini/commands/petdesk.toml
    */
   slashCommandPath: string;
   /**
@@ -182,7 +182,7 @@ export const AGENTS: Agent[] = [
     displayName: "Claude Code",
     configDir: path.join(HOME, ".claude"),
     configFile: path.join(HOME, ".claude", "settings.json"),
-    slashCommandPath: path.join(HOME, ".claude", "commands", "petdex.md"),
+    slashCommandPath: path.join(HOME, ".claude", "commands", "petdesk.md"),
     docsUrl: "https://docs.anthropic.com/en/docs/claude-code/hooks",
     hookEntries: [
       { event: "UserPromptSubmit", kind: "user.prompt" },
@@ -277,7 +277,7 @@ export const AGENTS: Agent[] = [
     displayName: "Codex CLI",
     configDir: path.join(HOME, ".codex"),
     configFile: path.join(HOME, ".codex", "hooks.json"),
-    slashCommandPath: path.join(HOME, ".codex", "prompts", "petdex.md"),
+    slashCommandPath: path.join(HOME, ".codex", "prompts", "petdesk.md"),
     docsUrl: "https://developers.openai.com/codex/hooks",
     hookEntries: [
       { event: "UserPromptSubmit", kind: "user.prompt" },
@@ -454,7 +454,7 @@ export const AGENTS: Agent[] = [
     displayName: "Gemini CLI",
     configDir: path.join(HOME, ".gemini"),
     configFile: path.join(HOME, ".gemini", "settings.json"),
-    slashCommandPath: path.join(HOME, ".gemini", "commands", "petdex.toml"),
+    slashCommandPath: path.join(HOME, ".gemini", "commands", "petdesk.toml"),
     docsUrl: "https://google-gemini.github.io/gemini-cli/docs/hooks",
     hookEntries: [
       { event: "BeforeTool", kind: "tool.before" },
@@ -505,7 +505,7 @@ export const AGENTS: Agent[] = [
     // OpenCode plugins live as TS/JS files, not in the JSON config. We treat
     // the plugin path as the "config file" for write/uninstall purposes.
     configFile: path.join(OPENCODE_CONFIG_DIR, "plugins", "petdex.js"),
-    slashCommandPath: path.join(OPENCODE_CONFIG_DIR, "command", "petdex.md"),
+    slashCommandPath: path.join(OPENCODE_CONFIG_DIR, "command", "petdesk.md"),
     docsUrl: "https://opencode.ai/docs/plugins",
     hookEntries: [
       { event: "tool.execute.before", kind: "tool.before" },
@@ -635,7 +635,7 @@ function _curlCommand(
   //
   // Killswitch: if ~/.petdex/runtime/hooks-disabled exists, exit 0
   // before any token read or network attempt. Users toggle it with
-  // `/petdex` from inside their agent (or `petdex hooks toggle`
+  // `/petdesk` from inside their agent (or `petdex hooks toggle`
   // from a shell). Important properties:
   //   - exit 0, NEVER non-zero — a non-zero hook in Claude Code
   //     stains the UI; we want this to be invisible.
@@ -799,7 +799,7 @@ async function postJson(url, body, token) {
 }
 
 async function notify({ state, duration, text }) {
-  // Killswitch: users toggle this with /petdex inside their agent
+  // Killswitch: users toggle this with /petdesk inside their agent
   // (or 'petdex hooks toggle' from a shell). Bail before the token
   // read so the disabled state has zero filesystem cost beyond the
   // existsSync.

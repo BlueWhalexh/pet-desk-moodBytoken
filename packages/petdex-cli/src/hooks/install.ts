@@ -225,7 +225,7 @@ export async function installForAgent(
     if (options.installSlashCommand === false) {
       await uninstallSlashCommand(agent);
     } else {
-      // /petdex slash command — installed alongside the hook config so
+      // /petdesk slash command — installed alongside the hook config so
       // users can toggle the killswitch from inside their agent without
       // dropping to a shell. Idempotent: overwrites our own file, never
       // user-authored content (we own the path under <agent>/commands/).

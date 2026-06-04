@@ -1,10 +1,10 @@
 /**
- * /petdex slash command — installable across every supported agent.
+ * /petdesk slash command — installable across every supported agent.
  *
  * The slash command body is identical for all four agents because
  * each of them shares the same "frontmatter + markdown + $ARGUMENTS"
  * convention. We just drop the file at the right path per agent
- * (see Agent.slashCommandPath) and the agent surfaces /petdex in
+ * (see Agent.slashCommandPath) and the agent surfaces /petdesk in
  * its picker.
  *
  * The command tells the agent to run a shell out to
@@ -28,18 +28,18 @@ import type { Agent } from "./agents.js";
 const PETDEX_INVOKE = `node "$HOME/.petdex/bin/petdex.js"`;
 
 const SLASH_COMMAND_BODY = `---
-description: Wake or sleep the petdex mascot. Toggles the floating pet on/off
+description: Wake or sleep the petdesk mascot. Toggles the floating pet on/off
 ---
 
-The user wants to control the petdex mascot from inside the agent. The mascot is a floating macOS window driven by hooks installed in agent settings. /petdex is a one-shot toggle that flips the entire state in a single command.
+The user wants to control the petdesk mascot from inside the agent. The mascot is a floating macOS window driven by hooks installed in agent settings. /petdesk is a one-shot toggle that flips the entire state in a single command.
 
 Run the matching command using the persisted petdex binary at \`$HOME/.petdex/bin/petdex.js\` (always present after \`petdex hooks install\`):
 
-- \`/petdex\` (no args) → run \`${PETDEX_INVOKE} toggle\`
-- \`/petdex up\` → run \`${PETDEX_INVOKE} up\`
-- \`/petdex down\` → run \`${PETDEX_INVOKE} down\`
-- \`/petdex status\` → run \`${PETDEX_INVOKE} hooks status\`
-- \`/petdex doctor\` → run \`${PETDEX_INVOKE} doctor\`
+- \`/petdesk\` (no args) → run \`${PETDEX_INVOKE} toggle\`
+- \`/petdesk up\` → run \`${PETDEX_INVOKE} up\`
+- \`/petdesk down\` → run \`${PETDEX_INVOKE} down\`
+- \`/petdesk status\` → run \`${PETDEX_INVOKE} hooks status\`
+- \`/petdesk doctor\` → run \`${PETDEX_INVOKE} doctor\`
 
 Show the command output verbatim to the user. Don't reinterpret, don't explain. The CLI's output is already user-facing.
 
@@ -48,18 +48,18 @@ If \`$HOME/.petdex/bin/petdex.js\` doesn't exist, the user hasn't run \`petdex h
 Arguments: \`$ARGUMENTS\`
 `;
 
-const GEMINI_COMMAND_BODY = `description = "Wake or sleep the petdex mascot. Toggles the floating pet on/off"
+const GEMINI_COMMAND_BODY = `description = "Wake or sleep the petdesk mascot. Toggles the floating pet on/off"
 
 prompt = """
-The user wants to control the petdex mascot from inside the agent. The mascot is a floating macOS window driven by hooks installed in agent settings. /petdex is a one-shot toggle that flips the entire state in a single command.
+The user wants to control the petdesk mascot from inside the agent. The mascot is a floating macOS window driven by hooks installed in agent settings. /petdesk is a one-shot toggle that flips the entire state in a single command.
 
 Run the matching command using the persisted petdex binary at \`$HOME/.petdex/bin/petdex.js\` (always present after \`petdex hooks install\`):
 
-- \`/petdex\` (no args) -> run \`${PETDEX_INVOKE} toggle\`
-- \`/petdex up\` -> run \`${PETDEX_INVOKE} up\`
-- \`/petdex down\` -> run \`${PETDEX_INVOKE} down\`
-- \`/petdex status\` -> run \`${PETDEX_INVOKE} hooks status\`
-- \`/petdex doctor\` -> run \`${PETDEX_INVOKE} doctor\`
+- \`/petdesk\` (no args) -> run \`${PETDEX_INVOKE} toggle\`
+- \`/petdesk up\` -> run \`${PETDEX_INVOKE} up\`
+- \`/petdesk down\` -> run \`${PETDEX_INVOKE} down\`
+- \`/petdesk status\` -> run \`${PETDEX_INVOKE} hooks status\`
+- \`/petdesk doctor\` -> run \`${PETDEX_INVOKE} doctor\`
 
 Show the command output verbatim to the user. Don't reinterpret, don't explain. The CLI's output is already user-facing.
 
@@ -78,7 +78,7 @@ const LEGACY_GEMINI_ANTIGRAVITY_WORKFLOW = path.join(
 );
 
 /**
- * Drop the /petdex slash command file at the agent's slash-command
+ * Drop the /petdesk slash command file at the agent's slash-command
  * path. Called from `petdex hooks install` for each selected agent.
  * Idempotent — if the file already exists we just overwrite it
  * (this is OUR file, not user-authored, and the body never depends
@@ -97,7 +97,7 @@ export async function installSlashCommand(agent: Agent): Promise<void> {
 }
 
 /**
- * Remove the /petdex slash command file. Best-effort — missing file
+ * Remove the /petdesk slash command file. Best-effort — missing file
  * is fine, that's the desired post-state.
  */
 export async function uninstallSlashCommand(agent: Agent): Promise<void> {

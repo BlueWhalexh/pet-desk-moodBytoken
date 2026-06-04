@@ -255,7 +255,7 @@ describe("Gemini slash command paths", () => {
   test("uses Gemini CLI commands instead of Antigravity global workflows", () => {
     const agent = AGENTS.find((a) => a.id === "gemini");
     expect(agent?.slashCommandPath).toEndWith(
-      join(".gemini", "commands", "petdex.toml"),
+      join(".gemini", "commands", "petdesk.toml"),
     );
     expect(agent?.slashCommandPath).not.toContain(
       join(".gemini", "antigravity", "global_workflows"),

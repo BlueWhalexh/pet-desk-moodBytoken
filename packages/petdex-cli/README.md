@@ -1,6 +1,6 @@
-# petdex
+# petdex CLI
 
-The Petdex CLI: browse, install, and submit animated pets for [OpenAI Codex](https://openai.com/codex) from your terminal.
+The CLI behind pet-desk-moodBytoken. It installs Petdex Desktop, wires local agent hooks, and lets users wake the desktop pet from their agent with `/petdesk`.
 
 - **Gallery & docs:** <https://petdex.crafter.run>
 - **Repo:** <https://github.com/crafter-station/petdex>
@@ -21,16 +21,14 @@ Requires Node.js 20+ (also runs on Bun).
 ## Quick start
 
 ```sh
-petdex login                       # opens browser, OAuth + PKCE via Clerk
-petdex list                        # browse approved pets
-petdex install boba                # drops boba into ~/.codex/pets/boba/
-petdex submit ~/.codex/pets/boba   # share a single pet
-petdex submit ~/.codex/pets        # bulk submit every subfolder
-petdex whoami                      # confirm signed-in identity
-petdex logout                      # clear stored credentials
+npx petdex@latest init             # install desktop, starter pet, hooks, and /petdesk
+petdex install aka-shiba           # install a pet by slug
+petdex submit ~/.codex/pets/aka-shiba
 ```
 
-After installing a pet, activate it inside Codex: **Settings → Appearance → Pets → Select**. Use `/pet` inside Codex to wake or tuck it away.
+After `init`, open Codex / Claude Code / Gemini CLI / OpenCode and run `/petdesk`.
+
+`aka-shiba` is the preferred starter pet for this fork. If it is unavailable in the online manifest, the installer falls back to the first available pet so the desktop still has something to render.
 
 ## Commands
 
@@ -39,6 +37,7 @@ After installing a pet, activate it inside Codex: **Settings → Appearance → 
 | `petdex login` | Authenticate via Clerk OAuth + PKCE (browser callback). Tokens stored in OS keychain. |
 | `petdex logout` | Clear local credentials. |
 | `petdex whoami` | Print the signed-in user's identity. |
+| `petdex init` | Install/start desktop, install a starter pet, and wire local agent hooks + `/petdesk`. |
 | `petdex list` | List approved pets in the gallery. |
 | `petdex install <slug>` | Install a pet into `~/.codex/pets/<slug>/`. |
 | `petdex submit <path>` | Submit a pet folder, zip, or parent of pets (bulk). |
@@ -49,8 +48,8 @@ After installing a pet, activate it inside Codex: **Settings → Appearance → 
 The CLI accepts three input shapes:
 
 ```sh
-petdex submit ~/.codex/pets/boba       # single folder (must contain pet.json + spritesheet.{webp,png})
-petdex submit ~/Downloads/boba.zip     # single zip with the same root layout
+petdex submit ~/.codex/pets/aka-shiba  # single folder (must contain pet.json + spritesheet.{webp,png})
+petdex submit ~/Downloads/aka-shiba.zip
 petdex submit ~/.codex/pets            # parent folder: every subfolder containing pet.json is submitted
 ```
 
@@ -61,7 +60,7 @@ Per submission the CLI:
 3. PUTs the three files to Cloudflare R2 directly. No body passes through Petdex servers.
 4. Calls `POST /api/cli/submit/register` to record the submission as `pending`. Identity comes from the verified token, never from the body.
 
-A spinner shows progress per pet; a summary lists failures with reasons. Slugs auto-deduplicate (`boba` → `boba-2` → `boba-3` → …) so submissions never rebote on collisions.
+A spinner shows progress per pet; a summary lists failures with reasons. Slugs auto-deduplicate (`aka-shiba` → `aka-shiba-2` → `aka-shiba-3` → …) so submissions never fail on collisions.
 
 ## Validation rules
 
@@ -95,7 +94,7 @@ This CLI distributes pets. It does not generate them. To create one:
 
 1. Open the **Codex desktop app** (download at <https://openai.com/codex>).
 2. Go to **Skills** in the top navbar → install **Hatch Pet**.
-3. In a Codex chat, type `/pet` and describe what you want (e.g. *"a tiny otter sipping bubble tea"*).
+3. In a Codex chat, type `/petdesk` after setup to control the desktop pet. For pet creation, use the Hatch Pet skill flow described in the gallery docs.
 4. Codex generates the spritesheet and animations into `~/.codex/pets/<slug>/`.
 5. Submit it: `petdex submit ~/.codex/pets/<slug>`.
 

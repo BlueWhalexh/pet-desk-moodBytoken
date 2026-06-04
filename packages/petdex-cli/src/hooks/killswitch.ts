@@ -3,7 +3,7 @@
  *
  * When this file exists, the curl hook installed in agent settings
  * exits 0 immediately, before any token read or network attempt.
- * Users toggle it from inside their agent via /petdex, or from a
+ * Users toggle it from inside their agent via /petdesk, or from a
  * shell via `petdex hooks toggle|on|off|status`.
  *
  * Why a flag file instead of an env var or a CLI-side mutation:
@@ -45,7 +45,7 @@ export function setKillswitchState(next: KillswitchState): KillswitchState {
     // their way back to the toggle command.
     writeFileSync(
       file,
-      `# Petdex hook killswitch.\n# Hooks are DISABLED while this file exists.\n# Re-enable: petdex hooks on (or /petdex from inside your agent).\n`,
+      `# Petdex hook killswitch.\n# Hooks are DISABLED while this file exists.\n# Re-enable: petdex hooks on (or /petdesk from inside your agent).\n`,
       { mode: 0o600 },
     );
   } else {

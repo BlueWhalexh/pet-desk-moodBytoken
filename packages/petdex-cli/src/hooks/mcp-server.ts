@@ -214,7 +214,7 @@ async function handleRequest(req: JsonRpcRequest): Promise<void> {
             content: [
               {
                 type: "text",
-                text: "Petdex hooks are disabled. Run /petdex in your agent or `petdex hooks on` to re-enable.",
+                text: "Petdex hooks are disabled. Run /petdesk in your agent or `petdex hooks on` to re-enable.",
               },
             ],
           },

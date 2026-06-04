@@ -251,9 +251,9 @@ function printHelp() {
       `  ${c("Examples")}`,
       `    ${dim("$")} petdex init                            ${dim("# after dragging Petdex.app from the .dmg → just run this")}`,
       `    ${dim("$")} petdex login`,
-      `    ${dim("$")} petdex submit ~/.codex/pets/boba       ${dim("# single folder")}`,
-      `    ${dim("$")} petdex install boba                    ${dim("# install a pet by slug")}`,
-      `    ${dim("$")} petdex install boba doraemon mochi     ${dim("# install several at once")}`,
+      `    ${dim("$")} petdex submit ~/.codex/pets/aka-shiba  ${dim("# single folder")}`,
+      `    ${dim("$")} petdex install aka-shiba               ${dim("# install a pet by slug")}`,
+      `    ${dim("$")} petdex install aka-shiba kabi mochi    ${dim("# install several at once")}`,
       `    ${dim("$")} petdex toggle                          ${dim("# wake or sleep the mascot")}`,
       `    ${dim("$")} petdex doctor                          ${dim("# diagnose install + agents")}`,
       `    ${dim("$")} petdex update                          ${dim("# pull the latest release")}`,
@@ -1350,7 +1350,7 @@ async function cmdHooks(args: string[]) {
         // single next action without leaking sidecar internals.
         console.log("");
         console.log(
-          `${pc.green("✓")} ${pc.bold("All set.")} Open your agent and run ${pc.cyan("/petdex")} to wake the mascot.`,
+          `${pc.green("✓")} ${pc.bold("All set.")} Open your agent and run ${pc.cyan("/petdesk")} to wake the mascot.`,
         );
       }
       break;
@@ -1452,7 +1452,7 @@ function cmdHooksKillswitch(sub: "toggle" | "on" | "off" | "status"): void {
 // Then in all paths: install hooks across detected agents, persist
 // petdex.js snapshot to ~/.petdex/bin/, and start the desktop. Hunter
 // 2026-05-11: previous init only wired hooks, leaving DMG users
-// staring at instructions to "open your agent and run /petdex" with
+// staring at instructions to "open your agent and run /petdesk" with
 // no mascot ever appearing because nobody had launched the desktop.
 async function cmdInit(): Promise<void> {
   emit("cli_init_started", {
@@ -1557,7 +1557,7 @@ async function cmdInit(): Promise<void> {
   if (desktopReady) {
     console.log("");
     console.log(
-      `${pc.green("✓")} ${pc.bold("All set.")} Open your agent and run ${pc.cyan("/petdex")} to wake the mascot.`,
+      `${pc.green("✓")} ${pc.bold("All set.")} Open your agent and run ${pc.cyan("/petdesk")} to wake the mascot.`,
     );
     console.log(
       pc.dim(
@@ -1580,7 +1580,7 @@ function tildeify(p: string): string {
 }
 
 // Wake-up: clears the killswitch AND ensures the desktop is running.
-// This is what /petdex (no args) calls from inside an agent. The
+// This is what /petdesk (no args) calls from inside an agent. The
 // command is idempotent — safe to call when desktop is already up,
 // or when hooks were already enabled.
 async function cmdUp(): Promise<void> {
@@ -1617,7 +1617,7 @@ async function cmdUp(): Promise<void> {
 
 // One-shot toggle: if the mascot is awake (hooks on AND desktop
 // running), this is `down`. Otherwise it's `up`. Drives the
-// /petdex slash with no args — single keystroke flips the whole
+// /petdesk slash with no args — single keystroke flips the whole
 // state. "Awake" requires BOTH because either alone is a degraded
 // state worth flipping out of.
 async function cmdToggle(): Promise<void> {

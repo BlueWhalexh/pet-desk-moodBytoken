@@ -226,7 +226,7 @@ function checkKillswitch(): CheckResult {
       status: "warn",
       label: "Killswitch",
       detail: "DISABLED. Agent hooks are short-circuited.",
-      hint: "Re-enable with `petdex hooks on` or `/petdex on` from inside your agent.",
+      hint: "Re-enable with `petdex hooks on` or `/petdesk on` from inside your agent.",
     };
   }
   return { status: "ok", label: "Killswitch", detail: "hooks enabled" };
@@ -278,7 +278,7 @@ function checkHooksInstalled(): CheckResult[] {
       });
       continue;
     }
-    // Antigravity uses a SKILL.md instead of a /petdex slash command
+    // Antigravity uses a SKILL.md instead of a /petdesk slash command
     if (agent.id === "antigravity") {
       const skillExists = existsSync(antigravitySkillDir());
       results.push({
@@ -297,7 +297,7 @@ function checkHooksInstalled(): CheckResult[] {
       results.push({
         status: "warn",
         label: agent.displayName,
-        detail: "hook installed, but /petdex slash command missing",
+        detail: "hook installed, but /petdesk slash command missing",
         hint: "Re-run `petdex hooks install` to add the slash command.",
       });
       continue;
@@ -305,7 +305,7 @@ function checkHooksInstalled(): CheckResult[] {
     results.push({
       status: "ok",
       label: agent.displayName,
-      detail: "hooks + /petdex installed",
+      detail: "hooks + /petdesk installed",
     });
   }
   return results;
