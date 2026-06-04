@@ -64,7 +64,7 @@ describe("killswitch", () => {
     setKillswitchState("off");
     const { readFileSync } = await import("node:fs");
     const body = readFileSync(killswitchPath(), "utf8");
-    expect(body).toMatch(/petdex hooks on/);
+    expect(body).toMatch(/petdesk hooks on/);
     expect(body).toMatch(/\/petdesk/);
   });
 

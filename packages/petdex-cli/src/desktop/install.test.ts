@@ -416,7 +416,7 @@ describe("resolveDesktopInstallPlan", () => {
     expect(plan.reason).toContain("No Linux desktop binary");
     expect(plan.hint).toContain("issue #296");
     expect(desktopInstallPlanError(plan).message).toContain(
-      "petdex hooks install",
+      "petdesk hooks install",
     );
   });
 });

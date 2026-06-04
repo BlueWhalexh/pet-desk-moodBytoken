@@ -10,23 +10,23 @@ The CLI behind pet-desk-moodBytoken. It installs Petdex Desktop, wires local age
 
 ```sh
 # One-shot via npx (no global install)
-npx -y petdex@latest --help
+npx -y pet-desk-moodbytoken@latest --help
 
-# Or install globally. This exposes both petdex and petdesk.
-npm install -g petdex
+# Or install globally. This exposes the petdesk command.
+npm install -g pet-desk-moodbytoken
 petdesk --help
 ```
 
 Requires Node.js 20+ (also runs on Bun).
 
-`npx` downloads the package into npm's temporary cache and runs its declared `bin`. It does not permanently install `petdesk` into your PATH. If you only used `npx -y petdex@latest init`, use `npx -y petdex@latest doctor` for later checks, or install globally first.
+`npx` downloads the package into npm's temporary cache and runs its declared `bin`. It does not permanently install `petdesk` into your PATH. If you only used `npx -y pet-desk-moodbytoken@latest init`, use `npx -y pet-desk-moodbytoken@latest doctor` for later checks, or install globally first.
 
 ## Quick start
 
 ```sh
-npx -y petdex@latest init          # install desktop, starter pet, hooks, and /petdesk
-petdex install aka-shiba           # install a pet by slug
-petdex submit ~/.codex/pets/aka-shiba
+npx -y pet-desk-moodbytoken@latest init          # install desktop, starter pet, hooks, and /petdesk
+petdesk install aka-shiba           # install a pet by slug
+petdesk submit ~/.codex/pets/aka-shiba
 ```
 
 After `init`, open Codex / Claude Code / Gemini CLI / OpenCode and run `/petdesk`.
@@ -39,23 +39,23 @@ Windows users can run the Node CLI with `npx` as long as Node.js 20+ is installe
 
 | Command | Description |
 | --- | --- |
-| `petdex login` | Authenticate via Clerk OAuth + PKCE (browser callback). Tokens stored in OS keychain. |
-| `petdex logout` | Clear local credentials. |
-| `petdex whoami` | Print the signed-in user's identity. |
-| `petdex init` | Install/start desktop, install a starter pet, and wire local agent hooks + `/petdesk`. |
-| `petdex list` | List approved pets in the gallery. |
-| `petdex install <slug>` | Install a pet into `~/.codex/pets/<slug>/`. |
-| `petdex submit <path>` | Submit a pet folder, zip, or parent of pets (bulk). |
-| `petdex --version` | Print the CLI version. |
+| `petdesk login` | Authenticate via Clerk OAuth + PKCE (browser callback). Tokens stored in OS keychain. |
+| `petdesk logout` | Clear local credentials. |
+| `petdesk whoami` | Print the signed-in user's identity. |
+| `petdesk init` | Install/start desktop, install a starter pet, and wire local agent hooks + `/petdesk`. |
+| `petdesk list` | List approved pets in the gallery. |
+| `petdesk install <slug>` | Install a pet into `~/.codex/pets/<slug>/`. |
+| `petdesk submit <path>` | Submit a pet folder, zip, or parent of pets (bulk). |
+| `petdesk --version` | Print the CLI version. |
 
 ## How `submit` works
 
 The CLI accepts three input shapes:
 
 ```sh
-petdex submit ~/.codex/pets/aka-shiba  # single folder (must contain pet.json + spritesheet.{webp,png})
-petdex submit ~/Downloads/aka-shiba.zip
-petdex submit ~/.codex/pets            # parent folder: every subfolder containing pet.json is submitted
+petdesk submit ~/.codex/pets/aka-shiba  # single folder (must contain pet.json + spritesheet.{webp,png})
+petdesk submit ~/Downloads/aka-shiba.zip
+petdesk submit ~/.codex/pets            # parent folder: every subfolder containing pet.json is submitted
 ```
 
 Per submission the CLI:
@@ -81,7 +81,7 @@ Override the defaults with environment variables when pointing at a non-producti
 PETDEX_URL=https://your-host.example.com \
 CLERK_ISSUER=https://clerk.your-host.example.com \
 CLERK_OAUTH_CLIENT_ID=public_client_id \
-petdex login
+petdesk login
 ```
 
 ## Authentication details
@@ -89,7 +89,7 @@ petdex login
 - OAuth 2.0 Authorization Code with **PKCE** (S256). Public client, no secrets stored on your machine.
 - Localhost callback on a random port (`http://127.0.0.1:0/callback`).
 - Tokens stored in the OS keychain (macOS Keychain, Windows Credential Manager, Linux Secret Service). Falls back to a `chmod 600` file if a keychain is unavailable.
-- Access tokens auto-refresh using the stored refresh token; you stay signed in until you `petdex logout`.
+- Access tokens auto-refresh using the stored refresh token; you stay signed in until you `petdesk logout`.
 
 The flow uses the [`@clerk/cli-auth`](https://github.com/Railly/clerk-cli-auth-example) reference implementation, vendored into this package.
 
@@ -101,7 +101,7 @@ This CLI distributes pets. It does not generate them. To create one:
 2. Go to **Skills** in the top navbar → install **Hatch Pet**.
 3. In a Codex chat, type `/petdesk` after setup to control the desktop pet. For pet creation, use the Hatch Pet skill flow described in the gallery docs.
 4. Codex generates the spritesheet and animations into `~/.codex/pets/<slug>/`.
-5. Submit it: `petdex submit ~/.codex/pets/<slug>`.
+5. Submit it: `petdesk submit ~/.codex/pets/<slug>`.
 
 The full step-by-step (with tips on what makes a great pet) lives at <https://petdex.crafter.run/create>.
 
@@ -138,8 +138,8 @@ node .agents/skills/petdex-mood-sprite/scripts/postprocess-ai-mood-sheet.mjs \
 
 | Symptom | Cause | Fix |
 | --- | --- | --- |
-| `Not signed in` | No tokens or session expired | `petdex login` |
-| `presign 401` | Bearer rejected by Clerk userinfo | `petdex logout && petdex login` |
+| `Not signed in` | No tokens or session expired | `petdesk login` |
+| `presign 401` | Bearer rejected by Clerk userinfo | `petdesk logout && petdesk login` |
 | `presign 429` | 10/24h rate limit hit | Wait 24h or open a [submit-fallback issue](https://github.com/crafter-station/petdex/issues/new?labels=submit-fallback) |
 | `register 400 invalid_spritesheet` | Sprite < 256×256 | Regenerate with bigger dims (recommend 1536×1872) |
 | `register 400 missing_field` | Folder missing `pet.json` or `spritesheet.{webp,png}` | Inspect folder contents, re-export from Codex if needed |
@@ -153,11 +153,11 @@ install path is just `fetch a JSON manifest, write two files to
 
 | Symptom | Cause | Fix |
 | --- | --- | --- |
-| Hangs at `Need to install the following packages: petdex@x` | `npx`'s own confirmation prompt, not a hang. Press `y` or auto-confirm | `npx -y petdex@latest install <slug>` |
+| Hangs at `Need to install the following packages: pet-desk-moodbytoken@x` | `npx`'s own confirmation prompt, not a hang. Press `y` or auto-confirm | `npx -y pet-desk-moodbytoken@latest install <slug>` |
 | `npm ERR! engine Unsupported engine` | Node < 20 | Upgrade Node to 20+ (`nvm install 20` is the easiest path) |
-| `manifest fetch 5xx` / network timeout | Slow connection or corporate/national firewall blocking `petdex.crafter.run` | Set a proxy: `HTTPS_PROXY=http://your.proxy:port npx -y petdex@latest install <slug>` |
+| `manifest fetch 5xx` / network timeout | Slow connection or corporate/national firewall blocking `petdex.crafter.run` | Set a proxy: `HTTPS_PROXY=http://your.proxy:port npx -y pet-desk-moodbytoken@latest install <slug>` |
 | `EACCES: permission denied … ~/.codex/pets/` | Pets dir owned by another user | `sudo chown -R "$USER" ~/.codex` or remove the dir and retry |
-| Windows: `'sh' is not recognized` | CLI version older than 0.1.1 piped through `curl … \| sh` | Upgrade: `npm i -g petdex@latest` or `npx -y petdex@latest install <slug>` |
+| Windows: `'sh' is not recognized` | CLI version older than 0.1.1 piped through `curl … \| sh` | Upgrade: `npm i -g pet-desk-moodbytoken@latest` or `npx -y pet-desk-moodbytoken@latest install <slug>` |
 
 The CLI bundles `@clack/prompts`, `picocolors`, and `jszip` into the
 shipped JS. There is no separate dependency-install step on your

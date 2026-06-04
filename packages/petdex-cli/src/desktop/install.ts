@@ -1,5 +1,5 @@
 /**
- * `petdex install desktop` installs Petdex Desktop from GitHub Releases.
+ * `petdesk install desktop` installs Petdex Desktop from GitHub Releases.
  * Bare binary releases land under ~/.petdex/; DMG-only macOS releases land
  * under ~/Applications/Petdex.app.
  *
@@ -88,13 +88,13 @@ export function desktopBinPath(): string {
   //   2. ~/Applications/Petdex.app/Contents/MacOS/petdex-desktop
   //      → user dropped Petdex.app into their per-user Applications dir
   //   3. ~/.petdex/bin/petdex-desktop[.exe]
-  //      → user ran `petdex install desktop` (or never bothered with the
+  //      → user ran `petdesk install desktop` (or never bothered with the
   //        DMG); on Windows this is the only path
   //
-  // Returning the first that exists lets `petdex up`, `petdex update`,
-  // and `petdex desktop start` find the binary regardless of how the
+  // Returning the first that exists lets `petdesk up`, `petdesk update`,
+  // and `petdesk desktop start` find the binary regardless of how the
   // user installed it. Net effect: DMG-only installs no longer need a
-  // follow-up `npx petdex install desktop` to make the CLI commands
+  // follow-up `npx -y pet-desk-moodbytoken install desktop` to make the CLI commands
   // work.
   const ext = nodePlatform() === "win32" ? ".exe" : "";
   if (nodePlatform() === "darwin") {
@@ -122,7 +122,7 @@ export function sidecarPath(): string {
   // bundled sidecar (Contents/Resources/sidecar/server.js) when present,
   // fall back to the CLI-installed bare path. This matches what the Zig
   // binary does at runtime (resolveSidecarDir checks Contents/Resources
-  // first when running inside an .app), so `petdex doctor` and the
+  // first when running inside an .app), so `petdesk doctor` and the
   // sidecar-status checks find the same file the desktop actually loads.
   if (nodePlatform() === "darwin") {
     const home = homeDir();
@@ -255,7 +255,7 @@ export function resolveDesktopInstallPlan(
       kind: "unsupported",
       target,
       reason: `No Linux desktop binary for ${target.archLabel} in ${release.tag_name}.`,
-      hint: "Hooks-only setup still works on Linux: run `petdex hooks install`. Desktop Linux support is tracked in issue #296.",
+      hint: "Hooks-only setup still works on Linux: run `petdesk hooks install`. Desktop Linux support is tracked in issue #296.",
     };
   }
 
@@ -263,7 +263,7 @@ export function resolveDesktopInstallPlan(
     kind: "unsupported",
     target,
     reason: `No desktop binary for ${target.assetSuffix} in ${release.tag_name}.`,
-    hint: "Run `petdex hooks install` for hooks-only setup, or download a supported desktop build from https://petdex.crafter.run/download.",
+    hint: "Run `petdesk hooks install` for hooks-only setup, or download a supported desktop build from https://petdex.crafter.run/download.",
   };
 }
 
@@ -677,7 +677,7 @@ export type RunInstallDesktopResult = {
 };
 
 // Slug we install when the user has no pets at all and ran
-// `petdex install desktop` from the default /download flow (no
+// `petdesk install desktop` from the default /download flow (no
 // ?next=install/<slug> hint). Without this fallback the desktop
 // binary exits at startup with "No pets found", and the
 // happy-path setup (install desktop / hooks install / desktop
@@ -734,7 +734,7 @@ function codexPetsRoot(): string {
 // Same size cap as MAX_PET_BYTES in main.zig. Spritesheets larger
 // than this fail loadSpritesheet and crash the desktop on startup,
 // so they don't count as a "usable" pet from the CLI's perspective
-// either — `petdex install desktop` should treat that user as
+// either — `petdesk install desktop` should treat that user as
 // having no pets and download the starter.
 const MAX_PET_BYTES = 16 * 1024 * 1024;
 
@@ -760,8 +760,8 @@ function isPetUsable(slugDir: string): boolean {
 // True only if at least one pet directory under either canonical
 // pets root has a usable spritesheet under MAX_PET_BYTES. The
 // previous "any path exists" check let a stale/oversized sprite
-// count as "installed" — `petdex install desktop` would then skip
-// the starter download, and `petdex desktop start` would crash on
+// count as "installed" — `petdesk install desktop` would then skip
+// the starter download, and `petdesk desktop start` would crash on
 // the unreadable file.
 export async function _hasAnyInstalledPetForTest(): Promise<boolean> {
   return hasAnyInstalledPet();
@@ -795,8 +795,8 @@ export async function ensureStarterPet(): Promise<StarterPetResult> {
 }
 
 // Best-effort install of the canonical starter pet. Called at the
-// tail of `petdex install desktop` so the user gets something to
-// see when they run `petdex desktop start`. Failures are non-fatal
+// tail of `petdesk install desktop` so the user gets something to
+// see when they run `petdesk desktop start`. Failures are non-fatal
 // — the binary still landed on disk and the user can install a pet
 // manually. Returns the slug it installed, or null if it skipped
 // or failed.
@@ -962,7 +962,7 @@ async function tryInstallStarterCandidate(
 }
 
 export async function runInstallDesktop(): Promise<RunInstallDesktopResult> {
-  p.intro(pc.bgMagenta(pc.white(" petdex install desktop ")));
+  p.intro(pc.bgMagenta(pc.white(" petdesk install desktop ")));
 
   const target = detectTarget();
   p.log.info(`Platform: ${pc.cyan(`${target.osLabel} ${target.archLabel}`)}`);
@@ -1020,8 +1020,8 @@ export async function runInstallDesktop(): Promise<RunInstallDesktopResult> {
   await writeFile(versionFile, `${release.tag_name}\n`);
 
   // Make sure the user has at least one pet to look at when they
-  // run `petdex desktop start`. Without this, a fresh install (no
-  // ?next=install/<slug> hint, no manual `petdex install <slug>`)
+  // run `petdesk desktop start`. Without this, a fresh install (no
+  // ?next=install/<slug> hint, no manual `petdesk install <slug>`)
   // exits at startup with "No pets found, install one with..." —
   // the documented happy path silently dead-ends.
   const ps = p.spinner();
@@ -1033,16 +1033,16 @@ export async function runInstallDesktop(): Promise<RunInstallDesktopResult> {
     ps.stop(`${pc.green("✓")} Pet library ready`);
   } else {
     ps.stop(
-      `${pc.yellow("!")} Could not download a starter pet. Run \`petdex install <slug>\` before \`petdex desktop start\`.`,
+      `${pc.yellow("!")} Could not download a starter pet. Run \`petdesk install <slug>\` before \`petdesk desktop start\`.`,
     );
   }
 
   const nextLines = [
     `Run it with:`,
-    `  ${pc.cyan("petdex desktop start")}`,
+    `  ${pc.cyan("petdesk desktop start")}`,
     "",
     `Or wire it into your coding agents:`,
-    `  ${pc.cyan("petdex hooks install")}`,
+    `  ${pc.cyan("petdesk hooks install")}`,
   ];
   p.note(nextLines.join("\n"), "Next");
 

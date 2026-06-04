@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "petdex",
+      "name": "pet-desk-moodbytoken",
       "dependencies": {
         "@clack/prompts": "^1.3.0",
         "jszip": "^3.10.1",

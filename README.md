@@ -11,7 +11,7 @@
 目标使用方式是：安装一次，然后在 agent 里直接输入 `/petdesk`。
 
 ```bash
-npx -y petdex@latest init
+npx -y pet-desk-moodbytoken@latest init
 ```
 
 `init` 会尽量完成三件事：
@@ -36,15 +36,15 @@ npx -y petdex@latest init
 | `/petdesk status` | 查看 hooks 状态 |
 | `/petdesk doctor` | 检查安装问题 |
 
-说明：`npx` 是一次性下载并运行 npm 包，不会把命令永久安装到你的 PATH。当前已发布包名仍沿用上游 `petdex`，所以一次性运行用 `npx -y petdex@latest ...`。发布后的 CLI 包会同时提供 `petdex` 和 `petdesk` 两个 shell 命令；全局安装后可以直接用：
+说明：`npx` 是一次性下载并运行 npm 包，不会把命令永久安装到你的 PATH。为了避免和上游 Petdex 的 `petdex` 包名、全局命令冲突，本项目计划使用独立 npm 包名 `pet-desk-moodbytoken`，并只暴露 `petdesk` 这个 shell 命令。全局安装后可以直接用：
 
 ```bash
-npm install -g petdex
+npm install -g pet-desk-moodbytoken
 petdesk init
 petdesk doctor
 ```
 
-如果你只跑过 `npx -y petdex@latest init`，然后在普通终端里输入 `petdesk` 找不到，这是正常的：`npx` 没有做全局安装。此时继续用 `npx -y petdex@latest doctor`，或者执行上面的全局安装。
+如果你只跑过 `npx -y pet-desk-moodbytoken@latest init`，然后在普通终端里输入 `petdesk` 找不到，这是正常的：`npx` 没有做全局安装。此时继续用 `npx -y pet-desk-moodbytoken@latest doctor`，或者执行上面的全局安装。
 
 Windows 用户也可以用 `npx` 运行 Node CLI；需要 Node.js 20+。桌面宠物是否能完整启动取决于当前 release 是否提供 `win32` desktop 资产和目标 agent 的 hooks 支持。当前最稳定路径仍是 macOS；Windows 可以先按 CLI / hooks-only 路径验证，遇到桌面二进制缺失时 `doctor` 会提示。
 
@@ -74,13 +74,13 @@ Windows 用户也可以用 `npx` 运行 Node CLI；需要 Node.js 20+。桌面�
 从商店安装：
 
 ```bash
-npx -y petdex@latest install <slug>
+npx -y pet-desk-moodbytoken@latest install <slug>
 ```
 
 例如：
 
 ```bash
-npx -y petdex@latest install aka-shiba
+npx -y pet-desk-moodbytoken@latest install aka-shiba
 ```
 
 安装后宠物会落到：

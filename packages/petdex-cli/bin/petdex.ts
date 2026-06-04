@@ -112,7 +112,7 @@ const VERSION = "0.4.1";
 
 // ─── entrypoint ────────────────────────────────────────────────────────────
 main().catch((err) => {
-  p.cancel(`petdex: ${(err as Error).message}`);
+  p.cancel(`petdesk: ${(err as Error).message}`);
   process.exit(1);
 });
 
@@ -131,7 +131,7 @@ async function main() {
     return;
   }
 
-  // `petdex mcp-server` is also a hot path run as a subprocess by
+  // `petdesk mcp-server` is also a hot path run as a subprocess by
   // Antigravity. Any stdout output (telemetry notice, help text)
   // before the client sends `initialize` breaks the MCP handshake.
   if (cmd === "mcp-server") {
@@ -145,7 +145,7 @@ async function main() {
     return;
   }
 
-  // Meta commands must produce machine-readable output. `petdex --version`
+  // Meta commands must produce machine-readable output. `petdesk --version`
   // is parsed by package managers and CI scripts; the multi-line telemetry
   // notice would corrupt that. `telemetry on|off|status` manages the
   // notice itself, so triggering it there creates a confusing UX. The
@@ -223,11 +223,10 @@ function printHelp() {
   console.log(
     [
       "",
-      `  ${pc.bold(pc.magenta("petdex"))} ${dim(VERSION)} ${dim("Petdesk / Codex pet gallery CLI")}`,
+      `  ${pc.bold(pc.magenta("petdesk"))} ${dim(VERSION)} ${dim("Petdesk / Codex pet gallery CLI")}`,
       "",
       `  ${c("Usage")}`,
-      `    petdex <command> [args]`,
-      `    petdesk <command> [args] ${dim("(global install alias)")}`,
+      `    petdesk <command> [args]`,
       "",
       `  ${c("Commands")}`,
       `    ${pc.bold("init")}               First-run setup: wires hooks across your agents AND wakes the mascot ${pc.green("(start here)")}`,
@@ -250,14 +249,14 @@ function printHelp() {
       `    ${pc.bold("telemetry")} [on|off|status]  Manage anonymous usage telemetry`,
       "",
       `  ${c("Examples")}`,
-      `    ${dim("$")} petdex init                            ${dim("# after dragging Petdex.app from the .dmg → just run this")}`,
-      `    ${dim("$")} petdex login`,
-      `    ${dim("$")} petdex submit ~/.codex/pets/aka-shiba  ${dim("# single folder")}`,
-      `    ${dim("$")} petdex install aka-shiba               ${dim("# install a pet by slug")}`,
-      `    ${dim("$")} petdex install aka-shiba kabi mochi    ${dim("# install several at once")}`,
-      `    ${dim("$")} petdex toggle                          ${dim("# wake or sleep the mascot")}`,
-      `    ${dim("$")} petdex doctor                          ${dim("# diagnose install + agents")}`,
-      `    ${dim("$")} petdex update                          ${dim("# pull the latest release")}`,
+      `    ${dim("$")} petdesk init                            ${dim("# after dragging Petdex.app from the .dmg → just run this")}`,
+      `    ${dim("$")} petdesk login`,
+      `    ${dim("$")} petdesk submit ~/.codex/pets/aka-shiba  ${dim("# single folder")}`,
+      `    ${dim("$")} petdesk install aka-shiba               ${dim("# install a pet by slug")}`,
+      `    ${dim("$")} petdesk install aka-shiba kabi mochi    ${dim("# install several at once")}`,
+      `    ${dim("$")} petdesk toggle                          ${dim("# wake or sleep the mascot")}`,
+      `    ${dim("$")} petdesk doctor                          ${dim("# diagnose install + agents")}`,
+      `    ${dim("$")} petdesk update                          ${dim("# pull the latest release")}`,
       "",
       `  ${dim("Gallery & docs:")} ${pc.underline(PETDEX_URL)}`,
       "",
@@ -268,7 +267,7 @@ function printHelp() {
 // ─── commands ──────────────────────────────────────────────────────────────
 
 async function cmdLogin() {
-  p.intro(pc.bgMagenta(pc.white(" petdex login ")));
+  p.intro(pc.bgMagenta(pc.white(" petdesk login ")));
   const s = p.spinner();
   s.start("Opening your browser to sign in with Clerk");
   try {
@@ -277,7 +276,7 @@ async function cmdLogin() {
     const label = firstString(user.email, user.username, user.sub) ?? "unknown";
     s.stop(`${pc.green("✓ ")}Signed in as ${pc.cyan(label)}`);
     p.outro(
-      `Try ${pc.cyan("petdex submit ~/.codex/pets")} to share your pets.`,
+      `Try ${pc.cyan("petdesk submit ~/.codex/pets")} to share your pets.`,
     );
   } catch (err) {
     s.stop(pc.red("× login failed"));
@@ -309,7 +308,7 @@ async function cmdWhoami() {
       "Signed in",
     );
   } catch {
-    p.cancel(`Not signed in. Run ${pc.cyan("petdex login")}.`);
+    p.cancel(`Not signed in. Run ${pc.cyan("petdesk login")}.`);
     process.exit(1);
   }
 }
@@ -389,7 +388,7 @@ async function cmdInstall(args: string[]) {
   const first = args[0];
   if (!first) {
     p.cancel(
-      `Usage: ${pc.cyan("petdex install <slug> [slug...]")} or ${pc.cyan("petdex install desktop")}`,
+      `Usage: ${pc.cyan("petdesk install <slug> [slug...]")} or ${pc.cyan("petdesk install desktop")}`,
     );
     process.exit(1);
   }
@@ -437,7 +436,7 @@ async function cmdInstall(args: string[]) {
   if (found.length === 0) {
     s.stop(pc.red("none found"));
     p.cancel(
-      `No pets matched. Try ${pc.cyan("petdex list")} to see what's available.`,
+      `No pets matched. Try ${pc.cyan("petdesk list")} to see what's available.`,
     );
     process.exit(1);
   }
@@ -542,7 +541,7 @@ async function cmdList() {
   });
   console.log(lines.join("\n"));
   console.log(
-    `\n${pc.dim("Install with")} ${pc.cyan("petdex install <slug>")}\n${pc.dim("Browse:")} ${pc.underline(PETDEX_URL)}`,
+    `\n${pc.dim("Install with")} ${pc.cyan("petdesk install <slug>")}\n${pc.dim("Browse:")} ${pc.underline(PETDEX_URL)}`,
   );
 }
 
@@ -550,7 +549,7 @@ async function cmdSubmit(args: string[]) {
   const positionals = args.filter((a) => !a.startsWith("--"));
   const target = positionals[0];
   if (!target) {
-    p.cancel(`Usage: ${pc.cyan("petdex submit <path> [--force]")}`);
+    p.cancel(`Usage: ${pc.cyan("petdesk submit <path> [--force]")}`);
     process.exit(1);
   }
 
@@ -560,12 +559,12 @@ async function cmdSubmit(args: string[]) {
   try {
     const t = await auth.getAccessToken();
     if (!t) {
-      p.cancel(`Not signed in. Run ${pc.cyan("petdex login")}.`);
+      p.cancel(`Not signed in. Run ${pc.cyan("petdesk login")}.`);
       process.exit(1);
     }
     token = t;
   } catch {
-    p.cancel(`Not signed in. Run ${pc.cyan("petdex login")}.`);
+    p.cancel(`Not signed in. Run ${pc.cyan("petdesk login")}.`);
     process.exit(1);
   }
   let profileUrl = PETDEX_URL;
@@ -582,7 +581,7 @@ async function cmdSubmit(args: string[]) {
     process.exit(1);
   }
 
-  p.intro(pc.bgMagenta(pc.white(" petdex submit ")));
+  p.intro(pc.bgMagenta(pc.white(" petdesk submit ")));
   const scan = p.spinner();
   scan.start(`Scanning ${absPath}`);
   const candidates = await collectCandidates(absPath, stats.isDirectory());
@@ -717,7 +716,7 @@ async function cmdEdit(args: string[]): Promise<void> {
   const slug = positionals[0];
   if (!slug) {
     p.cancel(
-      `Usage: ${pc.cyan('petdex edit <slug> [--desc "..."] [--displayName "..."] [--sprite ./new.webp] [--meta ./pet.json] [--zip ./pet.zip]')}`,
+      `Usage: ${pc.cyan('petdesk edit <slug> [--desc "..."] [--displayName "..."] [--sprite ./new.webp] [--meta ./pet.json] [--zip ./pet.zip]')}`,
     );
     process.exit(1);
   }
@@ -727,12 +726,12 @@ async function cmdEdit(args: string[]): Promise<void> {
   try {
     const t = await auth.getAccessToken();
     if (!t) {
-      p.cancel(`Not signed in. Run ${pc.cyan("petdex login")}.`);
+      p.cancel(`Not signed in. Run ${pc.cyan("petdesk login")}.`);
       process.exit(1);
     }
     token = t;
   } catch {
-    p.cancel(`Not signed in. Run ${pc.cyan("petdex login")}.`);
+    p.cancel(`Not signed in. Run ${pc.cyan("petdesk login")}.`);
     process.exit(1);
   }
 
@@ -754,7 +753,7 @@ async function cmdEdit(args: string[]): Promise<void> {
     process.exit(1);
   }
 
-  p.intro(pc.bgMagenta(pc.white(" petdex edit ")));
+  p.intro(pc.bgMagenta(pc.white(" petdesk edit ")));
   const s = p.spinner();
   s.start(`Resolving ${slug}`);
 
@@ -1194,7 +1193,7 @@ function translateLoginError(message: string): string {
     return [
       "Clerk OAuth rejected this CLI build (invalid_client).",
       "This usually means your installed CLI is out of date. Try:",
-      "  npm cache clean --force && npx -y petdex@latest login",
+      "  npm cache clean --force && npx -y pet-desk-moodbytoken@latest login",
       "If it still fails: https://github.com/crafter-station/petdex/issues",
     ].join("\n");
   }
@@ -1205,7 +1204,7 @@ function translateLoginError(message: string): string {
     return [
       "OAuth callback was rejected by Clerk (invalid_grant).",
       "Common cause: you closed the browser before approving, or the local",
-      "callback server timed out. Try `petdex login` again.",
+      "callback server timed out. Try `petdesk login` again.",
     ].join("\n");
   }
   if (m.includes("redirect_uri") && m.includes("pre-registered")) {
@@ -1372,7 +1371,7 @@ async function cmdHooks(args: string[]) {
       // Non-interactive re-write for already-wired agents. Picks up
       // changes to slash command body, hook templates, or the
       // persisted binary without a fresh `init`. Used after
-      // `petdex update` and as a manual recovery command.
+      // `petdesk update` and as a manual recovery command.
       const { runRefresh } = await import("../src/hooks/refresh");
       const result = await runRefresh();
       if (result.binaryPersisted) {
@@ -1395,7 +1394,7 @@ async function cmdHooks(args: string[]) {
       console.log("");
       if (totalRefreshed === 0) {
         console.log(
-          `${pc.dim("No wired agents found. Run")} ${pc.cyan("petdex init")} ${pc.dim("first.")}`,
+          `${pc.dim("No wired agents found. Run")} ${pc.cyan("petdesk init")} ${pc.dim("first.")}`,
         );
       } else {
         console.log(
@@ -1433,7 +1432,7 @@ function cmdHooksKillswitch(sub: "toggle" | "on" | "off" | "status"): void {
     console.log(`${pc.yellow("○")} Petdex hooks are ${pc.bold("DISABLED")}`);
     console.log(
       pc.dim(
-        `  agent hooks short-circuit before any network call. Re-enable: petdex hooks on`,
+        `  agent hooks short-circuit before any network call. Re-enable: petdesk hooks on`,
       ),
     );
   }
@@ -1525,7 +1524,7 @@ async function cmdInit(): Promise<void> {
         );
         console.log(
           pc.dim(
-            `  Open ${pc.cyan("/Applications/Petdex.app")} once manually, then re-run ${pc.cyan("petdex up")}.`,
+            `  Open ${pc.cyan("/Applications/Petdex.app")} once manually, then re-run ${pc.cyan("petdesk up")}.`,
           ),
         );
       }
@@ -1562,7 +1561,7 @@ async function cmdInit(): Promise<void> {
     );
     console.log(
       pc.dim(
-        `  Or from a shell: ${pc.cyan("petdex up")} (force-wake) · ${pc.cyan("petdex toggle")} (smart wake/sleep)`,
+        `  Or from a shell: ${pc.cyan("petdesk up")} (force-wake) · ${pc.cyan("petdesk toggle")} (smart wake/sleep)`,
       ),
     );
   } else {
@@ -1570,7 +1569,7 @@ async function cmdInit(): Promise<void> {
     console.log(
       `${pc.yellow("!")} Hooks-only setup finished. Desktop still needs a supported build for this platform.`,
     );
-    console.log(pc.dim(`  Try again later with ${pc.cyan("petdex update")}.`));
+    console.log(pc.dim(`  Try again later with ${pc.cyan("petdesk update")}.`));
   }
 }
 
@@ -1610,7 +1609,7 @@ async function cmdUp(): Promise<void> {
     console.log(`${pc.yellow("!")} ${result.reason}`);
     console.log(
       pc.dim(
-        `  Install the binary first: ${pc.cyan("petdex install desktop")}`,
+        `  Install the binary first: ${pc.cyan("petdesk install desktop")}`,
       ),
     );
   }
@@ -1658,10 +1657,10 @@ function printHooksHelp() {
   console.log(
     [
       "",
-      `  ${pc.bold(pc.magenta("petdex hooks"))}`,
+      `  ${pc.bold(pc.magenta("petdesk hooks"))}`,
       "",
       `  ${c("Usage")}`,
-      `    petdex hooks <command>`,
+      `    petdesk hooks <command>`,
       "",
       `  ${c("Commands")}`,
       `    ${pc.bold("install")}              Wire petdex into your coding agents`,
@@ -1673,9 +1672,9 @@ function printHooksHelp() {
       `    ${pc.bold("status")}               Show whether hooks are currently enabled`,
       "",
       `  ${c("Examples")}`,
-      `    ${dim("$")} petdex hooks install`,
-      `    ${dim("$")} petdex hooks toggle`,
-      `    ${dim("$")} petdex hooks status`,
+      `    ${dim("$")} petdesk hooks install`,
+      `    ${dim("$")} petdesk hooks toggle`,
+      `    ${dim("$")} petdesk hooks status`,
       "",
     ].join("\n"),
   );
@@ -1713,10 +1712,10 @@ function printDesktopHelp() {
   console.log(
     [
       "",
-      `  ${pc.bold(pc.magenta("petdex desktop"))}`,
+      `  ${pc.bold(pc.magenta("petdesk desktop"))}`,
       "",
       `  ${c("Usage")}`,
-      `    petdex desktop <command>`,
+      `    petdesk desktop <command>`,
       "",
       `  ${c("Commands")}`,
       `    ${pc.bold("start")}     Launch petdex-desktop in the background`,
@@ -1724,9 +1723,9 @@ function printDesktopHelp() {
       `    ${pc.bold("status")}    Show whether petdex-desktop is running`,
       "",
       `  ${c("Examples")}`,
-      `    ${dim("$")} petdex desktop start`,
-      `    ${dim("$")} petdex desktop status`,
-      `    ${dim("$")} petdex desktop stop`,
+      `    ${dim("$")} petdesk desktop start`,
+      `    ${dim("$")} petdesk desktop status`,
+      `    ${dim("$")} petdesk desktop stop`,
       "",
     ].join("\n"),
   );
@@ -1749,7 +1748,7 @@ function cmdTelemetry(args: string[]): void {
     } else {
       console.error(
         pc.red(
-          `${pc.bold("Failed to persist preference.")} ~/.petdex/telemetry.json is not writable. Check filesystem permissions, then run \`petdex telemetry ${sub}\` again.`,
+          `${pc.bold("Failed to persist preference.")} ~/.petdex/telemetry.json is not writable. Check filesystem permissions, then run \`petdesk telemetry ${sub}\` again.`,
         ),
       );
       process.exit(1);
@@ -1760,7 +1759,7 @@ function cmdTelemetry(args: string[]): void {
     if (status.install_id) console.log(`Install ID: ${status.install_id}`);
   } else {
     console.error(pc.red(`Unknown telemetry subcommand: ${sub}`));
-    console.error("Use: petdex telemetry [on|off|status]");
+    console.error("Use: petdesk telemetry [on|off|status]");
     process.exit(1);
   }
 }

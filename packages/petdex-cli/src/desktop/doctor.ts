@@ -1,5 +1,5 @@
 /**
- * `petdex doctor` — diagnostic for the full petdex install.
+ * `petdesk doctor` — diagnostic for the full petdesk install.
  *
  * Designed to be the first thing a confused user runs. Each check
  * answers a yes/no question and (when failing) suggests the
@@ -47,7 +47,7 @@ function checkBinary(): CheckResult {
       status: "fail",
       label: "Desktop binary",
       detail: `not found at ${bin}`,
-      hint: "Run `petdex install desktop` to download it.",
+      hint: "Run `petdesk install desktop` to download it.",
     };
   }
   try {
@@ -66,7 +66,7 @@ function checkBinary(): CheckResult {
       status: "fail",
       label: "Desktop binary",
       detail: `${bin} unreadable`,
-      hint: "Reinstall: `petdex install desktop`",
+      hint: "Reinstall: `petdesk install desktop`",
     };
   }
   return { status: "ok", label: "Desktop binary", detail: bin };
@@ -79,7 +79,7 @@ function checkSidecar(): CheckResult {
       status: "fail",
       label: "Sidecar bundle",
       detail: `not found at ${sc}`,
-      hint: "Reinstall: `petdex install desktop`",
+      hint: "Reinstall: `petdesk install desktop`",
     };
   }
   return { status: "ok", label: "Sidecar bundle", detail: sc };
@@ -95,7 +95,7 @@ async function checkSidecarReachable(): Promise<CheckResult> {
         status: "warn",
         label: "Sidecar reachable",
         detail: `:7777 responded ${res.status}`,
-        hint: "Restart: `petdex desktop stop && petdex desktop start`",
+        hint: "Restart: `petdesk desktop stop && petdesk desktop start`",
       };
     }
     const body = (await res.json().catch(() => null)) as {
@@ -119,7 +119,7 @@ async function checkSidecarReachable(): Promise<CheckResult> {
       status: "info",
       label: "Sidecar reachable",
       detail: "not running (this is fine if you haven't started the desktop)",
-      hint: "Start with `petdex desktop start`",
+      hint: "Start with `petdesk desktop start`",
     };
   }
 }
@@ -152,7 +152,7 @@ function checkPidFile(): CheckResult {
       status: "warn",
       label: "PID file",
       detail: "legacy bare-pid format detected",
-      hint: "Run `petdex desktop start` to rewrite it in the new format.",
+      hint: "Run `petdesk desktop start` to rewrite it in the new format.",
     };
   }
   try {
@@ -196,7 +196,7 @@ function checkToken(): CheckResult {
         status: "warn",
         label: "Update token",
         detail: "present but suspiciously short",
-        hint: `Stop the desktop and run \`petdex desktop start\` to regenerate.`,
+        hint: `Stop the desktop and run \`petdesk desktop start\` to regenerate.`,
       };
     }
     const stat = statSync(tp);
@@ -226,7 +226,7 @@ function checkKillswitch(): CheckResult {
       status: "warn",
       label: "Killswitch",
       detail: "DISABLED. Agent hooks are short-circuited.",
-      hint: "Re-enable with `petdex hooks on` or `/petdesk on` from inside your agent.",
+      hint: "Re-enable with `petdesk hooks on` or `/petdesk on` from inside your agent.",
     };
   }
   return { status: "ok", label: "Killswitch", detail: "hooks enabled" };
@@ -274,7 +274,7 @@ function checkHooksInstalled(): CheckResult[] {
         status: "warn",
         label: agent.displayName,
         detail: "petdex hook NOT detected",
-        hint: "Run `petdex hooks install`",
+        hint: "Run `petdesk hooks install`",
       });
       continue;
     }
@@ -289,7 +289,7 @@ function checkHooksInstalled(): CheckResult[] {
           : "MCP server configured, but Skill not found",
         hint: skillExists
           ? undefined
-          : "Re-run `petdex hooks install` to install the Agent Skill.",
+          : "Re-run `petdesk hooks install` to install the Agent Skill.",
       });
       continue;
     }
@@ -298,7 +298,7 @@ function checkHooksInstalled(): CheckResult[] {
         status: "warn",
         label: agent.displayName,
         detail: "hook installed, but /petdesk slash command missing",
-        hint: "Re-run `petdex hooks install` to add the slash command.",
+        hint: "Re-run `petdesk hooks install` to add the slash command.",
       });
       continue;
     }
@@ -331,7 +331,7 @@ function checkCodexFeatureFlag(): CheckResult {
   }
   try {
     const text = readFileSync(tomlPath, "utf8");
-    // Naive but matches `petdex hooks install`'s own inspectFeaturesCodexHooks.
+    // Naive but matches `petdesk hooks install`'s own inspectFeaturesCodexHooks.
     if (/\[features\][\s\S]*?codex_hooks\s*=\s*true/.test(text)) {
       return {
         status: "ok",
@@ -343,7 +343,7 @@ function checkCodexFeatureFlag(): CheckResult {
       status: "warn",
       label: "Codex codex_hooks flag",
       detail: "missing or set to non-true",
-      hint: "Re-run `petdex hooks install` and accept the auto-fix prompt.",
+      hint: "Re-run `petdesk hooks install` and accept the auto-fix prompt.",
     };
   } catch {
     return {
@@ -392,7 +392,7 @@ function checkPets(): CheckResult {
       status: "fail",
       label: "Installed pets",
       detail: "no usable pets in ~/.petdex/pets or ~/.codex/pets",
-      hint: "Install one with `petdex install <slug>`",
+      hint: "Install one with `petdesk install <slug>`",
     };
   }
   return {
@@ -424,7 +424,7 @@ function printResult(r: CheckResult): void {
 }
 
 export async function runDoctor(): Promise<void> {
-  console.log(pc.bgMagenta(pc.white(" petdex doctor ")));
+  console.log(pc.bgMagenta(pc.white(" petdesk doctor ")));
   console.log("");
 
   console.log(pc.bold("Install"));

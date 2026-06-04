@@ -1,5 +1,5 @@
 /**
- * `petdex update` — checks GitHub Releases for a newer petdex-desktop binary,
+ * `petdesk update` — checks GitHub Releases for a newer petdex-desktop binary,
  * downloads it (and the sidecar) atomically, then restarts the running
  * process so the user picks up the new version without manual steps.
  *
@@ -168,7 +168,7 @@ export async function runUpdate(
   // Logging shims. In silent mode the spinner becomes a no-op so we
   // don't render terminal escape sequences into the sidecar's log file.
   const intro = (label: string) => {
-    if (silent) console.log(`[petdex update] ${label}`);
+    if (silent) console.log(`[petdesk update] ${label}`);
     else p.intro(pc.bgMagenta(pc.white(` ${label} `)));
   };
   const info = (msg: string) => {
@@ -198,7 +198,7 @@ export async function runUpdate(
     };
   };
 
-  intro("petdex update");
+  intro("petdesk update");
 
   const installed = readInstalledVersion(deps.versionFile);
   info(
@@ -336,8 +336,8 @@ export async function runUpdate(
       : release.tag_name;
     outro(
       silent
-        ? `${note} (run petdex up to launch the app)`
-        : `${pc.green("✓")} ${note}\n${pc.dim("  Run petdex up to launch the app.")}`,
+        ? `${note} (run petdesk up to launch the app)`
+        : `${pc.green("✓")} ${note}\n${pc.dim("  Run petdesk up to launch the app.")}`,
     );
     return;
   }
@@ -386,7 +386,7 @@ export async function runUpdate(
       if (recheck.state === "running" && isPetdexPidAlive(recheck.pid)) {
         throw new Error(
           "Cannot replace petdex-desktop-win32-x64.exe: process is still running. " +
-            "Run `petdex desktop stop` first.",
+            "Run `petdesk desktop stop` first.",
         );
       }
     }
@@ -450,8 +450,8 @@ export async function runUpdate(
     if (!portFree) {
       warn(
         silent
-          ? `Port ${SIDECAR_PORT} still in use after 10s. Run 'petdex desktop stop && petdex desktop start' to recover.`
-          : `${pc.yellow("!")} Port ${SIDECAR_PORT} still in use after 10s. Run \`petdex desktop stop && petdex desktop start\` to recover.`,
+          ? `Port ${SIDECAR_PORT} still in use after 10s. Run 'petdesk desktop stop && petdesk desktop start' to recover.`
+          : `${pc.yellow("!")} Port ${SIDECAR_PORT} still in use after 10s. Run \`petdesk desktop stop && petdesk desktop start\` to recover.`,
       );
       // Don't restart — we'd just spawn a desktop whose sidecar
       // immediately crashes. Better to leave the user with the
@@ -474,8 +474,8 @@ export async function runUpdate(
     } else {
       warn(
         silent
-          ? `Could not restart: ${startResult.reason}. Run 'petdex desktop start' manually.`
-          : `${pc.yellow("!")} Could not restart: ${startResult.reason}. Run \`petdex desktop start\` manually.`,
+          ? `Could not restart: ${startResult.reason}. Run 'petdesk desktop start' manually.`
+          : `${pc.yellow("!")} Could not restart: ${startResult.reason}. Run \`petdesk desktop start\` manually.`,
       );
     }
   }
@@ -498,7 +498,7 @@ export async function runUpdate(
 // Auto-refresh hook configs for every wired agent. The new desktop
 // binary likely ships changes to the slash command body or hook
 // templates (matchers, agent_source naming, bubble runner subcommand);
-// forcing the user to re-run `petdex hooks install` would be silly.
+// forcing the user to re-run `petdesk hooks install` would be silly.
 // Refresh is non-interactive and idempotent — safe to run on every
 // update, even on no-op upgrades. Extracted so the app-bundle update
 // path and the bare-binary update path both share it.

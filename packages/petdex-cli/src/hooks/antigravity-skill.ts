@@ -2,7 +2,7 @@
  * Antigravity Agent Skill generator.
  *
  * Generates a Petdex Agent Skill that tells the Antigravity agent how to
- * communicate with the petdex desktop mascot via MCP tools.
+ * communicate with the petdesk desktop mascot via MCP tools.
  *
  * The skill is installed to ~/.gemini/antigravity/skills/petdex/ and follows
  * the open Agent Skills format (SKILL.md + optional scripts).
@@ -29,7 +29,7 @@ export function generateSkillMd(): string {
   return `---
 name: petdex
 description: >
-  Coordinates with the petdex desktop mascot to reflect agent activity.
+  Coordinates with the petdesk desktop mascot to reflect agent activity.
   The pet is a transparent, always-on-top companion that animates based
   on what the agent is doing. Call these MCP tools before/after every
   tool use so the pet stays in sync.
@@ -101,9 +101,9 @@ mcp_config.json):
 This skill requires the petdex MCP server to be running.
 Configure it in Antigravity: Agent Panel → ... → MCP Servers.
 The server command is installed with the same Node.js runtime that ran
-\`petdex hooks install\`: \`${process.execPath}\`
+\`petdesk hooks install\`: \`${process.execPath}\`
 
-Make sure petdex-desktop is running (\`petdex up\`) for the mascot to
+Make sure petdex-desktop is running (\`petdesk up\`) for the mascot to
 appear.
 `;
 }

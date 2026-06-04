@@ -134,7 +134,7 @@ const TOOLS = [
   {
     name: "petdex_status",
     description:
-      "Check if the petdex desktop mascot is reachable. Returns connection status.",
+      "Check if the petdesk desktop mascot is reachable. Returns connection status.",
     inputSchema: {
       type: "object",
       properties: {},
@@ -214,7 +214,7 @@ async function handleRequest(req: JsonRpcRequest): Promise<void> {
             content: [
               {
                 type: "text",
-                text: "Petdex hooks are disabled. Run /petdesk in your agent or `petdex hooks on` to re-enable.",
+                text: "Petdex hooks are disabled. Run /petdesk in your agent or `petdesk hooks on` to re-enable.",
               },
             ],
           },
@@ -308,7 +308,7 @@ async function handleRequest(req: JsonRpcRequest): Promise<void> {
                   type: "text",
                   text: reachable
                     ? "Petdex desktop is reachable."
-                    : "Petdex desktop not detected. Start it with `petdex up`.",
+                    : "Petdex desktop not detected. Start it with `petdesk up`.",
                 },
               ],
             },

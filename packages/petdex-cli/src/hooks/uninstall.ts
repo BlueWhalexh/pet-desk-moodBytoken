@@ -1,5 +1,5 @@
 /**
- * `petdex hooks uninstall` — reverses `petdex hooks install`.
+ * `petdesk hooks uninstall` — reverses `petdesk hooks install`.
  *
  * For each agent:
  *   - JSON-config agents (Claude, Codex, Gemini): read settings,
@@ -42,7 +42,7 @@ export type HooksUninstallResult = {
 export async function runUninstall(
   options: HooksUninstallOptions = {},
 ): Promise<HooksUninstallResult> {
-  p.intro(pc.bgMagenta(pc.white(" petdex hooks uninstall ")));
+  p.intro(pc.bgMagenta(pc.white(" petdesk hooks uninstall ")));
 
   const detections = await detectAgents();
   const installed = detections.filter((d) => d.installed);
@@ -107,7 +107,7 @@ export async function runUninstall(
   }
 
   p.outro(
-    `${pc.green("✓")} Done. Run ${pc.cyan("petdex hooks install")} to wire petdex back in.`,
+    `${pc.green("✓")} Done. Run ${pc.cyan("petdesk hooks install")} to wire petdex back in.`,
   );
 
   return { uninstalledAgents };

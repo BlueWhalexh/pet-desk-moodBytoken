@@ -4,7 +4,7 @@
  * Privacy:
  * - install_id is a random UUID v4 generated on first run, stored at
  *   ~/.petdex/telemetry.json. No email, no username, no PII.
- * - User can opt out: `petdex telemetry off`.
+ * - User can opt out: `petdesk telemetry off`.
  * - Notice shown once on first run (notice_seen flag).
  * - PETDEX_TELEMETRY=0 env var also disables.
  *
@@ -115,7 +115,7 @@ function writeConfigSafe(config: TelemetryConfig): boolean {
  * (env opt-out, read/parse error, write failure) so callers
  * short-circuit cleanly. A corrupted config file is never replaced
  * here because that would silently flip a previously opted-out user
- * back on; the only way to recover is `petdex telemetry on/off` which
+ * back on; the only way to recover is `petdesk telemetry on/off` which
  * goes through a different path that overwrites the file explicitly.
  */
 export function ensureTelemetryConfig(): TelemetryConfig | null {
@@ -145,7 +145,7 @@ export function isEnabled(): boolean {
 }
 
 export function setEnabled(enabled: boolean): boolean {
-  // For an explicit `petdex telemetry on/off` call we need a config
+  // For an explicit `petdesk telemetry on/off` call we need a config
   // file even if PETDEX_TELEMETRY=0 was set; the user is overriding.
   // A read/parse error here is the one place we DO want to overwrite
   // the corrupt file: the user just typed an explicit toggle, so
@@ -184,7 +184,7 @@ export function maybeShowFirstRunNotice(): void {
       "",
       "petdex collects anonymous usage stats (install volume, OS, agents wired up).",
       "No personal data, no file contents. Disable any time:",
-      "  petdex telemetry off",
+      "  petdesk telemetry off",
       "Details: https://petdex.crafter.run/legal/telemetry",
       "",
     ].join("\n"),

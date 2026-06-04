@@ -1,5 +1,5 @@
 /**
- * `petdex desktop {start|stop|status}` — manages the petdex-desktop process.
+ * `petdesk desktop {start|stop|status}` — manages the petdex-desktop process.
  *
  * Stores the current PID at ~/.petdex/desktop.pid so subsequent runs can
  * detect a previous instance and avoid spawning duplicates.
@@ -24,7 +24,7 @@ function logFile(): string {
 // start-time string so that `desktop stop` can refuse to signal a
 // pid that the OS recycled to an unrelated user process. Without
 // the start-time check, a long-uptime macOS box that reused the
-// pid for vim or ssh-agent would let `petdex desktop stop` SIGTERM
+// pid for vim or ssh-agent would let `petdesk desktop stop` SIGTERM
 // somebody else's session.
 //
 // `ps -p <pid> -o lstart=` is the cross-platform (POSIX) source of
@@ -201,7 +201,7 @@ export async function startDesktop(): Promise<StartResult> {
   if (!existsSync(bin)) {
     return {
       ok: false,
-      reason: `petdex-desktop binary not found at ${bin}. Run \`petdex install desktop\` first.`,
+      reason: `petdex-desktop binary not found at ${bin}. Run \`petdesk install desktop\` first.`,
     };
   }
 
@@ -235,7 +235,7 @@ export async function startDesktop(): Promise<StartResult> {
     return { ok: false, reason: "Failed to spawn petdex-desktop" };
   }
 
-  // Capture the start-time so a future `petdex desktop stop` can
+  // Capture the start-time so a future `petdesk desktop stop` can
   // verify identity before signalling. recordLstart() handles the
   // POSIX (ps) and Windows (sentinel) cases.
   const record: PidRecord = { pid: child.pid, lstart: recordLstart(child.pid) };
@@ -400,8 +400,8 @@ export async function stopDesktop(
   }
   clearPidFile();
   // Wait for the sidecar to actually release :7777 before we tell
-  // the caller "stopped". Without this wait `petdex desktop stop &&
-  // petdex desktop start` races: the new desktop spawns its own
+  // the caller "stopped". Without this wait `petdesk desktop stop &&
+  // petdesk desktop start` races: the new desktop spawns its own
   // sidecar before the old one has noticed its parent is gone (the
   // sidecar's parent watchdog polls every 2s), and the new sidecar
   // crashes on EADDRINUSE. The cap is 5s — well above the 2s
@@ -435,7 +435,7 @@ export async function cmdDesktopStop(): Promise<void> {
     process.exit(result.reason.includes("not running") ? 0 : 1);
   }
   // If the sidecar is still holding :7777 after our 5s cap, warn
-  // the user — the next `petdex desktop start` could fail with
+  // the user — the next `petdesk desktop start` could fail with
   // EADDRINUSE. Better to surface it now than have the next start
   // command produce a confusing error.
   if (result.portReleased) {
@@ -446,7 +446,7 @@ export async function cmdDesktopStop(): Promise<void> {
     );
     console.log(
       pc.dim(
-        `  if 'petdex desktop start' fails with EADDRINUSE, wait a moment and retry`,
+        `  if 'petdesk desktop start' fails with EADDRINUSE, wait a moment and retry`,
       ),
     );
   }
@@ -505,7 +505,7 @@ export function cmdDesktopStatus(): void {
       break;
     case "stale":
       console.log(
-        `${pc.yellow("?")} pid ${status.pid} written but not alive (run \`petdex desktop start\` to restart)`,
+        `${pc.yellow("?")} pid ${status.pid} written but not alive (run \`petdesk desktop start\` to restart)`,
       );
       break;
   }

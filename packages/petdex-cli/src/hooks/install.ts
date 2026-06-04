@@ -1,5 +1,5 @@
 /**
- * `petdex hooks install` — interactive wizard that detects installed coding
+ * `petdesk hooks install` — interactive wizard that detects installed coding
  * agents (~/.claude, ~/.codex, ~/.gemini, ~/.config/opencode), lets the user
  * pick which ones should drive the petdex mascot, and writes the right hook
  * config into each agent (with .bak backup of any existing settings).
@@ -64,7 +64,7 @@ export type HooksInstallResult = {
 };
 
 export async function runInstall(): Promise<HooksInstallResult> {
-  p.intro(pc.bgMagenta(pc.white(" petdex hooks install ")));
+  p.intro(pc.bgMagenta(pc.white(" petdesk hooks install ")));
 
   // Snapshot the running petdex binary to a known path so hooks can
   // invoke it with an absolute path. See persist-binary.ts for why.
@@ -185,10 +185,10 @@ export async function runInstall(): Promise<HooksInstallResult> {
   // No outro from this function — the caller (cmdInit) prints the
   // hand-off line. Keeping `runHooksInstall` to just hooks-install
   // means the same wizard works whether the user invoked
-  // `petdex hooks install` directly or `petdex init` (which wraps
+  // `petdesk hooks install` directly or `petdesk init` (which wraps
   // it). Implementation details (sidecar URL, token, curl test
   // command) used to leak here; they don't belong in the user's
-  // success path — anyone who needs them can run `petdex doctor`.
+  // success path — anyone who needs them can run `petdesk doctor`.
 
   return { installedAgents };
 }
@@ -254,7 +254,7 @@ export async function installForAgent(
   const existing = await readJson(agent.configFile);
   if (existing.kind === "error") {
     throw new Error(
-      `Refusing to overwrite ${agent.configFile}: ${existing.message}.\n   Fix the file (or rename it) and run \`petdex hooks install\` again.`,
+      `Refusing to overwrite ${agent.configFile}: ${existing.message}.\n   Fix the file (or rename it) and run \`petdesk hooks install\` again.`,
     );
   }
   const backupPath =
@@ -362,7 +362,7 @@ function collectCommands(entry: unknown): string[] {
 }
 
 /**
- * Install petdex hooks for Antigravity.
+ * Install petdesk hooks for Antigravity.
  *
  * Unlike hook-based agents (Claude Code, Codex, Gemini CLI), Antigravity
  * integrates via two mechanisms:
@@ -410,7 +410,7 @@ async function installForAntigravity(): Promise<void> {
     throw new Error(
       `Petdex persisted binary missing or not functional: ${PERSIST_PATH}.\n` +
         `  The mcp-server subcommand is required for Antigravity integration.\n` +
-        `  Run \`npx petdex@latest hooks install\` to persist a fresh binary, then re-run.`,
+        `  Run \`npx -y pet-desk-moodbytoken@latest hooks install\` to persist a fresh binary, then re-run.`,
     );
   }
 
@@ -422,7 +422,7 @@ async function installForAntigravity(): Promise<void> {
   const existing = await readAntigravityMcpJson(mcpConfigPath);
   if (existing.kind === "error") {
     throw new Error(
-      `Refusing to overwrite ${mcpConfigPath}: ${existing.message}.\n   Fix the file (or rename it) and run \`petdex hooks install\` again.`,
+      `Refusing to overwrite ${mcpConfigPath}: ${existing.message}.\n   Fix the file (or rename it) and run \`petdesk hooks install\` again.`,
     );
   }
   if (existing.kind === "ok") await maybeBackup(mcpConfigPath);
