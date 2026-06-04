@@ -7,11 +7,9 @@
  * (see Agent.slashCommandPath) and the agent surfaces /petdesk in
  * its picker.
  *
- * The command tells the agent to run a shell out to
- * `petdesk hooks toggle|on|off|status`. We do NOT want the agent to
- * "interpret" or "explain" anything — it should just run the CLI
- * and surface the output. A flag-file killswitch is the source of
- * truth, the CLI is just a thin frontend over it.
+ * The command tells the agent to run a shell out to the persisted
+ * petdesk CLI. We do NOT want the agent to "interpret" or "explain"
+ * anything — it should just run the CLI and surface the output.
  */
 import { mkdir, rm, writeFile } from "node:fs/promises";
 import { homedir } from "node:os";
@@ -28,15 +26,16 @@ import type { Agent } from "./agents.js";
 const PETDEX_INVOKE = `node "$HOME/.petdex/bin/petdex.js"`;
 
 const SLASH_COMMAND_BODY = `---
-description: Wake or sleep the petdesk mascot. Toggles the floating pet on/off
+description: Start or control the petdesk mascot from Codex
 ---
 
-The user wants to control the petdesk mascot from inside the agent. The mascot is a floating macOS window driven by hooks installed in agent settings. /petdesk is a one-shot toggle that flips the entire state in a single command.
+The user wants to start or control the petdesk mascot from inside the agent. The mascot is a floating desktop pet driven by hooks installed in agent settings. /petdesk with no args should force-wake the default pet, not toggle it off.
 
 Run the matching command using the persisted petdex binary at \`$HOME/.petdex/bin/petdex.js\` (always present after \`petdesk hooks install\`):
 
-- \`/petdesk\` (no args) → run \`${PETDEX_INVOKE} toggle\`
-- \`/petdesk up\` → run \`${PETDEX_INVOKE} up\`
+- \`/petdesk\` (no args) → run \`${PETDEX_INVOKE} up\`
+- \`/petdesk on\` or \`/petdesk start\` or \`/petdesk up\` → run \`${PETDEX_INVOKE} up\`
+- \`/petdesk toggle\` → run \`${PETDEX_INVOKE} toggle\`
 - \`/petdesk down\` → run \`${PETDEX_INVOKE} down\`
 - \`/petdesk status\` → run \`${PETDEX_INVOKE} hooks status\`
 - \`/petdesk doctor\` → run \`${PETDEX_INVOKE} doctor\`
@@ -48,15 +47,16 @@ If \`$HOME/.petdex/bin/petdex.js\` doesn't exist, the user hasn't run \`petdesk 
 Arguments: \`$ARGUMENTS\`
 `;
 
-const GEMINI_COMMAND_BODY = `description = "Wake or sleep the petdesk mascot. Toggles the floating pet on/off"
+const GEMINI_COMMAND_BODY = `description = "Start or control the petdesk mascot from Gemini"
 
 prompt = """
-The user wants to control the petdesk mascot from inside the agent. The mascot is a floating macOS window driven by hooks installed in agent settings. /petdesk is a one-shot toggle that flips the entire state in a single command.
+The user wants to start or control the petdesk mascot from inside the agent. The mascot is a floating desktop pet driven by hooks installed in agent settings. /petdesk with no args should force-wake the default pet, not toggle it off.
 
 Run the matching command using the persisted petdex binary at \`$HOME/.petdex/bin/petdex.js\` (always present after \`petdesk hooks install\`):
 
-- \`/petdesk\` (no args) -> run \`${PETDEX_INVOKE} toggle\`
-- \`/petdesk up\` -> run \`${PETDEX_INVOKE} up\`
+- \`/petdesk\` (no args) -> run \`${PETDEX_INVOKE} up\`
+- \`/petdesk on\` or \`/petdesk start\` or \`/petdesk up\` -> run \`${PETDEX_INVOKE} up\`
+- \`/petdesk toggle\` -> run \`${PETDEX_INVOKE} toggle\`
 - \`/petdesk down\` -> run \`${PETDEX_INVOKE} down\`
 - \`/petdesk status\` -> run \`${PETDEX_INVOKE} hooks status\`
 - \`/petdesk doctor\` -> run \`${PETDEX_INVOKE} doctor\`
