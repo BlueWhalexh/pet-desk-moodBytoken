@@ -11,7 +11,7 @@
 目标使用方式是：安装一次，然后在 agent 里直接输入 `/petdesk`。
 
 ```bash
-npx petdex@latest init
+npx -y petdex@latest init
 ```
 
 `init` 会尽量完成三件事：
@@ -36,7 +36,17 @@ npx petdex@latest init
 | `/petdesk status` | 查看 hooks 状态 |
 | `/petdesk doctor` | 检查安装问题 |
 
-说明：当前 npm/CLI 包名仍沿用上游 `petdex`，所以 shell 里还是 `petdex ...`；agent 里的原生命令是本项目面向用户的 `/petdesk`。
+说明：`npx` 是一次性下载并运行 npm 包，不会把命令永久安装到你的 PATH。当前已发布包名仍沿用上游 `petdex`，所以一次性运行用 `npx -y petdex@latest ...`。发布后的 CLI 包会同时提供 `petdex` 和 `petdesk` 两个 shell 命令；全局安装后可以直接用：
+
+```bash
+npm install -g petdex
+petdesk init
+petdesk doctor
+```
+
+如果你只跑过 `npx -y petdex@latest init`，然后在普通终端里输入 `petdesk` 找不到，这是正常的：`npx` 没有做全局安装。此时继续用 `npx -y petdex@latest doctor`，或者执行上面的全局安装。
+
+Windows 用户也可以用 `npx` 运行 Node CLI；需要 Node.js 20+。桌面宠物是否能完整启动取决于当前 release 是否提供 `win32` desktop 资产和目标 agent 的 hooks 支持。当前最稳定路径仍是 macOS；Windows 可以先按 CLI / hooks-only 路径验证，遇到桌面二进制缺失时 `doctor` 会提示。
 
 ## 默认宠物
 
@@ -59,7 +69,28 @@ npx petdex@latest init
 
 ## 新增自己的宠物
 
-每只宠物是一个目录，最小结构如下：
+你可以从 Petdex 宠物商店下载宠物，也可以自己做一只。本地桌面只认宠物目录结构，不强依赖它来自商店。
+
+从商店安装：
+
+```bash
+npx -y petdex@latest install <slug>
+```
+
+例如：
+
+```bash
+npx -y petdex@latest install aka-shiba
+```
+
+安装后宠物会落到：
+
+```text
+~/.petdex/pets/<slug>
+~/.codex/pets/<slug>
+```
+
+自己准备宠物时，每只宠物是一个目录，最小结构如下：
 
 ```text
 ~/.petdex/pets/my-pet/
@@ -88,7 +119,23 @@ npx petdex@latest init
 
 每张 mood 图固定为透明背景 WebP，尺寸 `1152x208`，横向 6 帧，每帧 `192x208`。
 
-开发时可以先生成 mock 姿态测试渲染链路：
+### 用 Agent 生成 Mood Sprites
+
+仓库里已经封装了一个 Codex skill：
+
+```text
+.agents/skills/petdex-mood-sprite/
+```
+
+你可以直接和自己的 agent 这样说：
+
+```text
+使用 petdex-mood-sprite skill，基于 ~/.petdex/pets/my-pet 生成五档 mood idle sprites。
+要求输出 energetic、normal、tired、exhausted、dying 五张 1152x208 WebP。
+不要只改透明度、颜色或滤镜，要画出真实表情和姿态变化。
+```
+
+如果只是测试渲染链路，可以先让 agent 生成 mock 姿态：
 
 ```bash
 node .agents/skills/petdex-mood-sprite/scripts/generate-mood-sprites.mjs \
@@ -96,7 +143,15 @@ node .agents/skills/petdex-mood-sprite/scripts/generate-mood-sprites.mjs \
   --mock-postures
 ```
 
-如果你用 AI 生成了一张 5x6 mood sheet，可以用脚本切成五张标准 WebP：
+如果你让 agent 调用图片模型生成真实素材，推荐沟通方式是：
+
+```text
+请参考 ~/.petdex/pets/my-pet/spritesheet.webp 的 idle 行，生成一张 5 行 x 6 列的 sprite sheet。
+每行对应 energetic、normal、tired、exhausted、dying。
+每格保持同一只宠物、同一画风、透明或纯绿色背景，姿态逐步从精神到疲惫趴倒。
+```
+
+拿到 5x6 mood sheet 后，用脚本切成五张标准 WebP：
 
 ```bash
 node .agents/skills/petdex-mood-sprite/scripts/postprocess-ai-mood-sheet.mjs \

@@ -10,18 +10,21 @@ The CLI behind pet-desk-moodBytoken. It installs Petdex Desktop, wires local age
 
 ```sh
 # One-shot via npx (no global install)
-npx petdex --help
+npx -y petdex@latest --help
 
-# Or install globally
+# Or install globally. This exposes both petdex and petdesk.
 npm install -g petdex
+petdesk --help
 ```
 
 Requires Node.js 20+ (also runs on Bun).
 
+`npx` downloads the package into npm's temporary cache and runs its declared `bin`. It does not permanently install `petdesk` into your PATH. If you only used `npx -y petdex@latest init`, use `npx -y petdex@latest doctor` for later checks, or install globally first.
+
 ## Quick start
 
 ```sh
-npx petdex@latest init             # install desktop, starter pet, hooks, and /petdesk
+npx -y petdex@latest init          # install desktop, starter pet, hooks, and /petdesk
 petdex install aka-shiba           # install a pet by slug
 petdex submit ~/.codex/pets/aka-shiba
 ```
@@ -29,6 +32,8 @@ petdex submit ~/.codex/pets/aka-shiba
 After `init`, open Codex / Claude Code / Gemini CLI / OpenCode and run `/petdesk`.
 
 `aka-shiba` is the preferred starter pet for this fork. If it is unavailable in the online manifest, the installer falls back to the first available pet so the desktop still has something to render.
+
+Windows users can run the Node CLI with `npx` as long as Node.js 20+ is installed. Full desktop behavior depends on a matching `win32` desktop release asset and the target agent's hook support; macOS is the currently most verified path.
 
 ## Commands
 
@@ -100,6 +105,35 @@ This CLI distributes pets. It does not generate them. To create one:
 
 The full step-by-step (with tips on what makes a great pet) lives at <https://petdex.crafter.run/create>.
 
+## Mood sprite skill
+
+This fork adds a local skill at `.agents/skills/petdex-mood-sprite/` for generating or validating token-mood art.
+
+Ask your agent:
+
+```text
+Use the petdex-mood-sprite skill for ~/.petdex/pets/my-pet.
+Generate energetic, normal, tired, exhausted, and dying mood idle sprites.
+Each output must be a transparent 1152x208 WebP row with 6 frames.
+Do not fake mood with opacity, tint, brightness, blur, or CSS filters.
+```
+
+For renderer smoke tests, the skill can create deterministic mock postures:
+
+```sh
+node .agents/skills/petdex-mood-sprite/scripts/generate-mood-sprites.mjs \
+  my-pet \
+  --mock-postures
+```
+
+For real artwork, ask the agent/image model for a 5 row x 6 column mood sheet, then standardize it:
+
+```sh
+node .agents/skills/petdex-mood-sprite/scripts/postprocess-ai-mood-sheet.mjs \
+  --input /path/to/generated-5x6-green-screen-sheet.png \
+  --slug my-pet
+```
+
 ## Failure modes
 
 | Symptom | Cause | Fix |
@@ -119,11 +153,11 @@ install path is just `fetch a JSON manifest, write two files to
 
 | Symptom | Cause | Fix |
 | --- | --- | --- |
-| Hangs at `Need to install the following packages: petdex@x` | `npx`'s own confirmation prompt, not a hang. Press `y` or auto-confirm | `npx -y petdex install <slug>` |
+| Hangs at `Need to install the following packages: petdex@x` | `npx`'s own confirmation prompt, not a hang. Press `y` or auto-confirm | `npx -y petdex@latest install <slug>` |
 | `npm ERR! engine Unsupported engine` | Node < 20 | Upgrade Node to 20+ (`nvm install 20` is the easiest path) |
-| `manifest fetch 5xx` / network timeout | Slow connection or corporate/national firewall blocking `petdex.crafter.run` | Set a proxy: `HTTPS_PROXY=http://your.proxy:port npx petdex install <slug>` |
+| `manifest fetch 5xx` / network timeout | Slow connection or corporate/national firewall blocking `petdex.crafter.run` | Set a proxy: `HTTPS_PROXY=http://your.proxy:port npx -y petdex@latest install <slug>` |
 | `EACCES: permission denied … ~/.codex/pets/` | Pets dir owned by another user | `sudo chown -R "$USER" ~/.codex` or remove the dir and retry |
-| Windows: `'sh' is not recognized` | CLI version older than 0.1.1 piped through `curl … \| sh` | Upgrade: `npm i -g petdex@latest` or `npx petdex@latest install <slug>` |
+| Windows: `'sh' is not recognized` | CLI version older than 0.1.1 piped through `curl … \| sh` | Upgrade: `npm i -g petdex@latest` or `npx -y petdex@latest install <slug>` |
 
 The CLI bundles `@clack/prompts`, `picocolors`, and `jszip` into the
 shipped JS. There is no separate dependency-install step on your

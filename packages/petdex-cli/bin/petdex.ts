@@ -223,10 +223,11 @@ function printHelp() {
   console.log(
     [
       "",
-      `  ${pc.bold(pc.magenta("petdex"))} ${dim(VERSION)} ${dim("Codex pet gallery CLI")}`,
+      `  ${pc.bold(pc.magenta("petdex"))} ${dim(VERSION)} ${dim("Petdesk / Codex pet gallery CLI")}`,
       "",
       `  ${c("Usage")}`,
       `    petdex <command> [args]`,
+      `    petdesk <command> [args] ${dim("(global install alias)")}`,
       "",
       `  ${c("Commands")}`,
       `    ${pc.bold("init")}               First-run setup: wires hooks across your agents AND wakes the mascot ${pc.green("(start here)")}`,
