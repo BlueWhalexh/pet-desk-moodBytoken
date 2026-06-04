@@ -188,6 +188,26 @@ node .agents/skills/petdex-mood-sprite/scripts/postprocess-ai-mood-sheet.mjs \
 
 ## Token 心情算法
 
+桌面端会在宠物上方显示一个 token 用量百分比，例如 `57%`。这个百分比来自当前统计窗口内的 weighted token 用量：
+
+```text
+usagePercent = round(fatigue * 100)
+```
+
+它默认开启，可以在 Settings 里关闭 `Usage percent`，也可以直接编辑：
+
+```json
+{
+  "showUsagePercent": false
+}
+```
+
+配置文件位置：
+
+```text
+~/.petdex/preferences.json
+```
+
 Mood 分档：
 
 | Fatigue | Mood | 宠物表现 |

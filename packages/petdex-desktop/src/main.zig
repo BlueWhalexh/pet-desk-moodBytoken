@@ -82,29 +82,41 @@ const html_head =
     \\  .pet[data-mood="exhausted"] { filter: saturate(0.6) brightness(0.85); --mood-anim-scale: 2; transform: translateY(2px); }
     \\  .pet[data-mood="dying"]     { filter: saturate(0.3) brightness(0.7) blur(0.4px); --mood-anim-scale: 3; transform: translateY(4px); }
     \\  .pet[data-mood-sprite="1"] { filter: none; transform: none; }
-    \\  /* Fatigue meter: tiny bar above the pet. Width driven by */
-    \\  /* --fatigue (0..1). Hidden when mood file hasn't been */
-    \\  /* written yet (counter=0). */
+    \\  /* Usage badge: shows weighted token usage as a percentage. */
+    \\  /* Width driven by --fatigue (0..1). Hidden when mood file */
+    \\  /* hasn't been written yet (counter=0) or the setting is off. */
     \\  .fatigue-meter {
     \\    position: absolute;
-    \\    top: -8px;
+    \\    top: -20px;
     \\    left: 50%;
     \\    transform: translateX(-50%);
-    \\    width: 56px;
-    \\    height: 4px;
-    \\    border-radius: 2px;
-    \\    background: rgba(0, 0, 0, 0.2);
+    \\    width: 64px;
+    \\    height: 14px;
+    \\    border-radius: 7px;
+    \\    background: rgba(17, 17, 17, 0.72);
     \\    overflow: hidden;
     \\    pointer-events: none;
     \\    opacity: 0;
+    \\    box-shadow: 0 1px 4px rgba(0,0,0,0.28);
     \\    transition: opacity 300ms ease;
     \\  }
     \\  .fatigue-meter[data-active="1"] { opacity: 0.9; }
     \\  .fatigue-fill {
+    \\    position: absolute;
+    \\    inset: 0 auto 0 0;
     \\    height: 100%;
     \\    width: calc(var(--fatigue, 0) * 100%);
     \\    background: linear-gradient(90deg, #2dbe6c 0%, #f3c54a 55%, #d94343 90%);
     \\    transition: width 600ms ease;
+    \\  }
+    \\  .fatigue-label {
+    \\    position: relative;
+    \\    z-index: 1;
+    \\    display: block;
+    \\    color: white;
+    \\    font: 700 10px/14px ui-monospace, SFMono-Regular, Menlo, monospace;
+    \\    text-align: center;
+    \\    text-shadow: 0 1px 2px rgba(0,0,0,0.45);
     \\  }
     \\  .menu { pointer-events: auto; }
     \\  .menu {
@@ -254,6 +266,7 @@ const html_head =
     \\  .settings-version { color: #666; font-size: 12px; white-space: nowrap; }
     \\  .settings-section { padding: 18px 0; border-bottom: 1px solid rgba(0,0,0,0.10); }
     \\  .settings-row { display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 34px; }
+    \\  .settings-row + .settings-row { margin-top: 12px; }
     \\  .settings-label { display: flex; flex-direction: column; gap: 3px; font-weight: 650; }
     \\  .settings-muted { color: #6b6b6b; font-size: 12px; line-height: 1.35; font-weight: 400; }
     \\  .settings-toggle { width: 42px; height: 24px; appearance: none; border-radius: 999px; border: 1px solid rgba(0,0,0,0.14); background: #cfd3d8; position: relative; cursor: pointer; flex: 0 0 auto; }
@@ -270,7 +283,7 @@ const html_head =
     \\</style>
     \\</head>
     \\<body>
-    \\<div class="stage"><div class="pet" id="pet" data-state="idle" data-mood="normal" style="position:relative;"><div class="fatigue-meter" id="fatigue-meter"><div class="fatigue-fill" id="fatigue-fill"></div></div></div></div>
+    \\<div class="stage"><div class="pet" id="pet" data-state="idle" data-mood="normal" style="position:relative;"><div class="fatigue-meter" id="fatigue-meter"><div class="fatigue-fill" id="fatigue-fill"></div><span class="fatigue-label" id="fatigue-label">0%</span></div></div></div>
     \\<script type="application/json" id="petdex-data">
 ;
 
@@ -328,6 +341,13 @@ const html_tail =
     \\          </div>
     \\          <input class="settings-toggle" id="settings-auto" type="checkbox" aria-label="Automatic updates">
     \\        </div>
+    \\        <div class="settings-row">
+    \\          <div class="settings-label">
+    \\            <span>Usage percent</span>
+    \\            <span class="settings-muted">Show weighted token usage above the pet.</span>
+    \\          </div>
+    \\          <input class="settings-toggle" id="settings-usage-percent" type="checkbox" aria-label="Usage percent">
+    \\        </div>
     \\        <div class="settings-status" id="settings-save-status"></div>
     \\      </section>
     \\      <section class="settings-section">
@@ -350,6 +370,7 @@ const html_tail =
     \\    </main>`;
     \\    const versionEl = document.getElementById('settings-version');
     \\    const autoEl = document.getElementById('settings-auto');
+    \\    const usagePercentEl = document.getElementById('settings-usage-percent');
     \\    const saveEl = document.getElementById('settings-save-status');
     \\    const updateEl = document.getElementById('settings-update-status');
     \\    const installEl = document.getElementById('settings-install');
@@ -359,6 +380,7 @@ const html_tail =
     \\      const settings = await window.zero.invoke('petdex.read_desktop_settings', {});
     \\      const update = await window.zero.invoke('petdex.read_update_info', {});
     \\      autoEl.checked = !!settings.autoInstallUpdates;
+    \\      usagePercentEl.checked = settings.showUsagePercent !== false;
     \\      versionEl.textContent = settings.version || 'No version file';
     \\      updateEl.textContent = updateSummary(update);
     \\      const canInstall = update && update.installable !== false && (update.available || update.status === 'error');
@@ -372,15 +394,17 @@ const html_tail =
     \\        pathsEl.appendChild(item);
     \\      }
     \\    }
-    \\    autoEl.addEventListener('change', async () => {
+    \\    async function saveSettings() {
     \\      saveEl.textContent = 'Saving...';
     \\      try {
-    \\        await window.zero.invoke('petdex.write_desktop_settings', { autoInstallUpdates: autoEl.checked });
+    \\        await window.zero.invoke('petdex.write_desktop_settings', { autoInstallUpdates: autoEl.checked, showUsagePercent: usagePercentEl.checked });
     \\        saveEl.textContent = 'Saved.';
     \\      } catch (err) {
     \\        saveEl.textContent = 'Could not save settings.';
     \\      }
-    \\    });
+    \\    }
+    \\    autoEl.addEventListener('change', saveSettings);
+    \\    usagePercentEl.addEventListener('change', saveSettings);
     \\    installEl.addEventListener('click', async () => {
     \\      installEl.disabled = true;
     \\      updateEl.textContent = 'Starting update...';
@@ -501,7 +525,18 @@ const html_tail =
     \\  };
     \\  const fatigueMeter = document.getElementById('fatigue-meter');
     \\  const fatigueFill = document.getElementById('fatigue-fill');
+    \\  const fatigueLabel = document.getElementById('fatigue-label');
+    \\  let showUsagePercent = true;
     \\  let lastMoodCounter = 0;
+    \\  let hasMoodSample = false;
+    \\  async function loadUsagePercentSetting() {
+    \\    if (!(window.zero && window.zero.invoke)) return;
+    \\    try {
+    \\      const settings = await window.zero.invoke('petdex.read_desktop_settings', {});
+    \\      showUsagePercent = settings.showUsagePercent !== false;
+    \\      if (fatigueMeter) fatigueMeter.dataset.active = showUsagePercent && hasMoodSample ? '1' : '0';
+    \\    } catch (e) {}
+    \\  }
     \\  async function pollSidecarMood() {
     \\    if (!(window.zero && window.zero.invoke)) return;
     \\    try {
@@ -511,16 +546,21 @@ const html_tail =
     \\      lastMoodCounter = r.counter;
     \\      const level = (typeof r.level === 'string' && MOOD_SCALES[r.level] != null) ? r.level : 'normal';
     \\      const fatigue = (typeof r.fatigue === 'number' && r.fatigue >= 0 && r.fatigue <= 1) ? r.fatigue : 0;
+    \\      hasMoodSample = r.counter > 0;
     \\      currentMood = level;
     \\      pet.dataset.mood = level;
     \\      moodAnimScale = MOOD_SCALES[level];
     \\      paintFrame(currentFrame.c, currentFrame.r);
     \\      if (fatigueMeter && fatigueFill) {
+    \\        const percent = Math.round(fatigue * 100);
     \\        fatigueFill.style.setProperty('--fatigue', String(fatigue));
-    \\        fatigueMeter.dataset.active = r.counter > 0 ? '1' : '0';
+    \\        if (fatigueLabel) fatigueLabel.textContent = String(percent) + '%';
+    \\        fatigueMeter.dataset.active = showUsagePercent && r.counter > 0 ? '1' : '0';
     \\      }
     \\    } catch (e) {}
     \\  }
+    \\  loadUsagePercentSetting();
+    \\  setInterval(loadUsagePercentSetting, 3000);
     \\  setInterval(pollSidecarMood, 250);
     \\
     \\  // Bubble: tooltip-style text shown above the sprite while a tool
@@ -2049,8 +2089,17 @@ const PetdexState = struct {
 
     fn writeDesktopSettingsCmd(context: *anyopaque, invocation: zero_native.bridge.Invocation, output: []u8) anyerror![]const u8 {
         const self: *PetdexState = @ptrCast(@alignCast(context));
-        const auto_updates = jsonBoolField(invocation.request.payload, "autoInstallUpdates") orelse return error.MissingAutoInstallUpdates;
-        const text = if (auto_updates) "{\"autoInstallUpdates\":true}\n" else "{\"autoInstallUpdates\":false}\n";
+        const auto_updates = jsonBoolField(invocation.request.payload, "autoInstallUpdates") orelse self.readDesktopAutoInstallUpdates();
+        const show_usage_percent = jsonBoolField(invocation.request.payload, "showUsagePercent") orelse self.readDesktopShowUsagePercent();
+        var text_buf: [96]u8 = undefined;
+        const text = try std.fmt.bufPrint(
+            &text_buf,
+            "{{\"autoInstallUpdates\":{s},\"showUsagePercent\":{s}}}\n",
+            .{
+                if (auto_updates) "true" else "false",
+                if (show_usage_percent) "true" else "false",
+            },
+        );
         var dir = try std.Io.Dir.openDirAbsolute(self.io, self.config_dir, .{});
         defer dir.close(self.io);
         try writeFileAll(self.io, dir, "preferences.json", text);
@@ -2067,12 +2116,24 @@ const PetdexState = struct {
         return jsonBoolField(buf[0..read], "autoInstallUpdates") orelse true;
     }
 
+    fn readDesktopShowUsagePercent(self: *PetdexState) bool {
+        const path = std.fs.path.join(self.allocator, &.{ self.config_dir, "preferences.json" }) catch return true;
+        defer self.allocator.free(path);
+        var file = std.Io.Dir.openFileAbsolute(self.io, path, .{}) catch return true;
+        defer file.close(self.io);
+        var buf: [4096]u8 = undefined;
+        const read = file.readPositionalAll(self.io, &buf, 0) catch return true;
+        return jsonBoolField(buf[0..read], "showUsagePercent") orelse true;
+    }
+
     fn formatDesktopSettingsJson(self: *PetdexState, output: []u8) ![]const u8 {
         var buf: std.ArrayList(u8) = .empty;
         defer buf.deinit(self.allocator);
 
         try buf.appendSlice(self.allocator, "{\"autoInstallUpdates\":");
         try buf.appendSlice(self.allocator, if (self.readDesktopAutoInstallUpdates()) "true" else "false");
+        try buf.appendSlice(self.allocator, ",\"showUsagePercent\":");
+        try buf.appendSlice(self.allocator, if (self.readDesktopShowUsagePercent()) "true" else "false");
         try buf.appendSlice(self.allocator, ",\"version\":");
 
         const version_path = try std.fs.path.join(self.allocator, &.{ self.config_dir, "version" });

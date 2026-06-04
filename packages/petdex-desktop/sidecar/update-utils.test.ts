@@ -33,6 +33,11 @@ describe("desktop update utils", () => {
   test("parses desktop preferences with safe defaults", () => {
     expect(parseDesktopPreferences('{"autoInstallUpdates":false}')).toEqual({
       autoInstallUpdates: false,
+      showUsagePercent: true,
+    });
+    expect(parseDesktopPreferences('{"showUsagePercent":false}')).toEqual({
+      autoInstallUpdates: true,
+      showUsagePercent: false,
     });
     expect(parseDesktopPreferences('{"autoInstallUpdates":"no"}')).toEqual(
       DEFAULT_DESKTOP_PREFERENCES,
