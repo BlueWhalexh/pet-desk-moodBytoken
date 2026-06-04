@@ -90,6 +90,7 @@ const MANUAL_MOOD_HOLD_MS = Number(
   process.env.PETDEX_MANUAL_MOOD_HOLD_MS ?? 5 * 60 * 1000,
 );
 const USAGE_MOOD_CONFIG = tokenMoodConfigFromEnv(process.env);
+const USAGE_MOOD_SOURCE = process.env.PETDEX_USAGE_MOOD_SOURCE;
 
 const VALID_STATES = new Set([
   "idle",
@@ -320,11 +321,17 @@ function writeMood(payload: {
   level: string;
   reason: string | null;
   agentSource: string | null;
+  weightedTokens?: number | null;
+  tokenBudget?: number | null;
+  usagePercent?: number | null;
 }): {
   fatigue: number;
   level: string;
   reason: string | null;
   agent_source: string | null;
+  weighted_tokens: number | null;
+  token_budget: number | null;
+  usage_percent: number | null;
   updatedAt: number;
   counter: number;
 } {
@@ -334,6 +341,9 @@ function writeMood(payload: {
     level: payload.level,
     reason: payload.reason,
     agent_source: payload.agentSource,
+    weighted_tokens: payload.weightedTokens ?? null,
+    token_budget: payload.tokenBudget ?? null,
+    usage_percent: payload.usagePercent ?? null,
     updatedAt: Date.now(),
     counter: moodCounter,
   };
@@ -346,14 +356,21 @@ function refreshMoodFromLocalUsage() {
   if (Date.now() - lastManualMoodAt < MANUAL_MOOD_HOLD_MS) return;
   const sample = scanLocalAgentUsage({
     config: USAGE_MOOD_CONFIG,
+    source:
+      USAGE_MOOD_SOURCE === "codex" || USAGE_MOOD_SOURCE === "claude-code"
+        ? USAGE_MOOD_SOURCE
+        : "all",
   });
-  if (sample.tokens <= 0) return;
+  if (sample.tokens <= 0 && sample.usagePercent <= 0) return;
   const level = fatigueToLevel(sample.fatigue);
   const result = writeMood({
     fatigue: sample.fatigue,
     level,
     reason: sample.reason,
     agentSource: sample.agentSource,
+    weightedTokens: sample.weightedTokens,
+    tokenBudget: sample.tokenBudget,
+    usagePercent: sample.usagePercent,
   });
   log(
     `usage-mood fatigue=${result.fatigue.toFixed(2)} level=${result.level} tokens=${sample.tokens} src=${sample.agentSource ?? "-"}`,
@@ -1237,6 +1254,9 @@ const server = http.createServer(async (req, res) => {
           level: "normal",
           reason: null,
           agent_source: null,
+          weighted_tokens: null,
+          token_budget: null,
+          usage_percent: null,
           updatedAt: 0,
           counter: 0,
         });

@@ -129,6 +129,100 @@ describe("scanLocalAgentUsage", () => {
     expect(sample.agentSource).toBe("codex");
     expect(sample.breakdown.textEstimate).toBe(2);
     expect(sample.fatigue).toBe(0.2);
+    expect(sample.usagePercent).toBe(20);
+    expect(sample.tokenBudget).toBe(10);
+  });
+
+  test("can filter to Codex usage without Claude stats-cache totals", () => {
+    const home = tmpHome();
+    mkdirSync(join(home, ".claude"), { recursive: true });
+    mkdirSync(join(home, ".codex", "archived_sessions"), { recursive: true });
+    const nowMs = Date.parse("2026-06-04T08:00:00.000Z");
+    writeFileSync(
+      join(home, ".claude", "stats-cache.json"),
+      JSON.stringify({
+        dailyModelTokens: [
+          {
+            date: "2026-06-04",
+            tokensByModel: { "claude-sonnet": 1_000_000 },
+          },
+        ],
+      }),
+    );
+    writeFileSync(
+      join(home, ".codex", "archived_sessions", "session.jsonl"),
+      JSON.stringify({
+        timestamp: "2026-06-04T07:00:00.000Z",
+        message: { usage: { input_tokens: 900 } },
+      }),
+    );
+
+    const sample = scanLocalAgentUsage({
+      homeDir: home,
+      nowMs,
+      source: "codex",
+      config: {
+        windowMs: 24 * 60 * 60 * 1000,
+        tokenBudget: 1_000,
+        weights: {
+          input: 1,
+          output: 1,
+          cacheRead: 1,
+          cacheCreation: 1,
+          textEstimate: 1,
+        },
+      },
+    });
+
+    expect(sample.agentSource).toBe("codex");
+    expect(sample.tokens).toBe(900);
+    expect(sample.fatigue).toBe(0.9);
+    expect(sample.usagePercent).toBe(90);
+  });
+
+  test("uses native Codex rate limit percent from active sessions", () => {
+    const home = tmpHome();
+    mkdirSync(join(home, ".codex", "sessions", "2026", "06", "04"), {
+      recursive: true,
+    });
+    const nowMs = Date.parse("2026-06-04T08:00:00.000Z");
+    writeFileSync(
+      join(home, ".codex", "sessions", "2026", "06", "04", "session.jsonl"),
+      JSON.stringify({
+        timestamp: "2026-06-04T07:00:00.000Z",
+        type: "event_msg",
+        payload: {
+          type: "token_count",
+          rate_limits: {
+            primary: {
+              used_percent: 10,
+            },
+          },
+        },
+      }),
+    );
+
+    const sample = scanLocalAgentUsage({
+      homeDir: home,
+      nowMs,
+      source: "codex",
+      config: {
+        windowMs: 24 * 60 * 60 * 1000,
+        tokenBudget: 1_000,
+        weights: {
+          input: 1,
+          output: 1,
+          cacheRead: 1,
+          cacheCreation: 1,
+          textEstimate: 1,
+        },
+      },
+    });
+
+    expect(sample.agentSource).toBe("codex");
+    expect(sample.usagePercent).toBe(10);
+    expect(sample.fatigue).toBe(0.1);
+    expect(sample.reason).toBe("codex rate limit: 10% used");
   });
 
   test("returns normal baseline when no recent token data exists", () => {

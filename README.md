@@ -191,7 +191,7 @@ node .agents/skills/petdex-mood-sprite/scripts/postprocess-ai-mood-sheet.mjs \
 桌面端会在宠物上方显示一个 token 用量百分比，例如 `57%`。这个百分比来自当前统计窗口内的 weighted token 用量：
 
 ```text
-usagePercent = round(fatigue * 100)
+usagePercent = round(weightedTokens / tokenBudget * 100)
 ```
 
 它默认开启，可以在 Settings 里关闭 `Usage percent`，也可以直接编辑：
@@ -222,13 +222,15 @@ Mood 分档：
 
 - Claude Code JSONL transcripts：`~/.claude/projects/**.jsonl`
 - Claude stats cache：`~/.claude/stats-cache.json`
+- Codex active JSONL sessions：`~/.codex/sessions/**.jsonl`
 - Codex archived JSONL transcripts：`~/.codex/archived_sessions/**.jsonl`
 
 计算优先级：
 
-1. 优先读取原生 usage 字段，例如 `input_tokens`、`output_tokens`、`cache_read_input_tokens`、`cache_creation_input_tokens`。
-2. 没有原生 usage 时，用 `js-tiktoken` 按 `gpt-4o` / `o200k_base` 估算 transcript 文本 token。
-3. tokenizer 不可用时，回退到 `ceil(text.length / 4)`。
+1. 当 `PETDEX_USAGE_MOOD_SOURCE=codex` 且 Codex session 里存在 `rate_limits.primary.used_percent` 时，优先使用 Codex 原生用量百分比。
+2. 否则读取原生 usage 字段，例如 `input_tokens`、`output_tokens`、`cache_read_input_tokens`、`cache_creation_input_tokens`。
+3. 没有原生 usage 时，用 `js-tiktoken` 按 `gpt-4o` / `o200k_base` 估算 transcript 文本 token。
+4. tokenizer 不可用时，回退到 `ceil(text.length / 4)`。
 
 公式：
 
@@ -242,6 +244,8 @@ weightedTokens =
 
 fatigue = clamp(weightedTokens / tokenBudget, 0, 1)
 ```
+
+`fatigue` 会 clamp 到 `0..1` 用来驱动 mood 分档；`usagePercent` 不 clamp，用来暴露真实预算占用。如果你看到 `100%` 以上，说明当前统计窗口内的 weighted token 已经超过配置预算。
 
 默认参数：
 
@@ -265,12 +269,27 @@ fatigue = clamp(weightedTokens / tokenBudget, 0, 1)
 PETDEX_USAGE_MOOD_INTERVAL_MS=30000
 PETDEX_USAGE_MOOD_WINDOW_MS=86400000
 PETDEX_USAGE_MOOD_TOKEN_BUDGET=600000
+PETDEX_USAGE_MOOD_SOURCE=all
 
 PETDEX_TOKEN_WEIGHT_INPUT=1
 PETDEX_TOKEN_WEIGHT_OUTPUT=1.5
 PETDEX_TOKEN_WEIGHT_CACHE_READ=0.15
 PETDEX_TOKEN_WEIGHT_CACHE_CREATION=0.5
 PETDEX_TOKEN_WEIGHT_TEXT_ESTIMATE=1
+```
+
+`PETDEX_USAGE_MOOD_SOURCE` 可选：
+
+| 值 | 含义 |
+| --- | --- |
+| `all` | 默认，合并所有支持的本地 agent 用量 |
+| `codex` | 只统计 Codex archived sessions |
+| `claude-code` | 只统计 Claude Code transcripts / stats cache |
+
+如果你主要用 Codex，但本机也有 Claude Code 的历史统计，建议先用：
+
+```bash
+PETDEX_USAGE_MOOD_SOURCE=codex petdesk start
 ```
 
 关闭自动 token mood：
@@ -359,7 +378,7 @@ bunx biome check \
 直接 smoke test 本地用量采样：
 
 ```bash
-bun -e "import { scanLocalAgentUsage } from './packages/petdex-desktop/sidecar/agent-usage.ts'; console.log(scanLocalAgentUsage())"
+PETDEX_USAGE_MOOD_SOURCE=codex bun -e "import { scanLocalAgentUsage } from './packages/petdex-desktop/sidecar/agent-usage.ts'; console.log(scanLocalAgentUsage())"
 ```
 
 ## Roadmap

@@ -28,6 +28,8 @@ export type AgentUsageSample = {
   tokens: number;
   weightedTokens: number;
   rawTokens: number;
+  tokenBudget: number;
+  usagePercent: number;
   messages: number;
   sinceMs: number;
   reason: string;
@@ -45,9 +47,12 @@ type UsageScanOptions = {
   homeDir?: string;
   nowMs?: number;
   config?: TokenMoodConfig;
+  source?: UsageSource;
   maxFiles?: number;
   tokenizer?: TextTokenizer | null;
 };
+
+export type UsageSource = "all" | "claude-code" | "codex";
 
 const DEFAULT_MAX_FILES = 24;
 const JSONL_TAIL_BYTES = 1024 * 1024;
@@ -58,25 +63,48 @@ export function scanLocalAgentUsage(
   const home = opts.homeDir ?? homedir();
   const nowMs = opts.nowMs ?? Date.now();
   const config = opts.config ?? tokenMoodConfigFromEnv(process.env);
+  const source = opts.source ?? usageSourceFromEnv(process.env);
   const maxFiles = Math.max(1, opts.maxFiles ?? DEFAULT_MAX_FILES);
   const tokenizer =
     opts.tokenizer === undefined ? loadDefaultTokenizer() : opts.tokenizer;
   const sinceMs = nowMs - config.windowMs;
-  const records = [
-    ...scanClaudeStats(join(home, ".claude", "stats-cache.json"), sinceMs),
-    ...scanClaudeProjectJsonl(
-      join(home, ".claude", "projects"),
-      sinceMs,
-      maxFiles,
-      tokenizer,
-    ),
-    ...scanCodexArchivedJsonl(
-      join(home, ".codex", "archived_sessions"),
-      sinceMs,
-      maxFiles,
-      tokenizer,
-    ),
-  ];
+  const codexRateLimit =
+    source === "codex"
+      ? latestCodexRateLimit(
+          [
+            ...scanRecentJsonl(join(home, ".codex", "sessions"), maxFiles),
+            ...scanRecentJsonl(
+              join(home, ".codex", "archived_sessions"),
+              maxFiles,
+            ),
+          ],
+          sinceMs,
+        )
+      : null;
+  const records = filterUsageRecords(
+    [
+      ...scanClaudeStats(join(home, ".claude", "stats-cache.json"), sinceMs),
+      ...scanClaudeProjectJsonl(
+        join(home, ".claude", "projects"),
+        sinceMs,
+        maxFiles,
+        tokenizer,
+      ),
+      ...scanCodexArchivedJsonl(
+        join(home, ".codex", "archived_sessions"),
+        sinceMs,
+        maxFiles,
+        tokenizer,
+      ),
+      ...scanCodexSessionJsonl(
+        join(home, ".codex", "sessions"),
+        sinceMs,
+        maxFiles,
+        tokenizer,
+      ),
+    ],
+    source,
+  );
 
   const totals = records.reduce(
     (acc, record) => {
@@ -94,26 +122,122 @@ export function scanLocalAgentUsage(
     },
   );
   const sample = tokenMoodSample(totals.breakdown, config);
+  const nativeUsagePercent = codexRateLimit?.usedPercent ?? null;
+  const usagePercent =
+    nativeUsagePercent !== null
+      ? Math.round(nativeUsagePercent)
+      : Math.round(
+          (sample.weightedTokens / Math.max(1, config.tokenBudget)) * 100,
+        );
+  const fatigue =
+    nativeUsagePercent !== null
+      ? clamp01(nativeUsagePercent / 100)
+      : sample.fatigue;
   const agentSource =
-    totals.sources.size === 1
-      ? [...totals.sources][0]
-      : totals.sources.size > 1
-        ? "mixed"
-        : null;
+    nativeUsagePercent !== null
+      ? "codex"
+      : totals.sources.size === 1
+        ? [...totals.sources][0]
+        : totals.sources.size > 1
+          ? "mixed"
+          : null;
   return {
     agentSource,
-    fatigue: sample.fatigue,
+    fatigue,
     tokens: Math.round(sample.weightedTokens),
     weightedTokens: sample.weightedTokens,
     rawTokens: sample.rawTokens,
+    tokenBudget: Math.max(1, config.tokenBudget),
+    usagePercent,
     messages: totals.messages,
     sinceMs,
     breakdown: sample.breakdown,
     reason:
-      sample.weightedTokens > 0
-        ? `local agent usage: ${Math.round(sample.weightedTokens)} weighted tokens/${Math.round(config.windowMs / 3600000)}h`
-        : "local agent usage: no recent token data",
+      nativeUsagePercent !== null
+        ? `codex rate limit: ${usagePercent}% used`
+        : sample.weightedTokens > 0
+          ? `local agent usage: ${Math.round(sample.weightedTokens)} weighted tokens/${Math.round(config.windowMs / 3600000)}h`
+          : "local agent usage: no recent token data",
   };
+}
+
+function clamp01(value: number): number {
+  if (!Number.isFinite(value)) return 0;
+  return Math.min(1, Math.max(0, value));
+}
+
+function latestCodexRateLimit(
+  files: string[],
+  sinceMs: number,
+): { usedPercent: number; timestampMs: number } | null {
+  let latest: { usedPercent: number; timestampMs: number } | null = null;
+  for (const file of files) {
+    const sample = scanCodexRateLimit(file, sinceMs);
+    if (!sample) continue;
+    if (!latest || sample.timestampMs > latest.timestampMs) latest = sample;
+  }
+  return latest;
+}
+
+function scanCodexRateLimit(
+  path: string,
+  sinceMs: number,
+): { usedPercent: number; timestampMs: number } | null {
+  try {
+    const stat = statSync(path);
+    const text = readTail(path, stat.size, JSONL_TAIL_BYTES);
+    let latest: { usedPercent: number; timestampMs: number } | null = null;
+    for (const line of text.split(/\r?\n/)) {
+      if (!line.trim()) continue;
+      let parsed: unknown;
+      try {
+        parsed = JSON.parse(line);
+      } catch {
+        continue;
+      }
+      const timestampMs = timestampOf(parsed) ?? stat.mtimeMs;
+      if (timestampMs < sinceMs) continue;
+      const usedPercent = codexPrimaryUsedPercent(parsed);
+      if (usedPercent === null) continue;
+      if (!latest || timestampMs > latest.timestampMs) {
+        latest = { usedPercent, timestampMs };
+      }
+    }
+    return latest;
+  } catch {
+    return null;
+  }
+}
+
+function codexPrimaryUsedPercent(value: unknown): number | null {
+  if (!value || typeof value !== "object") return null;
+  const payload = (value as { payload?: unknown }).payload;
+  if (!payload || typeof payload !== "object") return null;
+  const rateLimits = (payload as { rate_limits?: unknown }).rate_limits;
+  if (!rateLimits || typeof rateLimits !== "object") return null;
+  const primary = (rateLimits as { primary?: unknown }).primary;
+  if (!primary || typeof primary !== "object") return null;
+  const usedPercent = (primary as { used_percent?: unknown }).used_percent;
+  if (typeof usedPercent !== "number" || !Number.isFinite(usedPercent)) {
+    return null;
+  }
+  return usedPercent;
+}
+
+export function usageSourceFromEnv(env: NodeJS.ProcessEnv): UsageSource {
+  const value = env.PETDEX_USAGE_MOOD_SOURCE?.trim().toLowerCase();
+  if (value === "codex" || value === "claude-code" || value === "all") {
+    return value;
+  }
+  return "all";
+}
+
+function filterUsageRecords(
+  records: UsageRecord[],
+  source: UsageSource,
+): UsageRecord[] {
+  if (source === "all") return records;
+  return records.filter((record) => record.agentSource === source);
 }
 
 function scanClaudeStats(path: string, sinceMs: number): UsageRecord[] {
@@ -166,6 +290,17 @@ function scanClaudeProjectJsonl(
 }
 
 function scanCodexArchivedJsonl(
+  root: string,
+  sinceMs: number,
+  maxFiles: number,
+  tokenizer: TextTokenizer | null,
+): UsageRecord[] {
+  return scanRecentJsonl(root, maxFiles).flatMap((file) =>
+    scanJsonlUsage(file, "codex", sinceMs, tokenizer),
+  );
+}
+
+function scanCodexSessionJsonl(
   root: string,
   sinceMs: number,
   maxFiles: number,

@@ -68,20 +68,18 @@ const html_head =
     \\    pointer-events: auto;
     \\    cursor: grab;
     \\    --mood-anim-scale: 1;
-    \\    transition: filter 600ms ease, transform 600ms ease;
+    \\    transition: transform 600ms ease;
     \\  }
     \\  .pet.dragging { cursor: grabbing; }
     \\  /* Mood overlay: orthogonal to data-state. The renderer */
-    \\  /* multiplies frame durations by --mood-anim-scale and */
-    \\  /* applies a CSS filter so the same `running` animation */
-    \\  /* visually decays from energetic -> dying without */
-    \\  /* needing new sprite rows. */
-    \\  .pet[data-mood="energetic"] { filter: saturate(1.15) brightness(1.05); --mood-anim-scale: 0.85; }
-    \\  .pet[data-mood="normal"]    { filter: none; --mood-anim-scale: 1; }
-    \\  .pet[data-mood="tired"]     { filter: saturate(0.85) brightness(0.95); --mood-anim-scale: 1.4; }
-    \\  .pet[data-mood="exhausted"] { filter: saturate(0.6) brightness(0.85); --mood-anim-scale: 2; transform: translateY(2px); }
-    \\  .pet[data-mood="dying"]     { filter: saturate(0.3) brightness(0.7) blur(0.4px); --mood-anim-scale: 3; transform: translateY(4px); }
-    \\  .pet[data-mood-sprite="1"] { filter: none; transform: none; }
+    \\  /* multiplies frame durations by --mood-anim-scale. Visual */
+    \\  /* mood changes come from real mood sprites; CSS never */
+    \\  /* grays, fades, or blurs the pet as a fallback. */
+    \\  .pet[data-mood="energetic"] { --mood-anim-scale: 0.85; }
+    \\  .pet[data-mood="normal"]    { --mood-anim-scale: 1; }
+    \\  .pet[data-mood="tired"]     { --mood-anim-scale: 1.4; }
+    \\  .pet[data-mood="exhausted"] { --mood-anim-scale: 2; }
+    \\  .pet[data-mood="dying"]     { --mood-anim-scale: 3; }
     \\  /* Usage badge: shows weighted token usage as a percentage. */
     \\  /* Width driven by --fatigue (0..1). Hidden when mood file */
     \\  /* hasn't been written yet (counter=0) or the setting is off. */
@@ -552,9 +550,10 @@ const html_tail =
     \\      moodAnimScale = MOOD_SCALES[level];
     \\      paintFrame(currentFrame.c, currentFrame.r);
     \\      if (fatigueMeter && fatigueFill) {
-    \\        const percent = Math.round(fatigue * 100);
+    \\        const percent = (typeof r.usage_percent === 'number' && Number.isFinite(r.usage_percent)) ? Math.max(0, Math.round(r.usage_percent)) : Math.round(fatigue * 100);
     \\        fatigueFill.style.setProperty('--fatigue', String(fatigue));
     \\        if (fatigueLabel) fatigueLabel.textContent = String(percent) + '%';
+    \\        fatigueMeter.title = (r.agent_source ? String(r.agent_source) + ' ' : '') + String(percent) + '%';
     \\        fatigueMeter.dataset.active = showUsagePercent && r.counter > 0 ? '1' : '0';
     \\      }
     \\    } catch (e) {}
